@@ -27,17 +27,21 @@ public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 		dual(request,response);
 	}
 
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 		dual(request,response);
 	}
 
 
-	private void dual(HttpServletRequest request, HttpServletResponse response) {
+	private void dual(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
 		String uri = request.getRequestURI();
 		String ctx = request.getContextPath();
 		String subAddr = uri.substring(ctx.length());
