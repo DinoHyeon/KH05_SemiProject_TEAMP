@@ -62,7 +62,7 @@
 <body>
 	 <div id="header">
             <div id="navi">
-                <button id="myInfo">내정보</button>
+                <button onclick="location.href='memberInfoFrom.jsp'" id="myInfo">내정보</button>
                 <button id="notice">공지사항</button>
                 <button id="plan">일정</button>
                 <button id="fileBbs">파일게시판</button>
