@@ -3,86 +3,137 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<style>
-	#createGroup{
-		position: absolute;
-		display: none;
-	}
-	
-	#bg{
-		position: absolute;
-		display: none;
-		background-color: black;
-		opacity: 0.7;
-		z-index: 2;
-		width: 100%;
-		height: 100%;
-	}
-	
-	#pupupContent{
-		position: absolute;
-		display: none;
-		z-index: 3;
-		margin-top:10%;
-		margin-left:25%;
-		width: 800px;
-		height: 500px;
-		background-color: blue;
-		
-	}
-	
-	#close{
-		position: absolute;
-		margin-left:790px;
-	}
-	
-	table{
-		position: absolute;
-		left : 37%;
-		top : 35%;
-		background-color: white;
-		border: 1px solid black;
-		border-collapse: collapse;
-	}
-	
-	td{
-		border: 1px solid black;
-		border-collapse: collapse;		
-	}
-</style>
-</head>
-<body>
-	<div id="bg">
-	</div>
-	<div id="pupupContent">
-		<input id="close" onclick="colse()" type="button" value="닫기">
-		<table>
-			<tr>
-				<td>그룹장</td>
-				<td>${sessionScope.loginId}</td>
-			</tr>
-			<tr>
-				<td>그룹명</td>
-				<td><input type="text"/></td>
-			</tr>
-			<tr>
-				<td>시작일</td>
-				<td><input type="date"/></td>
-			</tr>
-			<tr>
-				<td>종료일</td>
-				<td><input type="date"/></td>
-			</tr>	
-		</table>
-		<input type="button" value="생성완료">
-	</div>
-	<input id="createGroup" type="button" value="그룹생성">
-
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>J-QUERY</title>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <style>
+			body{
+				margin : 0px;
+			}
+			
+            #mainInfo{
+                position: fixed;
+                left: 82.5%;
+                width: 17.5%;
+                height: 100%;
+                background-color: #004C63;
+            }
+            
+            #header{
+                position: absolute;
+                width: 82.5%;
+                height: 8%;
+                background-color: white;
+            }
+            
+            #navi{
+                position: absolute;
+                background-color: none;
+                left : 61%;
+                top : 28.5%;
+            }
+            
+            #navi button{
+                border: none;
+                background-color: white;
+                font-size: 14px;
+                padding : 5px;
+                color : #004C63;
+                border : 1px solid white;
+            }
+            
+            #groupName{
+                position: absolute;
+                padding: 15px;
+                left: 15px;
+                top: 80px;
+            }
+            
+            #group{
+                position: absolute;
+                background-color: #566A70;
+                width: 82.5%;
+                top: 8%;
+                height: 7.9%;
+            }
+            
+            #groupInfo{
+                position: absolute;
+                background-color: #FFD724;
+                color: #004C63;
+                width: 8%;
+                height: 60%;
+                top: 18.5%;
+                left: 91%;
+                text-align: center;
+                line-height: 33px;
+                font-weight: 900;
+                border-radius: 8px;
+            }
+            
+            #page{
+                position: absolute;
+                width: 82.5%;
+                /* height: 623px; */
+            }
+            
+            #TeamP{
+            	position: absolute;
+            	color: #FFD724;
+            	left: 74%;
+            	top: 1%;
+            	font-weight: 900;
+            	font-size: 16px;
+            }
+            
+            #userName{
+                position: absolute;
+            	color: #FFD724;
+            	width: 100%;
+                text-align: center;
+            	top: 8%;
+            	font-weight: 900;
+            	font-size: 20px;
+            }
+            
+            
+            #groupName{
+                position: absolute;
+            	color: #FFD724;
+                width: 83%;
+            	top: 10.5%;
+            	font-weight: 900;
+            	font-size: 16px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div id="mainInfo">
+        	<div id="TeamP">Team P</div>
+            <div id="userName">박현정</div>
+            <div id="groupName">현재 그룹이 없어요:(</div>
+        </div>
+        <div id="header">
+            <div id="navi">
+                <button id="myInfo">내정보</button>
+                <button id="notice">공지사항</button>
+                <button id="plan">일정</button>
+                <button id="fileBbs">파일게시판</button>
+                <button id="groupBbs">그룹게시판</button>
+                <button id="comunityBbs">의견나눔게시판</button>
+            </div>
+        </div>
+        <div id="group">
+            <div id="groupInfo">그룹 정보</div>
+        </div>
+        <div id="page">
+            
+        </div>
+    </body>
+    
 <script>
 	var obj = {};		
 	obj.type="post";
@@ -102,15 +153,74 @@
 			$("input[type='button']").css("display","inline");
 		}
 	})
-	
-	$("#createGroup").click(function() {
-		$("#bg").css("display","inline");
-		$("#pupupContent").css("display","inline");
-	})
-	
-	function colse() {
-		$("#bg").css("display","none");
-		$("#pupupContent").css("display","none");
-		}
+
+	    	$("button").click(function(){
+    		$("button").css("font-weight","normal");
+    		$(this).css("font-weight","900");
+    	})
+    
+		$("#myInfo").click(function(e){
+			console.log("내정보");
+			//$(표현할 위치).load(불러올 페이지^[id|class|tag], callBack함수);
+			$("#page").load("./TemPBbs/myInfo.jsp")
+		});
+		
+		$("#notice").click(function(e){
+			console.log("공지사항");
+			//$(표현할 위치).load(불러올 페이지^[id|class|tag], callBack함수);
+			$("#page").load("./TemPBbs/notice.jsp", 
+					function(res, stat){//res:전체 소스 , stat:성공|실패 여부
+						console.log(res);
+						console.log(stat);
+			});
+		});
+		
+		$("#plan").click(function(e){
+			console.log("일정");
+			//$(표현할 위치).load(불러올 페이지^[id|class|tag], callBack함수);
+			$("#page").load("./TemPBbs/plan.jsp", 
+					function(res, stat){//res:전체 소스 , stat:성공|실패 여부
+						console.log(res);
+						console.log(stat);
+			});
+		});
+		
+		$("#fileBbs").click(function(e){
+			console.log("내정보");
+			//$(표현할 위치).load(불러올 페이지^[id|class|tag], callBack함수);
+			$("#page").load("./TemPBbs/fileBbs.jsp", 
+					function(res, stat){//res:전체 소스 , stat:성공|실패 여부
+						console.log(res);
+						console.log(stat);
+			});
+		});
+		
+		$("#groupBbs").click(function(e){
+			console.log("내정보");
+			//$(표현할 위치).load(불러올 페이지^[id|class|tag], callBack함수);
+			$("#page").load("./TemPBbs/groupBbs.jsp", 
+					function(res, stat){//res:전체 소스 , stat:성공|실패 여부
+						console.log(res);
+						console.log(stat);
+			});
+		});
+		
+		$("#comunityBbs").click(function(e){
+			console.log("내정보");
+			//$(표현할 위치).load(불러올 페이지^[id|class|tag], callBack함수);
+			$("#page").load("./TemPBbs/comunityBbs.jsp", 
+					function(res, stat){//res:전체 소스 , stat:성공|실패 여부
+						console.log(res);
+						console.log(stat);
+			});
+		});
+		
+        $("#groupInfo").hover(function(){
+			$(this).css("background-color","#004C63");
+			$(this).css("color","#FFD724");
+        },function(){//mouseleave
+			$(this).css("background-color","#FFD724");
+			$(this).css("color","#004C63");
+        })
 </script>
 </html>
