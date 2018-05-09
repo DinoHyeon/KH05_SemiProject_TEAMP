@@ -185,9 +185,19 @@ public class MemberService {
 		response.getWriter().println(obj);
 	}
 
-	public void infoUpdateForm() {
-		// TODO Auto-generated method stub
+	public void infoUpdateForm() throws IOException {
+		String id = request.getParameter("id");
+		System.out.println("현재 접속한 회원의 아이디  : "+id);
 		
+		MemberDAO dao = new MemberDAO();
+		MemberDTO dto = dao.infoUpdateForm(id);
+		
+		Gson json = new Gson();
+		HashMap<String, MemberDTO> map = new HashMap<>();
+		map.put("memberInfo", dto);
+		String obj = json.toJson(map);
+		response.setContentType("text/html; charset=UTF-8");
+		response.getWriter().println(obj);
 	}
 	
 	

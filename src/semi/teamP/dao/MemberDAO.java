@@ -206,4 +206,28 @@ public class MemberDAO {
 		}
 		return result;
 	}
+
+	public MemberDTO infoUpdateForm(String id) {
+		MemberDTO dto = new MemberDTO();
+		String sql = "SELECT * FROM member WHERE member_id=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				dto.setMember_Id(rs.getString("member_id"));
+				dto.setMember_name(rs.getString("member_name"));
+				dto.setMember_birth(rs.getString("member_birth"));
+				dto.setMember_email(rs.getString("member_email"));
+				dto.setMember_phone(rs.getString("member_phone"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		
+		return dto;
+	}
 }
