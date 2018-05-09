@@ -56,258 +56,258 @@ public class Controller extends HttpServlet {
 		
 		switch (subAddr) {
 		case "/login":
-			System.out.println("·Î±×ÀÎ ¿äÃ»");
+			System.out.println("ë¡œê·¸ì¸ ìš”ì²­");
 			member = new MemberService(request, response);
 			member.login();
 			break;
 			
 		case "/findId":
-			System.out.println("¾ÆÀÌµğ Ã£±â ¿äÃ»");
+			System.out.println("ì•„ì´ë”” ì°¾ê¸° ìš”ì²­");
 			member = new MemberService(request, response);			
 			member.findId();
 			break;
 			
 		case "/findPw":
-			System.out.println("ºñ¹Ğ¹øÈ£ Ã£±â ¿äÃ»");
+			System.out.println("ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸° ìš”ì²­");
 			member = new MemberService(request, response);	
 			member.findPw();
 			break;
 			
 		case "/ChangePw":
-			System.out.println("ºñ¹Ğ¹øÈ£ º¯°æ ¿äÃ»");
+			System.out.println("ë¹„ë°€ë²ˆí˜¸ ë³€ê²½ ìš”ì²­");
 			member = new MemberService(request, response);	
 			member.ChangePw();
 			break;
 			
 		case "/join":
-			System.out.println("È¸¿ø°¡ÀÔ ¿äÃ»");
+			System.out.println("íšŒì›ë“±ë¡ ìš”ì²­");
 			member = new MemberService(request, response);
 			member.join();
 			break;
 			
 		case "/idOverlay":
-			System.out.println("¾ÆÀÌµğ Áßº¹È®ÀÎ ¿äÃ»");
+			System.out.println("ì•„ì´ë”” ì¤‘ë³µ ê²€ì‚¬ ìš”ì²­");
 			member = new MemberService(request, response);		
 			member.idOverlay();
 			break;
 			
 		case "/emailOverlay":
-			System.out.println("ÀÌ¸ŞÀÏ Áßº¹È®ÀÎ ¿äÃ»");
+			System.out.println("ì´ë©”ì¼ ì¤‘ë³µ ê²€ì‚¬ ìš”ì²­");
 			member = new MemberService(request, response);	
 			member.emailOverlay();
 			break;
 			
 		case "/infoUpdate":
-			System.out.println("È¸¿øÁ¤º¸ ¼öÁ¤ ¿äÃ»");
+			System.out.println("íšŒì›ì •ë³´ ìˆ˜ì • ìš”ì²­");
 			member = new MemberService(request, response);		
 			member.infoUpdate();
 			break;
 			
 		case "/infoUpdateForm":
-			System.out.println("È¸¿øÁ¤º¸ ¼öÁ¤ ¾ç½Ä ¿äÃ»");
+			System.out.println("íšŒì›ì •ë³´ ìˆ˜ì • í¼ ìš”ì²­");
 			member = new MemberService(request, response);	
 			member.infoUpdateForm();
 			break;
 			
 		case "/logout":
-			System.out.println("·Î±×¾Æ¿ô ¿äÃ»");
+			System.out.println("ë¡œê·¸ì•„ì›ƒ ìš”ì²­");
 			member = new MemberService(request, response);		
 			member.logout();
 			break;
 			
 		case "/withdrawal":
-			System.out.println("È¸¿øÅ»Åğ ¿äÃ»");
+			System.out.println("íšŒì›íƒˆí‡´ ìš”ì²­");
 			member = new MemberService(request, response);		
 			member.withdrawal();
 			break;
 			
 		case "/write":
-			System.out.println("±Û ÀÛ¼º ¿äÃ»");
+			System.out.println("ê²Œì‹œê¸€ ê¸€ ë“±ë¡ ìš”ì²­");
 			board = new BoardService(request, response);
 			board.write();
 			break;
 
 		case "/detail":
-			System.out.println("±Û »ó¼¼º¸±â ¿äÃ»");
+			System.out.println("ê²Œì‹œê¸€ ìƒì„¸ë³´ê¸° ìš”ì²­");
 			board = new BoardService(request, response);
 			board.detail();
 			break;
 			
 		case "/updateForm":
-			System.out.println("±Û ¼öÁ¤ ¾ç½Ä ¿äÃ»");
+			System.out.println("ê²Œì‹œê¸€ ìˆ˜ì • í¼ ìš”ì²­");
 			board = new BoardService(request, response);
 			board.updateForm();
 			break;
 			
 		case "/update":
-			System.out.println("±Û ¼öÁ¤ ¿äÃ»");
+			System.out.println("ê²Œì‹œê¸€ ìˆ˜ì • ìš”ì²­");
 			board = new BoardService(request, response);
 			board.update();
 			break;
 			
 		case "/delete":
-			System.out.println("±Û »èÁ¦ ¿äÃ»");
+			System.out.println("ê²Œì‹œê¸€ ì‚­ì œ ìš”ì²­");
 			board = new BoardService(request, response);	
 			board.delete();
 			break;
 			
 		case "/groupDetail":
-			System.out.println("±×·ì »ó¼¼Á¤º¸ ¿äÃ»");
+			System.out.println("ê·¸ë£¹ ì •ë³´ ë³´ê¸° ìš”ì²­");
 			group = new GroupService(request, response);
 			group.groupDetail();
 			break;
 		case "/groupCreate":
-			System.out.println("±×·ì »ı¼º ¿äÃ»");
+			System.out.println("ê·¸ë£¹ ìƒì„± ìš”ì²­");
 			group = new GroupService(request, response);
 			group.groupCreate();
 			break;
 			
 		case "/groupDelete":
-			System.out.println("±×·ì »èÁ¦ ¿äÃ»");
+			System.out.println("ê·¸ë£¹ ì‚­ì œ ìš”ì²­");
 			group = new GroupService(request, response);
 			group.groupDelete();
 			break;
 			
 		case "/groupInvite":
-			System.out.println("±×·ì ÃÊ´ë ¿äÃ»");
+			System.out.println("ê·¸ë£¹ ì´ˆëŒ€ ìš”ì²­");
 			group = new GroupService(request, response);
 			group.groupInvite();
 			break;
 			
 		case "/groupInviteList":
-			System.out.println("±×·ì ÃÊ´ë ¸ñ·Ï ¿äÃ»");
+			System.out.println("ê·¸ë£¹ ì´ˆëŒ€ ë¦¬ìŠ¤íŠ¸ ìš”ì²­");
 			group = new GroupService(request, response);
 			group.groupInviteList();
 			break;			
 			
 		case "/inviteRefuse":
-			System.out.println("±×·ì ÃÊ´ë °ÅÀı ¿äÃ»");
+			System.out.println("ê·¸ë£¹ ì´ˆëŒ€ ê±°ì ˆ ìš”ì²­");
 			group = new GroupService(request, response);
 			group.inviteRefuse();
 			break;
 			
 		case "/inviteAccept":
-			System.out.println("±×·ì ÃÊ´ë ¼ö¶ô ¿äÃ»");
+			System.out.println("ê·¸ë£¹ ì´ˆëŒ€ ìˆ˜ë½ ìš”ì²­");
 			group = new GroupService(request, response);
 			group.inviteAccept();
 			break;
 			
 		case "/replyWrite":
-			System.out.println("´ñ±Û ÀÛ¼º ¿äÃ»");
+			System.out.println("ëŒ“ê¸€ ì‘ì„± ìš”ì²­");
 			reply = new ReplyService(request, response);
 			reply.replyWrite();
 			break;
 			
 		case "/replyUpdate":
-			System.out.println("´ñ±Û ÀÛ¼º ¿äÃ»");
+			System.out.println("ëŒ“ê¸€ ìˆ˜ì • ìš”ì²­");
 			reply = new ReplyService(request, response);
 			reply.replyUpdate();
 			break;
 			
 		case "/replyDelete":
-			System.out.println("´ñ±Û ÀÛ¼º ¿äÃ»");
+			System.out.println("ëŒ“ê¸€ ì‚­ì œ ìš”ì²­");
 			reply = new ReplyService(request, response);
 			reply.replyDelete();
 			break;
 			
 		case "/replyCheck":
-			System.out.println("´ñ±Û ÀÛ¼º ¿äÃ»");
+			System.out.println("ëŒ“ê¸€ ë¶ˆëŸ¬ì˜¤ê¸° ìš”ì²­");
 			reply = new ReplyService(request, response);
 			reply.replyCheck();
 			break;
 			
 		case "/replyUpdateForm":
-			System.out.println("´ñ±Û ÀÛ¼º ¿äÃ»");
+			System.out.println("ëŒ“ê¸€ ìˆ˜ì • í¼ ìš”ì²­");
 			reply = new ReplyService(request, response);
 			reply.replyUpdateForm();
 			break;
 			
 		case "/planWrite":
-			System.out.println("ÀÏÁ¤ ÀÛ¼º ¿äÃ»");
+			System.out.println("ì¼ì • ì‘ì„± ìš”ì²­");
 			plan = new PlanService(request, response);
 			plan.planWrite();
 			break;
 			
 		case "/planWokerPick":
-			System.out.println("ÀÏÁ¤ ÁøÇàÀÚ ÁöÁ¤ ¿äÃ»");
+			System.out.println("ì¼ì • ìˆ˜í–‰ì ë“±ë¡ ìš”ì²­");
 			plan = new PlanService(request, response);
 			plan.planWokerPick();
 			break;
 			
 		case "/planChange":
-			System.out.println("ÀÏÁ¤ »óÅÂ º¯°æ ¿äÃ»");
+			System.out.println("ì¼ì • ìƒíƒœ ë³€ê²½ ìš”ì²­");
 			plan = new PlanService(request, response);
 			plan.planChange();
 			break;
 			
 		case "/planDelete":
-			System.out.println("ÀÏÁ¤ »èÁ¦ ¿äÃ»");
+			System.out.println("ì¼ì • ì‚­ì œ ìš”ì²­");
 			plan = new PlanService(request, response);
 			plan.planDelete();
 			break;
 			
 		case "/planDetail":
-			System.out.println("ÀÏÁ¤ »ó¼¼º¸±â ¿äÃ»");
+			System.out.println("ì¼ì • ìƒì„¸ë³´ê¸° ìš”ì²­");
 			plan = new PlanService(request, response);
 			plan.planDetail();
 			break;
 			
 		case "/todoDetail":
-			System.out.println("todo »ó¼¼º¸±â ¿äÃ»");
+			System.out.println("í• ì¼ ìƒì„¸ë³´ê¸° ìš”ì²­ ");
 			todo = new TodoService(request, response);
 			todo.todoDetail();
 			break;
 			
 		case "/todoWrite":
-			System.out.println("todo »ó¼¼º¸±â ¿äÃ»");
+			System.out.println("í• ì¼ ì‘ì„± ìš”ì²­");
 			todo = new TodoService(request, response);
 			todo.todoWrite();
 			break;
 			
 		case "/todoUpdate":
-			System.out.println("todo »ó¼¼º¸±â ¿äÃ»");
+			System.out.println("í• ì¼ ìˆ˜ì • ìš”ì²­");
 			todo = new TodoService(request, response);
 			todo.todoUpdate();
 			break;
 			
 		case "/todoDelete":
-			System.out.println("todo »ó¼¼º¸±â ¿äÃ»");
+			System.out.println("í• ì¼ ì‚­ì œ ìš”ì²­");
 			todo = new TodoService(request, response);
 			todo.todoDelete();
 			break;
 			
 		case "/todoChange":
-			System.out.println("todo »ó¼¼º¸±â ¿äÃ»");
+			System.out.println("í• ì¼ ìƒíƒœ ë³€ê²½ ìš”ì²­");
 			todo = new TodoService(request, response);
 			todo.todoChange();
 			break;
 			
 		case "/adMemberList":
-			System.out.println("°ü¸®ÀÚ) È¸¿ø ¸®½ºÆ® ¿äÃ»");
+			System.out.println("ê´€ë¦¬ì) íšŒì› ë¦¬ìŠ¤íŠ¸ ìš”ì²­");
 			admin = new AdminService(request, response);
 			admin.adMemberList();
 			break;
 			
 		case "/adMemberDel":
-			System.out.println("°ü¸®ÀÚ) È¸¿ø »èÁ¦ ¿äÃ»");
+			System.out.println("ê´€ë¦¬ì) íšŒì› ì‚­ì œ ìš”ì²­");
 			admin = new AdminService(request, response);
 			admin.adMemberDel();
 			break;
 			
 		case "/adGroupList":
-			System.out.println("°ü¸®ÀÚ) ±×·ì ¸®½ºÆ® ¿äÃ»");
+			System.out.println("ê´€ë¦¬ì) ê·¸ë£¹ ë¦¬ìŠ¤íŠ¸ ìš”ì²­");
 			admin = new AdminService(request, response);
 			admin.adGroupList();
 			break;
 			
 		case "/adGroupDel":
-			System.out.println("°ü¸®ÀÚ) ±×·ì »èÁ¦ ¿äÃ»");
+			System.out.println("ê´€ë¦¬ì) ê·¸ë£¹ ì‚­ì œ ìš”ì²­");
 			admin = new AdminService(request, response);
 			admin.adGroupDel();
 			break;
 			
 		case "/adGroupSession":	
-			System.out.println("°ü¸®ÀÚ) ¼±ÅÃ ±×·ì ¼¼¼Ç ¿äÃ»");
+			System.out.println("ê´€ë¦¬ì) ê·¸ë£¹ ì ‘ê·¼ ê¶Œí•œ ìš”ì²­");
 			admin = new AdminService(request, response);
 			admin.adGroupSession();
 			break;

@@ -50,10 +50,9 @@ public class MemberService {
 		String birth = request.getParameter("idYear")+request.getParameter("idMonth")+request.getParameter("idDay");
 		String email = request.getParameter("idEmail");
 		
-		System.out.println(name+"/"+birth+"/"+email);
 		
 		String findId="";
-		String msg = "ÀÏÄ¡ÇÏ´Â Á¤º¸°¡ ¾ø½À´Ï´Ù.";
+		String msg = "ì¼ì¹˜í•˜ëŠ” ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤.";
 		String page = "findInfo.jsp";
 		
 		MemberDAO dao = new MemberDAO();
@@ -77,8 +76,10 @@ public class MemberService {
 		MemberDAO dao = new MemberDAO();
 		int success = dao.changePw(id, pw);
 		
+		System.out.println(success);
+		
 		if(success>0) {
-			request.setAttribute("msg", "Á¤»óÀûÀ¸·Î º¯°æµÇ¾ú½À´Ï´Ù.");
+			request.setAttribute("msg", "ë¹„ë°€ë²ˆí˜¸ ë³€ê²½ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
 			RequestDispatcher dis = request.getRequestDispatcher("index.jsp");
 			dis.forward(request, response);
 		}
@@ -145,7 +146,7 @@ public class MemberService {
 		
 		MemberDAO dao = new MemberDAO();
 		String result = dao.findPw(dto);
-		String msg = "ÀÏÄ¡ÇÏ´Â Á¤º¸°¡ ¾ø½À´Ï´Ù.";
+		String msg = "ë¡œê·¸ì¸ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.";
 		String page = "findInfo.jsp";
 			
 		if(!result.equals("")) {
@@ -160,7 +161,6 @@ public class MemberService {
 
 	public void idOverlay() throws IOException {
 		String id = request.getParameter("id");
-		System.out.println("Áßº¹È®ÀÎ ¿äÃ» ¾ÆÀÌµğ : "+id);
 		
 		MemberDAO dao = new MemberDAO();
 		Boolean idChk = dao.idOverlay(id);
@@ -174,7 +174,6 @@ public class MemberService {
 
 	public void emailOverlay() throws IOException {
 		String email = request.getParameter("email");
-		System.out.println("Áßº¹È®ÀÎ ¿äÃ» ÀÌ¸ŞÀÏ : "+email);
 		
 		MemberDAO dao = new MemberDAO();
 		Boolean emailChk = dao.emailOverlay(email);
