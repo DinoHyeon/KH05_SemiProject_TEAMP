@@ -57,16 +57,17 @@ public class TodoService {
 	}
 
 	public void todoDelete() throws IOException {
-		//form 방식에서는 상관 없으나 javascript 배열 방식으로 보낼 경우는 뒤에 [] 를 붙여 준다.
-		String delcontent = request.getParameterValues("delcontent"); //가져온 delList[]를 변수로 담기
-		System.out.println(delcontent);
-		//복수개의 데이터를 지우기
-		//1.지울 수 만큼 쿼리를 반복
-		//2. DELETE FROM bbs2 WHERE idx=?+OR idx=?
-		TodoDAO dao=new TodoDAO();
-		boolean success = false;
-		if(dao.delete(delList) == delList.length) {
-			success = true;
+		String content = request.getParameter("delcontent");
+		System.out.println("id : "+id);
+		PhotoDAO dao = new PhotoDAO();
+		//글 번호로 파일명 추출(DB)
+		//fileName이라는 변수에 dao.fileNameCall메서드 실행(id)값을 인자값으로 넘김
+		String fileName = dao.fileNameCall(Integer.parseInt(id));
+		System.out.println(fileName);
+		//글 삭제(DB)
+		if(dao.del(id)>0) {
+			//파일 삭제(파일이 있을 경우만)
+			System.out.println("성공");
 			
 		}
 		System.out.println(dao.delete(delList));

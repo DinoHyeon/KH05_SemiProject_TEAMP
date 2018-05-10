@@ -155,8 +155,8 @@ $(document).ready(function() {
 				list.forEach(function(item, idx){
 					content += "<tr>";
 					content +="<td>"+item.todo_content+"</td>";
-					content +="<td><div class='tododel' id='+item.idx+'>-</div></td>";//삭제div
-					content += "</tr>";
+					content +="<td><div class='tododel' id="+item.to_do_idx+">-</div></td>";//삭제div
+					content += "</tr>"; 
 				});		
 				$("#TodoTable").append(content);
 			}
@@ -181,9 +181,9 @@ $(document).ready(function() {
 			$(".tododel").click(function(){
 	        	$.ajax({
 	    			type:"post",
-	    			url:"./tododel",
+	    			url:"./todoDelete",
 	    			data:{
-	    				delcontent:$(this).attr('id');
+	    				delcontent:$(this).attr('id')
 	    			},
 	    			dataType:"json",
 	    			success:function(data){//인자 값은 서버에서 주는 메세지
