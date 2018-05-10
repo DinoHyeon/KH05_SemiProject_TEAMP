@@ -85,9 +85,22 @@ public class MemberService {
 		}
 	}
 
-	public void infoUpdate() {
-		// TODO Auto-generated method stub
+	public void infoUpdate() throws IOException {
+		String id = (String) request.getSession().getAttribute("loginId");
+		String phone = request.getParameter("phone");
+		String email = request.getParameter("email");
+		String pw = request.getParameter("pw");//pw변경x의 값 ""
 		
+		MemberDAO dao = new MemberDAO();
+		int success = dao.infoUpdate(id,pw,email,phone);
+		
+		if(success>0) {
+			Gson json = new Gson();
+			HashMap<String, Integer> map = new HashMap<>();
+			map.put("success", success);
+			String obj = json.toJson(map);
+			response.getWriter().println(obj);
+		}
 	}
 
 	public void logout() {
@@ -185,21 +198,39 @@ public class MemberService {
 		response.getWriter().println(obj);
 	}
 
-	public void infoUpdateForm() throws IOException {
-		String id = request.getParameter("id");
+	public void infoUpdateForm() throws IOException, ServletException {
+		String id = (String) request.getSession().getAttribute("loginId");
 		System.out.println("현재 접속한 회원의 아이디  : "+id);
 		
 		MemberDAO dao = new MemberDAO();
+		//아이디 이름 생일 이메일 휴대폰번호
 		MemberDTO dto = dao.infoUpdateForm(id);
 		
-		Gson json = new Gson();
-		HashMap<String, MemberDTO> map = new HashMap<>();
-		map.put("memberInfo", dto);
-		String obj = json.toJson(map);
-		response.setContentType("text/html; charset=UTF-8");
-		response.getWriter().println(obj);
+		request.setAttribute("dto", dto);
+		RequestDispatcher dis = request.getRequestDispatcher("memberInfoForm.jsp");
+		dis.forward(request, response);
 	}
-	
+
+	public void memberDataAccess() throws IOException, ServletException {
+		String id = (String) request.getSession().getAttribute("loginId");
+		String pw = request.getParameter("memberPass");
+		
+		System.out.println(id+" / "+pw);
+		
+		MemberDAO dao = new MemberDAO();
+		boolean success = dao.memberDataAccess(id,pw);
+		
+		if(success) {
+			response.sendRedirect("./infoUpdateForm");
+		}else {
+			request.setAttribute("msg", "비밀번호가 일치하지 않습니다.");
+			RequestDispatcher dis = request.getRequestDispatcher("memberInfoAccess.jsp");
+			dis.forward(request, response);
+		}
+		
+	}
+
+
 	
 	
 }
