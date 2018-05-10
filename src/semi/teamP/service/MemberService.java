@@ -126,6 +126,8 @@ public class MemberService {
 		String memberName = dto.getMember_name();
 		int groupNum = dto.getMember_groupNum();
 		
+		System.out.println("현재 가입한 그룹 번호 : "+groupNum);
+		
 		boolean success = false;
 		
 		if(loginId!=null&&memberLv!=null&&memberName!=null) {
@@ -133,9 +135,7 @@ public class MemberService {
 			request.getSession().setAttribute("loginId", id);
 			request.getSession().setAttribute("memberLv", memberLv);
 			request.getSession().setAttribute("memberName", memberName);
-			if(groupNum!= 0) {
-				request.getSession().setAttribute("groupNum", groupNum);
-			}
+			request.getSession().setAttribute("groupNum", groupNum);
 		}
 		
 		String page = "";
@@ -143,6 +143,7 @@ public class MemberService {
 		Gson json = new Gson();
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("login", success);
+		map.put("projectIdx",groupNum);
 		String obj = json.toJson(map);
 		response.getWriter().println(obj);
 	}

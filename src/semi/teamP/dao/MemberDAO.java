@@ -81,7 +81,7 @@ public class MemberDAO {
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, id);
-			ps.executeQuery();
+			rs=ps.executeQuery();
 			if(rs.next()) {
 				System.out.println("그룹번호 있음");
 				groupNum = rs.getInt("group_idx");
