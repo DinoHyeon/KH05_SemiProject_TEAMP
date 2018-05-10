@@ -41,6 +41,7 @@
 			dataType:"json",
 			success:function(data){//인자 값은 서버에서 주는 메세지
 				if(data.login){
+					console.log(data.projectIdx)
 					alert("로그인에 성공 했습니다.")
 					if(data.projectIdx>0){
 						location.href="main_Group.jsp"

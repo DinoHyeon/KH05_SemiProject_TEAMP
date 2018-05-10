@@ -107,7 +107,6 @@ public class MemberDAO {
 		}finally {
 			resClose();
 		}
-		System.out.println("중복확인 : "+result);
 		return result;
 	}
 
