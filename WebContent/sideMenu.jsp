@@ -155,21 +155,18 @@ $(document).ready(function() {
 				list.forEach(function(item, idx){
 					content += "<tr>";
 					content +="<td>"+item.todo_content+"</td>";
-					content +="<td><div class='tododel' id='+item.idx+'>'-'</div></td>";
+					content +="<td><div class='tododel' id='+item.idx+'>-</div></td>";//삭제div
 					content += "</tr>";
 				});		
 				$("#TodoTable").append(content);
 			}
-			 //삭제
-			$(".tododel").click(function(){
+			/*  //삭제
+			$(".tododel").click(function(){//삭제 div클릭시
 				obj.url="./todoDelete";
-				var checked = [];
+				var val=$(this).attr('id');
 				//$(elem).each() == elem.forEach()
-				$("input[type='checkbox']:checked").each(function(){//
-					checked.push($(this).val());			
-				});
 				console.log(checked);		
-				obj.data = {delList:checked};//delList변수에 체크된값 넣기
+				obj.data = {val};//delList변수에 체크된값 넣기
 				obj.success = function(data){
 					if(data.success){
 						alert("삭제성공");
@@ -180,7 +177,28 @@ $(document).ready(function() {
 				}
 				console.log(obj);
 				ajaxCall(obj);
-			}); 
+			});  */
+			$(".tododel").click(function(){
+	        	$.ajax({
+	    			type:"post",
+	    			url:"./tododel",
+	    			data:{
+	    				delcontent:$(this).attr('id');
+	    			},
+	    			dataType:"json",
+	    			success:function(data){//인자 값은 서버에서 주는 메세지
+	    				console.log(data);
+	    				if(data.success){
+	    					alert("삭제 완료")
+	    					location.reload();
+	    				}else{
+	    					alert("삭제 실패")
+	    				}
+
+	    			}
+	    		});
+	        	ajaxCall(obj);
+	        });
 			
         function ajaxCall(param){
     		$.ajax(param);

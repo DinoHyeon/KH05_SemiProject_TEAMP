@@ -58,8 +58,8 @@ public class TodoService {
 
 	public void todoDelete() throws IOException {
 		//form 방식에서는 상관 없으나 javascript 배열 방식으로 보낼 경우는 뒤에 [] 를 붙여 준다.
-		String[] delList = request.getParameterValues("delList[]"); //가져온 delList[]를 변수로 담기
-		System.out.println(delList.length);
+		String delcontent = request.getParameterValues("delcontent"); //가져온 delList[]를 변수로 담기
+		System.out.println(delcontent);
 		//복수개의 데이터를 지우기
 		//1.지울 수 만큼 쿼리를 반복
 		//2. DELETE FROM bbs2 WHERE idx=?+OR idx=?
