@@ -20,9 +20,29 @@
 	<%@include file="headerMenu.jsp"%>
 	<%@include file="sideMenu.jsp"%>
     <div id="page">
-		<!-- 이 영역에 페이지 코드 작성하시면 됩니다 :) -->
+    	<form action="./memberDataAccess" method="post">
+    		<h1>${sessionScope.loginId}님 비밀번호를 입력해주세요.</h1>
+			<table>
+				<tr>
+					<td>현재 비밀번호</td>
+				</tr>
+				<tr>
+					<td><input type="password" name="memberPass"></td>
+				</tr>
+				<tr>
+					<td><input type="submit" value="입력"></td>
+				</tr>
+			</table>
+		</form>
     </div>
 </body>
 <script>
+	var msg = '${msg}';
+	
+	if(msg!=""){
+		alert(msg);
+		location.href="memberInfoAccess.jsp"
+	}
+	
 </script>
 </html>

@@ -9,6 +9,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import oracle.net.aso.s;
 import semi.teamP.dto.MemberDTO;
 
 /*CREATE TABLE member(
@@ -80,7 +81,7 @@ public class MemberDAO {
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, id);
-			ps.executeQuery();
+			rs=ps.executeQuery();
 			if(rs.next()) {
 				System.out.println("그룹번호 있음");
 				groupNum = rs.getInt("group_idx");
@@ -229,5 +230,58 @@ public class MemberDAO {
 		}
 		
 		return dto;
+	}
+
+	public boolean memberDataAccess(String id, String pw) {
+		boolean success = false;
+		String sql = "SELECT member_id, member_lv, member_name FROM member WHERE member_id=? AND member_pw=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			ps.setString(2, pw);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				success = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return success;
+	}
+
+	public int infoUpdate(String id, String pw, String email, String phone) {
+		int success = 0;
+		String sql ="";
+		if(pw.equals("")) {
+			System.out.println("비밀번호 수정X");
+			sql="UPDATE member SET member_email=?, member_phone=? WHERE member_id=?";
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, email);
+				ps.setString(2, phone);
+				ps.setString(3, id);
+				success = ps.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}	
+		}else {
+			System.out.println("비밀번호 수정O");
+			sql="UPDATE member SET member_email=?, member_phone=?, member_pw=? WHERE member_id=?";
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, email);
+				ps.setString(2, phone);
+				ps.setString(3, pw);
+				ps.setString(4, id);
+				success = ps.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}	
+		}
+		resClose();
+		return success;
 	}
 }

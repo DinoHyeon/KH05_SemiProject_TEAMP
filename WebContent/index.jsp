@@ -40,10 +40,13 @@
 			},
 			dataType:"json",
 			success:function(data){//인자 값은 서버에서 주는 메세지
-				console.log(data);
 				if(data.login){
 					alert("로그인에 성공 했습니다.")
-					location.href="main.jsp";
+					if(data.projectIdx>0){
+						location.href="main_Group.jsp"
+					}else{
+						location.href="main_nonGroup.jsp"
+					}
 				}else{
 					alert("로그인에 실패 했습니다.")
 				}
