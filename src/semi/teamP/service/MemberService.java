@@ -138,8 +138,10 @@ public class MemberService {
 			}
 		}
 		
+		String page = "";
+		
 		Gson json = new Gson();
-		HashMap<String, Boolean> map = new HashMap<>();
+		HashMap<String, Object> map = new HashMap<>();
 		map.put("login", success);
 		String obj = json.toJson(map);
 		response.getWriter().println(obj);
