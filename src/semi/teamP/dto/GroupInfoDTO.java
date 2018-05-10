@@ -5,8 +5,8 @@ import java.sql.Date;
 public class GroupInfoDTO {
    private String member_id;
    private int group_idx;
-   private Date group_StrartDay;
-   private Date group_EndDay;
+   private String group_StrartDay;
+   private String group_EndDay;
    private String group_name;
    public String getMember_id() {
       return member_id;
@@ -20,16 +20,16 @@ public class GroupInfoDTO {
    public void setGroup_idx(int group_idx) {
       this.group_idx = group_idx;
    }
-   public Date getGroup_StrartDay() {
+   public String getGroup_StrartDay() {
       return group_StrartDay;
    }
-   public void setGroup_StrartDay(Date group_StrartDay) {
+   public void setGroup_StrartDay(String group_StrartDay) {
       this.group_StrartDay = group_StrartDay;
    }
-   public Date getGroup_EndDay() {
+   public String getGroup_EndDay() {
       return group_EndDay;
    }
-   public void setGroup_EndDay(Date group_EndDay) {
+   public void setGroup_EndDay(String group_EndDay) {
       this.group_EndDay = group_EndDay;
    }
    public String getGroup_name() {
