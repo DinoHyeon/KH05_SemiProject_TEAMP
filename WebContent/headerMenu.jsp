@@ -22,14 +22,15 @@
                 position: absolute;
                 background-color: none;
                 left : 61%;
-                top : 28.5%;
+                top : 15.7%;
+                width: 45%;
             }
             
             #navi button{
                 border: none;
                 background-color: white;
                 font-size: 14px;
-                padding : 5px;
+                padding : 3%;
                 color : #004C63;
                 border : 1px solid white;
             }
@@ -55,6 +56,22 @@
                 line-height: 33px;
                 font-weight: 900;
                 border-radius: 8px;
+               	display: block;
+            }
+            
+           #groupManage{
+                position: absolute;
+                background-color: #FFD724;
+                color: #004C63;
+                width: 8%;
+                height: 60%;
+                top: 18.5%;
+                left: 91%;
+                text-align: center;
+                line-height: 33px;
+                font-weight: 900;
+                border-radius: 8px;
+               	display: block;
             }
             
         </style>
@@ -72,8 +89,18 @@
         </div>
         <div id="group">
             <div id="groupInfo">그룹 정보</div>
+            <div id="groupManage">그룹 관리</div>
         </div>
 </body>
 <script>
+	$(document).ready(function() {
+		console.log('${sessionScope.memberLv}');
+		if('${sessionScope.memberLv}'=="member"){
+			$("#groupManage").css("display","none")
+			console.log("멤버")
+		}else{
+			$("#groupInfo").css("display","none")
+		}
+	})
 </script>
 </html>

@@ -39,6 +39,7 @@ public class GroupService {
 		
 		if(success != 0) {
 			request.getSession().setAttribute("groupNum", success);
+			request.getSession().setAttribute("memberLv", "master");
 			page = "main_Group.jsp";
 		}
 		response.sendRedirect(page);

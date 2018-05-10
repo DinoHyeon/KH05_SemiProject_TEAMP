@@ -43,6 +43,7 @@ public class GroupDAO {
 
 
 	public int createGroup(GroupInfoDTO infoDto) {
+		int groupIdx = 0;
 		int success = 0;
 		String sql = "INSERT INTO Group_project(group_idx,group_name,group_startDay,group_endDay,member_id)"
 				+ " VALUES(group_idx_seq.NEXTVAL,?,?,?,?)";
@@ -53,28 +54,35 @@ public class GroupDAO {
 			ps.setDate(3, castingDate(infoDto.getGroup_EndDay()));
 			ps.setString(4, infoDto.getMember_id());
 			
-			ps.executeUpdate();
+			success = ps.executeUpdate();
 			
 			rs = ps.getGeneratedKeys();
 			if(rs.next()) {
-				success = (int) rs.getLong(1);
+				groupIdx = (int) rs.getLong(1);
 			}
 
-			System.out.println("생성된 그룹번호 : "+success);
-			
 			if(success>0) {
+				sql = "UPDATE member SET member_lv=? WHERE member_id=?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, "master");
+				ps.setString(2, infoDto.getMember_id());
+				success = ps.executeUpdate();
+			}
+			
+			if(groupIdx>0&&success>0) {
 				sql = "INSERT INTO member_group(member_idx,group_idx,member_id) VALUES(SEQ_member_group.NEXTVAL,?,?)";
 				ps = conn.prepareStatement(sql);
-				ps.setInt(1, success);
+				ps.setInt(1,groupIdx);
 				ps.setString(2, infoDto.getMember_id());
 				ps.executeUpdate();
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			resClose();
 		}
-		return success;
+		return groupIdx;
 	}
 
 	
