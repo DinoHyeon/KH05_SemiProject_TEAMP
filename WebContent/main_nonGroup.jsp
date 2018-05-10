@@ -39,6 +39,16 @@
 	    background-color: #004C63;
 	}
 	
+	#close{
+		position: absolute;
+		font-size: 18px;
+		font-weight: 900;
+		color: white;
+		left: 97%;
+		top: 2%;
+		display: none;
+	}
+	
 	table td{
 		border: 1px solid white;
 	}
@@ -50,6 +60,7 @@
 
 	</div>
 	<div id="popupContent">
+			<div id="close">X</div>
 			<h1 style="color:#FFD724">그룹 생성</h1>
 			<form action="./groupCreate" method="post">
 				<table>
@@ -93,7 +104,14 @@
 <script>
 	$("#create").click(function() {
 		$("#bg").css("display","inline");
+		$("#close").css("display","inline");
 		$("#popupContent").css("display","inline");
+	})
+	
+	$("#close").click(function() {
+		$("#bg").css("display","none");
+		$("#popupContent").css("display","none");
+		$("#close").css("display","none");
 	})
 	
 	$("#createBnt").click(function() {

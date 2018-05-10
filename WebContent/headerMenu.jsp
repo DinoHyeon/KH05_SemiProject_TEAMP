@@ -82,6 +82,37 @@
                	display: block;
             }
             
+            #groupBg{
+		        position: absolute;
+				display: none;
+				background-color: black;
+				opacity: 0.7;
+				z-index: 2;
+				width: 100%;
+				height: 100%;
+            }
+            
+         	#popupContentMaster{
+				position: absolute;
+			    display: none;
+			    z-index: 3;
+			    top: 20%;
+			    left: 18%;
+			    width: 60%;
+			    height: 60%;
+			    background-color: #004C63;
+			}
+		
+			#close{
+				position: absolute;
+				font-size: 18px;
+				font-weight: 900;
+				color: white;
+				left: 97%;
+				top: 2%;
+				display: none;
+			}
+	            
         </style>
 </head>
 <body>
@@ -104,6 +135,13 @@
             <div id="groupInfo">그룹 정보</div>
             <div id="groupManage">그룹 관리</div>
         </div>
+        
+       	<div id="groupBg"></div>
+       	
+       	<div id="popupContentMaster">
+			<div id="close">X</div>
+		</div>
+        
 </body>
 <script>
 	$(document).ready(function() {
@@ -122,20 +160,24 @@
 			$("#groupInfo").css("display","none")
 		}
 	})
-
+	
+	//그룹원이 클릭했을 경우
 	$("#groupInfo").click(function() {
-		$("#bg").css("display","inline");
+		$("#groupBg").css("display","inline");
 		$("#close").css("display","inline");
 	})
 	
+	//그룹장이 클릭했을 경우
 	$("#groupManage").click(function() {
-		$("#bg").css("display","inline");
+		$("#groupBg").css("display","inline");
 		$("#popupContentMaster").css("display","inline");
 		$("#close").css("display","inline");
 	})
 	
+	//닫기
 	$("#close").click(function() {
-		$("#bg").css("display","none");
+		$("#groupBg").css("display","none");
+		$("#close").css("display","none");
 		$("#popupContentMaster").css("display","none");
 	})
 </script>
