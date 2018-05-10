@@ -44,6 +44,14 @@
                 height: 7.9%;
             }
             
+            #Nongroup{
+			    position: absolute;
+			    background-color: #566A70;
+			    width: 82.5%;
+			    top: 8%;
+			    height: 7.9%;
+			}
+            
             #groupInfo{
                 position: absolute;
                 background-color: #FFD724;
@@ -87,6 +95,11 @@
                 <button id="comunityBbs">의견나눔게시판</button>
             </div>
         </div>
+        
+      	<div id="Nongroup">
+			<h1>가입하신 그룹이 없습니다.</h1>
+	 	</div>
+        
         <div id="group">
             <div id="groupInfo">그룹 정보</div>
             <div id="groupManage">그룹 관리</div>
@@ -94,13 +107,36 @@
 </body>
 <script>
 	$(document).ready(function() {
-		console.log('${sessionScope.memberLv}');
+		//그룹가입 여부에 따른 ... *include처리 방법 고민
+		if('${sessionScope.groupNum}'!="0"){
+			$("#Nongroup").css("display","none")
+		}else{
+			$("#Nongroup").css("display","inline")
+		}
+		
+		//회원등급에 따른 버튼...
 		if('${sessionScope.memberLv}'=="member"){
 			$("#groupManage").css("display","none")
 			console.log("멤버")
 		}else{
 			$("#groupInfo").css("display","none")
 		}
+	})
+
+	$("#groupInfo").click(function() {
+		$("#bg").css("display","inline");
+		$("#close").css("display","inline");
+	})
+	
+	$("#groupManage").click(function() {
+		$("#bg").css("display","inline");
+		$("#popupContentMaster").css("display","inline");
+		$("#close").css("display","inline");
+	})
+	
+	$("#close").click(function() {
+		$("#bg").css("display","none");
+		$("#popupContentMaster").css("display","none");
 	})
 </script>
 </html>

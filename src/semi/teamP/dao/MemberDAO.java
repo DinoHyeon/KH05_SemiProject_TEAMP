@@ -94,12 +94,12 @@ public class MemberDAO {
 
 	public Boolean idOverlay(String id) {
 		Boolean result = false;
-		String sql = "SELECT member_name FROM member WHERE member_name=?";
+		String sql = "SELECT member_id FROM member WHERE member_id=?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, id);
 			rs = ps.executeQuery();
-			if(rs.next()) {
+			if(!rs.next()) {
 				result = true;
 			}
 		} catch (SQLException e) {
@@ -107,6 +107,7 @@ public class MemberDAO {
 		}finally {
 			resClose();
 		}
+		System.out.println("중복확인 : "+result);
 		return result;
 	}
 
