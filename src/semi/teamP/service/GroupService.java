@@ -103,24 +103,53 @@ public class GroupService {
 		
 	}
 
-	public void inviteRefuse() {
-		// TODO Auto-generated method stub
+	public void inviteRefuse() throws IOException {
+		int inviteIdx = Integer.parseInt(request.getParameter("inviteIdx"));
+		System.out.println("거절할 초대 번호 : "+inviteIdx);
 		
+		GroupDAO dao = new GroupDAO();
+		boolean result = dao.refuseInvite(inviteIdx);//result가 true면 거절성공
+		
+		Gson json = new Gson();
+		HashMap<String, Boolean> map = new HashMap<>();
+		map.put("result", result);
+		String obj = json.toJson(map);
+		response.getWriter().println(obj);
 	}
 
-	public void inviteAccept() {
-		// TODO Auto-generated method stub
+	public void inviteAccept() throws IOException {
+		int groupIdx = Integer.parseInt(request.getParameter("groupIdx"));
+		String memberId = (String) request.getSession().getAttribute("loginId");
+		System.out.println("수락할 초대 번호 : "+groupIdx);
 		
+		GroupDAO dao = new GroupDAO();
+		boolean result = dao.acceptInvite(groupIdx,memberId);
+		
+		if(result) {
+			request.getSession().setAttribute("groupNum", groupIdx);
+		}
+		
+		Gson json = new Gson();
+		HashMap<String, Boolean> map = new HashMap<>();
+		map.put("result", result);
+		String obj = json.toJson(map);
+		response.getWriter().println(obj);
 	}
 
-	public void groupInviteList() {
+	public void groupInviteList() throws IOException {
 		String memberId = (String) request.getSession().getAttribute("loginId");
 		System.out.println(memberId+"님의 그룹초대 리스트 출력");
 		
 		ArrayList<GroupInviteDTO>list = new ArrayList<GroupInviteDTO>();
 		GroupDAO dao = new GroupDAO();
-		list=dao.groupInviteList(memberId);
+		list = dao.groupInviteList(memberId);
 		
+		Gson json = new Gson();
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("list", list);
+		String obj = json.toJson(map);
+		response.setContentType("text/html; charset=UTF-8");
+		response.getWriter().println(obj);	
 	}
 
 	public void inviteMemberIdChk() throws IOException {
