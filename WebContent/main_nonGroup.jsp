@@ -22,7 +22,7 @@
 		display: none;
 		background-color: black;
 		opacity: 0.7;
-		z-index: 2;
+		z-index: 3;
 		width: 100%;
 		height: 100%;
 	}
@@ -32,16 +32,39 @@
 		position: absolute;
 	    display: none;
 	    z-index: 3;
-	    top: 20%;
+	    top: 13%;
 	    left: 18%;
 	    width: 60%;
-	    height: 60%;
+	    height: 75%;
 	    background-color: #004C63;
+	}
+	
+	/* 그룹 초대 팝업 */
+	#inviteListPopup{
+		position: absolute;
+	    display: none;
+	    z-index: 3;
+	    top: 13%;
+	    left: 18%;
+	    width: 60%;
+	    height: 75%;
+	    background-color: #004C63;
+	}
+	
+	.mainPopupClose{
+		position: absolute;
+		font-size: 18px;
+		font-weight: 900;
+		color: white;
+		left: 97%;
+		top: 2%;
+		display: inline;
 	}
 	
 	table td{
 		border: 1px solid white;
 	}
+	
 </style>
 </head>
 <body>
@@ -49,7 +72,10 @@
 	<div id="bg">
 
 	</div>
+	
+	
 	<div id="popupContent">
+			<div class="mainPopupClose">X</div>
 			<h1 style="color:#FFD724">그룹 생성</h1>
 			<form action="./groupCreate" method="post">
 				<table>
@@ -82,18 +108,48 @@
 			</form>
 	</div>
 	
+	
+			
+	<div id="inviteListPopup">
+		<h1 style="color:#FFD724">그룹 초대</h1>
+		<div class="mainPopupClose">X</div>
+		<table id="inviteList">
+			<tr>
+				<td>그룹명</td>
+				<td>그룹장</td>
+				<td>내용</td>
+				<td>날짜</td>
+				<td></td>
+			</tr>
+		</table>
+	</div>
+		
+		
 	<%@include file="headerMenu.jsp"%>
 	<%@include file="sideMenu.jsp"%>
     <div id="page">
 		<h1>현재 가입되어 있는 그룹이 없습니다 :(</h1>
 		<div id="create">그룹 생성</div>
-		<div id="invite">그룹 초대</div>
+		<div id="inviteListBtn">그룹 초대</div>
     </div>
 </body>
 <script>
+	var obj = {};
+	var idx;//idex값을 저장할 전역 변수
+	obj.type="POST";
+	obj.dataType="JSON";
+	obj.error=function(e){console.log(e)};
+
+
 	$("#create").click(function() {
 		$("#bg").css("display","inline");
 		$("#popupContent").css("display","inline");
+	})
+	
+	$(".mainPopupClose").click(function() {
+		$("#bg").css("display","none");
+		$("#inviteListPopup").css("display","none");
+		$("#popupContent").css("display","none");
 	})
 	
 	$("#createBnt").click(function() {
@@ -122,5 +178,26 @@
 			$("#createBnt").attr("type","submit");
 		}
 	})
+	
+	//그룹 초대 확인
+	$("#inviteListBtn").click(function() {
+		//오늘
+		$("#bg").css("display","inline");
+		$("#inviteListPopup").css("display","inline");
+		
+		//ajax 실행
+		obj.url="./groupInviteList";
+		obj.data={};
+		obj.success = function(data) {
+			 //inviteList 테이블 아이디
+		}
+		ajaxCall(obj);
+	})
+	
+	
+	function ajaxCall(param){
+		console.log(param);
+		$.ajax(param);
+	}
 </script>
 </html>

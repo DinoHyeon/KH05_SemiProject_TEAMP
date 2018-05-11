@@ -96,14 +96,14 @@
 			obj.data={id:$("#userId").val()};
 			obj.success=function(d){
 				if(d.idChk ==true){
+					$("#idOverlayMsg").html("사용 가능한 아이디입니다.");
+					$("#idOverlayMsg").css("color","green");
+					idChk=true;
+				}else{
 					$("#idOverlayMsg").html("이미 존재하는 아이디입니다.");
 					$("#idOverlayMsg").css("color","red");
 					$("#userId").val("");
 					idChk=false;
-				}else{
-					$("#idOverlayMsg").html("사용 가능한 아이디입니다.");
-					$("#idOverlayMsg").css("color","green");
-					idChk=true;
 				}
 			};
 			ajaxCall(obj);
