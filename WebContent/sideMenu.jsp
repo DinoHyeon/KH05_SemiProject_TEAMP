@@ -7,9 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style>
-         body{
-            margin : 0px;
-         }
+     
          
             #mainInfo{
                 position: fixed;
@@ -48,7 +46,6 @@
                font-size: 16px;
                 text-align: center;
             }
-           
           
              #Todo{
                 position: absolute;
@@ -62,9 +59,19 @@
             #content{
                 background-color: #004D65;
                 border: 1px solid white;
+                width: 225px;
                 border-style: none none solid none;
                 color: white;
+                margin:10;
             }
+             .tododel{
+                border: none;
+                margin-bottom: 10px;
+                background-color: #004D65;
+                font-size: 20px;
+                color: white;  
+            } 
+            
             button{
                 margin-left: -20px;
                 border: none;
@@ -73,7 +80,44 @@
                 font-size: 20px;
                 color: white;   
             }
-		
+      
+            #TodoList{
+            width:80%;
+            height:40%;
+            
+            }
+            #TodoList
+			{
+				float: left;
+				height: 450px;
+				width: 265px;
+				font-weight: 900;
+                font-size: 14px;
+                text-align: left;
+				background-color: #004C63;
+				overflow : auto;
+				margin-bottom: 25px;
+			}
+			#TodoList::-webkit-scrollbar-track
+			{
+				-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+				border-radius: 10px;
+				background-color: #F5F5F5;
+			}
+			
+			#TodoList::-webkit-scrollbar
+			{
+				width: 12px;
+				background-color: #F5F5F5;
+			}
+			
+			#TodoList::-webkit-scrollbar-thumb
+			{
+				border-radius: 10px;
+				-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+				background-color: #555;
+			}
+      
 </style>
 </head>
 <body>
@@ -81,13 +125,15 @@
            <div id="TeamP">Team P</div>
             <div id="userName"></div>
             <div id="groupName">현재 그룹이 없어요:(</div>
-            <div id="Todo">할일
-            <input id="content" type="text"/><button id="insert">+</button> <button id="del">-</button> 
-            <div id="TodoList">
+            <div id="Todo">할일 입력란
+            <input id="content" type="text" maxlength="15"/><button id="insert">+</button> 
+            <P>
+             <div>할일 리스트<button id="slide">▲</button></div>
+           <div class="scrollbar" id="TodoList">
             <table id="TodoTable">
-            	<tr>
+            	<!-- <tr>
             		<th>할일 내용</th>
-            	</tr>
+            	</tr> -->
             	
             </table>
             </div>
@@ -102,10 +148,28 @@ obj.error=function(e){console.log(e)};
 
 //페이지가 로드되었을 때 session에 그룹번호가 없는 경우 화면을 다르게 보여줘야한다.
 $(document).ready(function() {
-	//이건 ajax로 처리
+
+	 $("#content").keyup(function(){
+	        if ($(this).val().length > $(this).attr('maxlength')) {
+	            alert('제한길이 초과');
+	            $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
+	        }
+	    });
+
+
+ 	$("#TodoList").scroll(function(){
+		var scrollHeight=$("#scrolltest").scrollTop()+$(window).height();
+		var documentHeight=$("#scrolltest").height;
+		if(scrollHeight==documentHeight){
+			$("#TodoTable").appendTo('content');
+		}
+	}); 
+	
+	//로그인상태인지 확인
 	if('${sessionScope.loginId}'==""){
 		alert("로그인이 필요한 서비스입니다.");
 		location.href="index.jsp";
+		//로그인상태면 할일 리스트 뽑아오는todoDetail실행
 	}else if('${sessionScope.loginId}'!==""){
 		obj.url="./todoDetail"
 		obj.success = function(data){
@@ -137,7 +201,6 @@ $(document).ready(function() {
     			success:function(data){//인자 값은 서버에서 주는 메세지
     				console.log(data);
     				if(data.success){
-    					alert("할일 등록완료")
     					location.reload();
     				}else{
     					alert("할일 등록실패")
@@ -147,49 +210,38 @@ $(document).ready(function() {
     		});
         	ajaxCall(obj);
         });
-        
+				var content ="";
 			function listPrint(list){
 				console.log(list);
-				var content ="";
+				//var content ="";
 				//idx, user_name, subject, reg_date, bHit
 				list.forEach(function(item, idx){
-					content += "<tr>";
+					content += "<tr>";					
+					//content +="<td><div class='tododel' id="+item.to_do_idx+">삭제</div></td>";//삭제div
+					content +="<td><input onclick='del()' class='tododel' value='-' type='button' id="+item.to_do_idx+"></td>";
 					content +="<td>"+item.todo_content+"</td>";
-					content +="<td><div class='tododel' id="+item.to_do_idx+">-</div></td>";//삭제div
 					content += "</tr>"; 
 				});		
+				
 				$("#TodoTable").append(content);
 			}
-			/*  //삭제
-			$(".tododel").click(function(){//삭제 div클릭시
-				obj.url="./todoDelete";
-				var val=$(this).attr('id');
-				//$(elem).each() == elem.forEach()
-				console.log(checked);		
-				obj.data = {val};//delList변수에 체크된값 넣기
-				obj.success = function(data){
-					if(data.success){
-						alert("삭제성공");
-						location.reload();
-					}else{
-						alert("삭제실패");
-					}
-				}
-				console.log(obj);
-				ajaxCall(obj);
-			});  */
-			$(".tododel").click(function(){
+			
+			
+			
+	        function del(){
+				console.log("삭제");
+				
 	        	$.ajax({
 	    			type:"post",
 	    			url:"./todoDelete",
 	    			data:{
-	    				delcontent:$(this).attr('id')
+	    				delcontent:$(".tododel").attr('id')
+	    				
 	    			},
 	    			dataType:"json",
 	    			success:function(data){//인자 값은 서버에서 주는 메세지
 	    				console.log(data);
 	    				if(data.success){
-	    					alert("삭제 완료")
 	    					location.reload();
 	    				}else{
 	    					alert("삭제 실패")
@@ -198,8 +250,14 @@ $(document).ready(function() {
 	    			}
 	    		});
 	        	ajaxCall(obj);
-	        });
-			
+	        }; 
+
+	     $("#slide").click(function(){
+	            $("#TodoList").slideToggle("slow");
+	            
+	        })
+		
+	    	
         function ajaxCall(param){
     		$.ajax(param);
     	}
