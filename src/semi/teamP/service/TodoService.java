@@ -57,22 +57,17 @@ public class TodoService {
 	}
 
 	public void todoDelete() throws IOException {
-		String content = request.getParameter("delcontent");
-		System.out.println("id : "+id);
-		PhotoDAO dao = new PhotoDAO();
+		request.setCharacterEncoding("UTF-8");
+		String delcontent = request.getParameter("delcontent");
+		System.out.println(delcontent);
+		TodoDAO dao = new TodoDAO();
 		//글 번호로 파일명 추출(DB)
 		//fileName이라는 변수에 dao.fileNameCall메서드 실행(id)값을 인자값으로 넘김
-		String fileName = dao.fileNameCall(Integer.parseInt(id));
-		System.out.println(fileName);
-		//글 삭제(DB)
-		if(dao.del(id)>0) {
-			//파일 삭제(파일이 있을 경우만)
-			System.out.println("성공");
-			
-		}
-		System.out.println(dao.delete(delList));
+		int success = dao.delete(delcontent);
+		System.out.println(success);
+
 		Gson json = new Gson();
-		HashMap<String, Boolean> map = new HashMap<>();
+		HashMap<String, Integer> map = new HashMap<>();
 		map.put("success", success);
 		String obj = json.toJson(map);
 		response.getWriter().println(obj);
