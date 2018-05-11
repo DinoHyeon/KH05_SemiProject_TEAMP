@@ -41,16 +41,13 @@
 <body>
 	<%@include file="../headerMenu.jsp"%>
 	<%@include file="../sideMenu.jsp"%>
+
+	<!-- 그룹장만 쓸수있는 페이지 -->
+	
     <div id="page">
 		<form action="../write" method="get">
-		
-		<c:if test="${sessionScope.loginId != 'admin' }">
-			<input type="hidden" name="bbs_name" value="freeBbs"/>
-		</c:if>
-		
-		<c:if test="${sessionScope.loginId == 'admin'}">
-			<input type="hidden" name="bbs_name" value = "adminBbs"/>
-		</c:if>
+
+		<input type="hidden" name="bbs_name" value="groupBbs"/>
 		
 		<table>
 			<tr>
@@ -67,19 +64,14 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-					<c:if test="${sessionScope.loginId == 'admin'}">
-						<a href="../adminList">리스트가기</a>
-					</c:if>
-					<c:if test="${sessionScope.loginId != 'admin'}">
-						<a href="../comunityList">리스트가기</a>
-					</c:if>		
+					<a href="../groupList">리스트가기</a>		
 						&nbsp;&nbsp;&nbsp;&nbsp;
 						<button>저장</button>		
 				</td>
 			</tr>
 		</table>
 	</form>
-    </div>
+    </div> 
 </body>
 <script>
 </script>

@@ -39,15 +39,15 @@
 			<c:forEach items="${list}" var="bbs">
 				<tr>
 					<td>${bbs.bbs_idx}</td>
-					<td><a href="detail?idx=${bbs.bbs_idx}">${bbs.bbs_name}</a>
-					<td>${bbs.bbs_subject }</td>
+					<td>${bbs.bbs_name}</td>
+					<td><a href="detail?idx=${bbs.bbs_idx}">${bbs.bbs_subject }</a></td>
 					<td>${bbs.member_id }</td>
 					<td>${bbs.bbs_date }</td>
 					<td>${bbs.bbs_bHit }</td>
 				</tr>
 			</c:forEach>
 		</table>
-		<c:if test="${sessionScope.loginId eq 'admin'}">
+		<c:if test="${sessionScope.loginId == 'admin'}">
 			<button onclick="location.href = 'TeamPBbs/writeForm.jsp'">글쓰기</button>
 		</c:if>
     </div>

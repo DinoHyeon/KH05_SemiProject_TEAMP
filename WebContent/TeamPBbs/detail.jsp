@@ -44,13 +44,9 @@
    
 
    <tr>      
+   	
       <td colspan="2">
-      	 <c:if test="${sessionScope.loginId == 'admin'}">
-      	 	 <a href=adminList>리스트 </a>
-      	 </c:if>
-      	 <c:if test= "${sessionScope.loginId != 'admin'}">
-	         <a href=comunityList>리스트 </a>
-	     </c:if>
+	     	<a href="#" onclick="history.go(-1)">리스트 </a> 
 	         &nbsp;&nbsp;&nbsp;&nbsp;
 	         <a href="./updateForm?idx=${info.bbs_idx}">수정</a>
 	         &nbsp;&nbsp;&nbsp;&nbsp;
@@ -62,4 +58,5 @@
       </div>
    </div>
 </body>
+
 </html>

@@ -18,7 +18,7 @@ import semi.teamP.service.TodoService;
 
 
 @WebServlet({ "/login", "/findPw", "/findId", "/ChangePw", "/join", "/idOverlay", "/emailOverlay", "/infoUpdate", "/infoUpdateForm", "/logout", "/withdrawal", "/infoFormAccess", "/memberDataAccess"
-	,"/write", "/detail", "/updateForm", "/update", "/delete","/comunityList","/adminList"
+	,"/write", "/detail", "/updateForm", "/update", "/delete","/comunityList","/adminList", "/groupList"
 	,"/groupJoin", "/groupDetail", "/groupCreate", "/groupDelete", "/inviteMemberIdChk", "/groupInviteList", "/groupInvite", "/inviteRefuse", "/inviteAccept", "/memberOut", "/groupInfoUpdate", "/groupInfoUpdateForm", "/groupMemberList", "/memberChk" 
 	,"/replyWrite", "/replyUpdate", "/replyDelete", "/replyCheck", "/replyUpdateForm"
 	,"/planWrite", "/planWokerPick", "/planChange", "/planDelete", "/planDetail"
@@ -168,6 +168,12 @@ public class Controller extends HttpServlet {
 			System.out.println("관리자 리스트 요청");
 			board = new BoardService(request, response);
 			board.adminList();
+			break;
+			
+		case "/groupList":
+			System.out.println("그룹 리스트 요청");
+			board = new BoardService(request, response);
+			board.groupList();
 			break;
 			
 		case "/groupDetail":
