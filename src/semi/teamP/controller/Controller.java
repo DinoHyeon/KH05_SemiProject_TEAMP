@@ -1,12 +1,12 @@
 package semi.teamP.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.crypto.Data;
 
 import semi.teamP.service.AdminService;
 import semi.teamP.service.BoardService;
@@ -18,7 +18,7 @@ import semi.teamP.service.TodoService;
 
 
 @WebServlet({ "/login", "/findPw", "/findId", "/ChangePw", "/join", "/idOverlay", "/emailOverlay", "/infoUpdate", "/infoUpdateForm", "/logout", "/withdrawal", "/infoFormAccess", "/memberDataAccess"
-	,"/write", "/detail", "/updateForm", "/update", "/delete"
+	,"/write", "/detail", "/updateForm", "/update", "/delete","/comunityList","/adminList"
 	,"/groupJoin", "/groupDetail", "/groupCreate", "/groupDelete", "/inviteMemberIdChk", "/groupInviteList", "/groupInvite", "/inviteRefuse", "/inviteAccept", "/memberOut", "/groupInfoUpdate", "/groupInfoUpdateForm", "/groupMemberList", "/memberChk" 
 	,"/replyWrite", "/replyUpdate", "/replyDelete", "/replyCheck", "/replyUpdateForm"
 	,"/planWrite", "/planWokerPick", "/planChange", "/planDelete", "/planDetail"
@@ -156,6 +156,18 @@ public class Controller extends HttpServlet {
 			System.out.println("게시글 삭제 요청");
 			board = new BoardService(request, response);	
 			board.delete();
+			break;
+			
+		case "/comunityList":
+			System.out.println("리스트 요청");
+			board = new BoardService(request, response);
+			board.list();
+			break;
+			
+		case "/adminList":
+			System.out.println("관리자 리스트 요청");
+			board = new BoardService(request, response);
+			board.adminList();
 			break;
 			
 		case "/groupDetail":
