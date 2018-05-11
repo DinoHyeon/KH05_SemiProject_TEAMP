@@ -188,6 +188,29 @@ public class GroupDAO {
 		return success;
 	}
 	
+	public ArrayList<GroupInviteDTO> groupInviteList(String memberId) {
+		ArrayList<GroupInviteDTO>list = new ArrayList<>();
+		String sql = "SELECT * FROM Invite WHERE to_member_id=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, memberId);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				GroupInviteDTO dto = new GroupInviteDTO();
+				dto.setInvite_idx(rs.getInt("in_idx"));
+				dto.setGroup_name(group_name);
+				dto.setFrom_memberId(from_memberId);
+				dto.setInvite_content(invite_content);
+				dto.setInvite_date(invite_date);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	
 	//date -> string
 	private String castingString(Date date) {
 		String dateString = "20";
@@ -208,6 +231,8 @@ public class GroupDAO {
 
 		return date;
 	}
+
+
 
 
 

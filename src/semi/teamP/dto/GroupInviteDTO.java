@@ -1,5 +1,7 @@
 package semi.teamP.dto;
 
+import java.sql.Date;
+
 public class GroupInviteDTO {
 	   private int invite_idx;
 	   private String from_memberId;
@@ -7,6 +9,7 @@ public class GroupInviteDTO {
 	   private int  group_idx;
 	   private String group_name;
 	   private String invite_content;
+	   private String invite_date;
 	   
 	   public int getInvite_idx() {
 	      return invite_idx;
@@ -44,7 +47,13 @@ public class GroupInviteDTO {
 	   public void setInvite_content(String invite_content) {
 	      this.invite_content = invite_content;
 	   }
-	   
-	   
-	   
+	   public String getInvite_date() {
+		   return invite_date;
+	   }
+	   public void setInvite_date(String invite_date) {
+		   this.invite_date = invite_date;
+	   }
+		   
+		   
+		   
 	}

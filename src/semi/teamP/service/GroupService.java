@@ -35,6 +35,7 @@ public class GroupService {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("groupInfo", dto);
 		String obj = json.toJson(map);
+		response.setContentType("text/html; charset=UTF-8");
 		response.getWriter().println(obj);
 	}
 
@@ -49,6 +50,7 @@ public class GroupService {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("list", list);
 		String obj = json.toJson(map);
+		response.setContentType("text/html; charset=UTF-8");
 		response.getWriter().println(obj);
 	}
 	
@@ -112,7 +114,12 @@ public class GroupService {
 	}
 
 	public void groupInviteList() {
-		// TODO Auto-generated method stub
+		String memberId = (String) request.getSession().getAttribute("loginId");
+		System.out.println(memberId+"님의 그룹초대 리스트 출력");
+		
+		ArrayList<GroupInviteDTO>list = new ArrayList<GroupInviteDTO>();
+		GroupDAO dao = new GroupDAO();
+		list=dao.groupInviteList(memberId);
 		
 	}
 
