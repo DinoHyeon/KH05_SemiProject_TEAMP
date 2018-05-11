@@ -190,9 +190,65 @@
 		obj.data={};
 		obj.success = function(data) {
 			 //inviteList 테이블 아이디
+			 console.log(data);
+			 
+			 data.list.forEach(function(item,index){
+				 content +="<tr>";
+				 content +="<td>"+item.group_name+"</td>";//그룹명
+				 content +="<td>"+item.from_memberId+"</td>";//그룹장
+				 content +="<td>"+item.invite_content+"</td>";//내용
+				 content +="<td>"+item.invite_date+"</td>";//날짜
+				 content +="<td>"+"<input class='accept' type='button' id="+item.group_idx+" value='수락'>"+"<input class='refuse' type='button' id="+item.invite_idx+" value='거절'>"+"</td>";//수락 거절
+				 content +="</tr>";
+				 
+				 $("#inviteList").html("<tr>"
+											+"<td>그룹명</td>"
+											+"<td>그룹장</td>"
+											+"<td>내용</td>"
+											+"<td>날짜</td>"
+											+"<td>수락/거절</td>"
+										+"</tr>");
+				 $("#inviteList").append(content);
+		      });   
 		}
 		ajaxCall(obj);
 	})
+	
+	//거절 버튼을 클릭했을 때) 초대번호만 있으면 된다.
+	$(document).on('click','.refuse', function() {
+		var inviteIdx = $(this).attr("id");
+		
+		obj.url="./inviteRefuse";
+		obj.data={inviteIdx:inviteIdx};
+		obj.success = function(data){
+			console.log(data);
+			if(data.result){
+				alert("초대 거절을 성공했습니다");
+				location.reload();
+			}else{
+				alert("초대 거절에 실패했습니다");
+			}
+		};
+		ajaxCall(obj);
+	});
+
+	//수락 버튼을 클릭했을 때) 그룹번호만 있으면 된다.
+	$(document).on('click','.accept', function() {
+		var groupIdx = $(this).attr("id");
+		
+		obj.url="./inviteAccept";
+		obj.data = {groupIdx:groupIdx};
+		obj.success = function(data){
+			if(data.result){
+				alert("축하드립니다. 그룹가입이 되셨습니다 !");
+				if('${sessionScope.groupIdx}'>0)
+					location.href="main_Group.jsp"
+			}else{
+				alert("그룹가입에 실패했습니다 TT..");
+			}
+		};
+		ajaxCall(obj);
+	});
 	
 	
 	function ajaxCall(param){

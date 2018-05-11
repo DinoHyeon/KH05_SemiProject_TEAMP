@@ -20,6 +20,7 @@ public class GroupDAO {
 	Connection conn = null;
 	PreparedStatement ps = null;
 	ResultSet rs = null;
+	ResultSet rsT = null;
 	
 	public GroupDAO() {
 		try {
@@ -36,6 +37,9 @@ public class GroupDAO {
 		try {
 			if(rs != null) {
 				rs.close();
+			}
+			if(rsT != null) {
+				rsT.close();
 			}
 			ps.close();
 			conn.close();
@@ -190,6 +194,7 @@ public class GroupDAO {
 	
 	public ArrayList<GroupInviteDTO> groupInviteList(String memberId) {
 		ArrayList<GroupInviteDTO>list = new ArrayList<>();
+		GroupInviteDTO dto = null;
 		String sql = "SELECT * FROM Invite WHERE to_member_id=?";
 		try {
 			ps = conn.prepareStatement(sql);
@@ -197,17 +202,96 @@ public class GroupDAO {
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				GroupInviteDTO dto = new GroupInviteDTO();
+				dto = new GroupInviteDTO();
 				dto.setInvite_idx(rs.getInt("in_idx"));
-				dto.setGroup_name(group_name);
-				dto.setFrom_memberId(from_memberId);
-				dto.setInvite_content(invite_content);
-				dto.setInvite_date(invite_date);
+				dto.setGroup_idx(rs.getInt("group_idx"));
+				dto.setFrom_memberId(rs.getString("from_member_id"));
+				dto.setInvite_content(rs.getString("in_content"));
+				dto.setInvite_date(castingString(rs.getDate("invite_date")));
+				dto.setGroup_name(groupNameFind(rs.getInt("group_idx")));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return list;
+	}
+
+	//초대 거절
+	public boolean refuseInvite(int inviteIdx) {
+		int success = 0;
+		boolean result = false;
+		String sql = "DELETE FROM Invite WHERE in_idx=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, inviteIdx);
+			success = ps.executeUpdate();
+			
+			if(success>0) {
+				result=true;
+			}else {
+				result=false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		
+		return result;
+	}
+
+	
+	//초대 수락
+	public boolean acceptInvite(int groupIdx, String memberId) {
+		boolean result = false;
+		int success = 0;
+		String sql = ""; 
+		//쿼리 두개 돌려야한다. (프로젝트 멤버 테이블 추가/삭제)
+		try {
+			sql = "INSERT INTO member_group(member_idx,group_idx,member_id) VALUES(SEQ_member_group.NEXTVAL,?,?)";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, groupIdx);
+			ps.setString(2, memberId);
+			success = ps.executeUpdate();
+			
+			if(success>0) {
+				sql = "DELETE FROM Invite WHERE group_idx=?";
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, groupIdx);
+				success = ps.executeUpdate();
+				
+				if(success>0) {
+					result = true;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return result;
+	}
+
+		
+	//인덱스 번호로 그룹 이름 찾기
+	private String groupNameFind(int groupIdx) {
+		String groupName="";
+		String sql = "SELECT group_name FROM Group_project WHERE group_idx=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, groupIdx);
+			rsT = ps.executeQuery();
+			
+			if(rsT.next()) {
+				groupName = rsT.getString("group_name");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return groupName;
 	}
 
 	
@@ -231,14 +315,6 @@ public class GroupDAO {
 
 		return date;
 	}
-
-
-
-
-
-
-
-
 
 
 }
