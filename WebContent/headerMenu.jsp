@@ -156,7 +156,7 @@
 			}
 			
 			/* 닫기버튼 */
-			.close{
+			.headerPopupClose{
 				position: absolute;
 				font-size: 18px;
 				font-weight: 900;
@@ -173,11 +173,11 @@
 	 <div id="header">
             <div id="navi">
                 <button onclick="location.href='memberInfoAccess.jsp'" id="myInfo">내정보</button>
-                <button id="notice">공지사항</button>
+                <button onclick="location.href='/SemiProject_TeamP/adminList'" id="notice">공지사항</button>
                 <button id="plan">일정</button>
                 <button id="fileBbs">파일게시판</button>
                 <button id="groupBbs">그룹게시판</button>
-                <button id="comunityBbs">의견나눔게시판</button>
+                 <button onclick="location.href ='/SemiProject_TeamP/comunityList'" id="comunityBbs">의견나눔게시판</button>
             </div>
         </div>
         
@@ -196,7 +196,7 @@
        	<div id="groupBg"></div><!-- 팝업이 띄워졌을 때 홈페이지에 깔리는 불투명한 배경 -->
        	
        	<div id="popupContentMaster"><!-- 그룹장일 때 나오는 팝업 창 -->
-			<div class="close">X</div>
+			<div class="headerPopupClose">X</div>
 			<h2>그룹 관리</h2>
 			<table id="groupInfoManage">
 				<tr>
@@ -233,7 +233,7 @@
 		
 		<!-- 그룹 초대 팝업 -->
 		<div id="popupContentInvite">
-			<div class="close">X</div>
+			<div class="headerPopupClose">X</div>
 			<h2>그룹원 초대</h2>
 			<table>
 				<tr>
@@ -296,7 +296,7 @@
 	//그룹원)그룹정보 버튼을 클릭했을 경우
 	$("#groupInfo").click(function() {
 		$("#groupBg").css("display","inline");
-		$("#close").css("display","inline");
+		$(".headerPopupClose").css("display","inline");
 	})
 	
 	//그룹장)그룹관리 버튼을 클릭했을 경우
@@ -307,7 +307,7 @@
 		
 		$("#groupBg").css("display","inline");
 		$("#popupContentMaster").css("display","inline");
-		$(".close").css("display","inline")
+		$(".headerPopupClose").css("display","inline")
 		
 	});
 	
@@ -383,7 +383,7 @@
 	}
 	
 	//닫기
-	$(".close").click(function() {
+	$(".headerPopupClose").click(function() {
 		if($("#popupContentMaster").css("display")!="none"){
 			$("#groupBg").css("display","none");
 			$("#popupContentMaster").css("display","none");
@@ -410,7 +410,6 @@
 			
  			//그룹 멤버조회
 			obj.url="./groupMemberList";
-			obj.data={};
 			obj.data={groupIdx:groupIdx};
 			obj.success = function(data) {
 				 console.log(data.list);
