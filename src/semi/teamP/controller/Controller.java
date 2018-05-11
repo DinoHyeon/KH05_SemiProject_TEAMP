@@ -16,13 +16,14 @@ import semi.teamP.service.PlanService;
 import semi.teamP.service.ReplyService;
 import semi.teamP.service.TodoService;
 
+
 @WebServlet({ "/login", "/findPw", "/findId", "/ChangePw", "/join", "/idOverlay", "/emailOverlay", "/infoUpdate", "/infoUpdateForm", "/logout", "/withdrawal", "/infoFormAccess", "/memberDataAccess"
-		,"/write", "/detail", "/updateForm", "/update", "/delete"
-		,"/groupJoin", "/groupDetail", "/groupCreate", "/groupDelete", "/groupInviteList", "/groupInvite", "/inviteRefuse", "/inviteAccept", "/memberOut", "/groupInfoUpdate", "/groupInfoUpdateForm", "/groupMemberList", "/memberChk" 
-		,"/replyWrite", "/replyUpdate", "/replyDelete", "/replyCheck", "/replyUpdateForm"
-		,"/planWrite", "/planWokerPick", "/planChange", "/planDelete", "/planDetail"
-		,"/todoDetail", "/todoWrite", "/todoUpdate", "/todoDelete", "/todoChange"
-		,"/adMemberList", "/adMemberDel", "/adGroupList", "/adGroupDel", "/adGroupSession" })
+	,"/write", "/detail", "/updateForm", "/update", "/delete"
+	,"/groupJoin", "/groupDetail", "/groupCreate", "/groupDelete", "/inviteMemberIdChk", "/groupInviteList", "/groupInvite", "/inviteRefuse", "/inviteAccept", "/memberOut", "/groupInfoUpdate", "/groupInfoUpdateForm", "/groupMemberList", "/memberChk" 
+	,"/replyWrite", "/replyUpdate", "/replyDelete", "/replyCheck", "/replyUpdateForm"
+	,"/planWrite", "/planWokerPick", "/planChange", "/planDelete", "/planDetail"
+	,"/todoDetail", "/todoWrite", "/todoUpdate", "/todoDelete", "/todoChange"
+	,"/adMemberList", "/adMemberDel", "/adGroupList", "/adGroupDel", "/adGroupSession" })
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -162,6 +163,12 @@ public class Controller extends HttpServlet {
 			group = new GroupService(request, response);
 			group.groupDetail();
 			break;
+		case "/groupMemberList":
+			System.out.println("그룹 멤버 조회 요청");
+			group = new GroupService(request, response);
+			group.groupMemberList();
+			break;
+		
 		case "/groupCreate":
 			System.out.println("그룹 생성 요청");
 			group = new GroupService(request, response);
@@ -172,6 +179,11 @@ public class Controller extends HttpServlet {
 			System.out.println("그룹 삭제 요청");
 			group = new GroupService(request, response);
 			group.groupDelete();
+			break;
+		case "/inviteMemberIdChk":
+			System.out.println("그룹 초대 멤버 아이디 확인");
+			group = new GroupService(request, response);
+			group.inviteMemberIdChk();
 			break;
 			
 		case "/groupInvite":

@@ -177,7 +177,7 @@ public class MemberService {
 
 	public void idOverlay() throws IOException {
 		String id = request.getParameter("id");
-		
+
 		MemberDAO dao = new MemberDAO();
 		Boolean idChk = dao.idOverlay(id);
 		
