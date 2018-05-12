@@ -170,6 +170,8 @@
         </style>
 </head>
 <body>
+	<%@include file="passCheck.jsp"%>
+
 	 <div id="header">
             <div id="navi">
                 <button onclick="location.href='memberInfoAccess.jsp'" id="myInfo">내정보</button>
@@ -300,10 +302,9 @@
 	
 	//그룹장)그룹관리 버튼을 클릭했을 경우
 	$("#groupManage").click(function() {
-
+		passCheckCss();
 		//그룹정보 호출 함수
 		groupInfoLoad();
-		
 		$("#groupBg").css("display","inline");
 		$("#popupContentMaster").css("display","inline");
 		$(".headerPopupClose").css("display","inline")
@@ -448,24 +449,16 @@
 				}else{
 					alert("그룹 정보수정을 완료하지 못 했습니다.");
 				}
-				
 			};
 			ajaxCall(obj);
 		}
 	})
 	
-	//그룹 삭제
-	$("#groupDel").click(function() {
-		//그룹 삭제 전 회원 비밀번호로 체크
-		//오늘
-		
-	});
-	
 	
 	//회원추방
 	$(document).on('click','#out', function() {
 		var groupMemberId = $(this).attr("value");
-		
+		passCheckCss();
 		obj.url="./memberOut";
 		obj.data = {groupMemberId:groupMemberId};
 		obj.success = function(data){
@@ -481,14 +474,12 @@
 	
 	//그룹 멤버조회
 	function groupMemberListCall(){
-		var i = 0;
 		obj.url="./groupMemberList";
 		obj.data={groupIdx:groupIdx};
 		obj.success = function(data) {
 			console.log(data.groupMember);
 			 $("#groupMemberList").empty();
 			 data.groupMember.forEach(function(item,index){
-				 i++;
 				 groupMemberContent += "<tr>";
 				 groupMemberContent += "<td><div id='groupMemberId' value="+item.groupMember_id+">"+item.groupMember_id+"</div></td>";
 				 groupMemberContent += "<td><div id='out' value="+item.groupMember_id+">강퇴</div></td>";
@@ -498,9 +489,34 @@
 				 groupMemberContent="";
 			 })
 		}
-		i=0;
+
 		ajaxCall(obj);
 	}
+	
+	
+	//비밀번호 체크 클릭
+	function passCheckCss() {
+		$("#passChkBg").css("display","inline");
+		$("#passChkPopup").css("display","inline");
+	}
+	
+	function groupDel() {
+		//그룹 삭제 전 회원 비밀번호로 체크
+		passCheckCss();
+		//오늘
+		obj.url="./groupDelete";
+		obj.data={};
+		obj.data={groupInfoIdx:$('#groupInfoIdx').val()};
+		obj.success = function(data){
+			if(data.success){
+				alert("그룹을 삭제했습니다. 로그인을 다시해주세요.");
+				location.href="index.jsp";
+			}else{
+				alert("그룹 삭제를 못 했습니다.");
+			}
+		};
+		ajaxCall(obj);
+	};
 	
 	function ajaxCall(param){
 		console.log(param);

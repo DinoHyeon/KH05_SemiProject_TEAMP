@@ -79,9 +79,24 @@ public class GroupService {
 		response.sendRedirect(page);
 	}
 
-	public void groupDelete() {
-		// TODO Auto-generated method stub
+	public void groupDelete() throws IOException {
+		int groupIdx = Integer.parseInt(request.getParameter("groupInfoIdx"));
+		String groupMasterId = (String) request.getSession().getAttribute("loginId");
 		
+		GroupDAO dao = new GroupDAO();
+		boolean success = dao.groupDelete(groupIdx,groupMasterId);
+		
+		//그룹을 삭제하면 해당 아이디의 그룹세션 삭제, 등급세션 변경
+		if(success) {
+			request.getSession().removeAttribute("groupNum");
+			request.getSession().setAttribute("memberLv","member");
+		}		
+		Gson json = new Gson();
+		HashMap<String, Boolean> map = new HashMap<>();
+		map.put("success", success);
+		String obj = json.toJson(map);
+		response.getWriter().println(obj);
+	
 	}
 
 	public void groupInvite() throws IOException {

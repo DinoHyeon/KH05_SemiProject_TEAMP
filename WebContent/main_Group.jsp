@@ -24,5 +24,10 @@
     </div>
 </body>
 <script>
+	//그룹 삭제
+	$("#groupDel").click(function() {
+		//그룹 삭제 함수 호출
+		groupDel();
+	});
 </script>
 </html>

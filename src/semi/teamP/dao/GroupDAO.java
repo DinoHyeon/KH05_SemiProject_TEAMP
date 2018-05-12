@@ -327,6 +327,34 @@ public class GroupDAO {
 	}
 
 	
+	public boolean groupDelete(int groupIdx, String groupMasterId) {
+		boolean success = false;
+		String sql ="";
+		
+		sql = "DELETE FROM Group_project WHERE group_idx=? AND member_id=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, groupIdx);
+			ps.setString(2, groupMasterId);
+			
+			if(ps.executeUpdate()>0) {
+				sql = "UPDATE member SET member_lv=? WHERE member_id=?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, "member");
+				ps.setString(2, groupMasterId);
+				if(ps.executeUpdate()>0){
+					success = true;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return success;
+	}
+
+
 	//인덱스 번호로 그룹 이름 찾기
 	private String groupNameFind(int groupIdx) {
 		String groupName="";

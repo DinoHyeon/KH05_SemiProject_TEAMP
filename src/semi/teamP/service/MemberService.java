@@ -214,23 +214,20 @@ public class MemberService {
 		dis.forward(request, response);
 	}
 
-	public void memberDataAccess() throws IOException, ServletException {
+	public void memberPasswordCheck() throws IOException, ServletException {
 		String id = (String) request.getSession().getAttribute("loginId");
 		String pw = request.getParameter("memberPass");
 		
 		System.out.println(id+" / "+pw);
 		
 		MemberDAO dao = new MemberDAO();
-		boolean success = dao.memberDataAccess(id,pw);
+		boolean success = dao.memberPasswordCheck(id,pw);
 		
-		if(success) {
-			response.sendRedirect("./infoUpdateForm");
-		}else {
-			request.setAttribute("msg", "비밀번호가 일치하지 않습니다.");
-			RequestDispatcher dis = request.getRequestDispatcher("memberInfoAccess.jsp");
-			dis.forward(request, response);
-		}
-		
+		Gson json = new Gson();
+		HashMap<String, Boolean> map = new HashMap<String, Boolean>();
+		map.put("success", success);
+		String obj = json.toJson(map);
+		response.getWriter().println(obj);
 	}
 
 

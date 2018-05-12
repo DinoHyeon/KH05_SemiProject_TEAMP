@@ -17,7 +17,7 @@ import semi.teamP.service.ReplyService;
 import semi.teamP.service.TodoService;
 
 
-@WebServlet({ "/login", "/findPw", "/findId", "/ChangePw", "/join", "/idOverlay", "/emailOverlay", "/infoUpdate", "/infoUpdateForm", "/logout", "/withdrawal", "/infoFormAccess", "/memberDataAccess"
+@WebServlet({ "/login", "/findPw", "/findId", "/ChangePw", "/join", "/idOverlay", "/emailOverlay", "/infoUpdate", "/infoUpdateForm", "/logout", "/withdrawal", "/infoFormAccess", "/memberPasswordCheck"
 	,"/write", "/detail", "/updateForm", "/update", "/delete","/comunityList","/adminList", "/groupList"
 	,"/groupJoin", "/groupDetail", "/groupCreate", "/groupDelete", "/inviteMemberIdChk", "/groupInviteList", "/groupInvite", "/inviteRefuse", "/inviteAccept", "/memberOut", "/groupInfoUpdate", "/groupInfoUpdateForm", "/groupMemberList", "/memberChk" 
 	,"/replyWrite", "/replyUpdate", "/replyDelete", "/replyCheck", "/replyUpdateForm"
@@ -98,10 +98,10 @@ public class Controller extends HttpServlet {
 			member.emailOverlay();
 			break;
 		
-		case "/memberDataAccess":
-			System.out.println("회원 중요 정보 접근 요청");
+		case "/memberPasswordCheck":
+			System.out.println("회원 비밀번호 확인 요청");
 			member = new MemberService(request, response);
-			member.memberDataAccess();
+			member.memberPasswordCheck();
 			break;
 			
 		case "/infoUpdate":
