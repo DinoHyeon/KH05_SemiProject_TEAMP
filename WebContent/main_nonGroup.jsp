@@ -113,15 +113,9 @@
 	<div id="inviteListPopup">
 		<h1 style="color:#FFD724">그룹 초대</h1>
 		<div class="mainPopupClose">X</div>
-		<table id="inviteList">
-			<tr>
-				<td>그룹명</td>
-				<td>그룹장</td>
-				<td>내용</td>
-				<td>날짜</td>
-				<td></td>
-			</tr>
-		</table>
+		<table id="inviteListBody">
+
+		</table>		
 	</div>
 		
 		
@@ -134,6 +128,8 @@
     </div>
 </body>
 <script>
+	var content ="";
+
 	var obj = {};
 	var idx;//idex값을 저장할 전역 변수
 	obj.type="POST";
@@ -148,6 +144,7 @@
 	
 	$(".mainPopupClose").click(function() {
 		$("#bg").css("display","none");
+		$("#inviteListBody").empty();
 		$("#inviteListPopup").css("display","none");
 		$("#popupContent").css("display","none");
 	})
@@ -185,33 +182,7 @@
 		$("#bg").css("display","inline");
 		$("#inviteListPopup").css("display","inline");
 		
-		//ajax 실행
-		obj.url="./groupInviteList";
-		obj.data={};
-		obj.success = function(data) {
-			 //inviteList 테이블 아이디
-			 console.log(data);
-			 
-			 data.list.forEach(function(item,index){
-				 content +="<tr>";
-				 content +="<td>"+item.group_name+"</td>";//그룹명
-				 content +="<td>"+item.from_memberId+"</td>";//그룹장
-				 content +="<td>"+item.invite_content+"</td>";//내용
-				 content +="<td>"+item.invite_date+"</td>";//날짜
-				 content +="<td>"+"<input class='accept' type='button' id="+item.group_idx+" value='수락'>"+"<input class='refuse' type='button' id="+item.invite_idx+" value='거절'>"+"</td>";//수락 거절
-				 content +="</tr>";
-				 
-				 $("#inviteList").html("<tr>"
-											+"<td>그룹명</td>"
-											+"<td>그룹장</td>"
-											+"<td>내용</td>"
-											+"<td>날짜</td>"
-											+"<td>수락/거절</td>"
-										+"</tr>");
-				 $("#inviteList").append(content);
-		      });   
-		}
-		ajaxCall(obj);
+		inviteListCall();
 	})
 	
 	//거절 버튼을 클릭했을 때) 초대번호만 있으면 된다.
@@ -224,7 +195,7 @@
 			console.log(data);
 			if(data.result){
 				alert("초대 거절을 성공했습니다");
-				location.reload();
+				inviteListCall();
 			}else{
 				alert("초대 거절에 실패했습니다");
 			}
@@ -250,6 +221,39 @@
 		ajaxCall(obj);
 	});
 	
+	
+	function inviteListCall(){
+		//ajax 실행
+		obj.url="./groupInviteList";
+		obj.data={};
+		obj.success = function(data) {
+			 
+			  $("#inviteListBody").empty();
+			 
+			  $("#inviteListBody").append("<tr>"
+						+"<td>그룹명</td>"
+						+"<td>그룹장</td>"
+						+"<td>내용</td>"
+						+"<td>날짜</td>"
+						+"<td>수락/거절</td>"
+					+"</tr>");
+			 
+			 data.list.forEach(function(item,index){
+				 content +="<tr>";
+				 content +="<td>"+item.group_name+"</td>";//그룹명
+				 content +="<td>"+item.from_memberId+"</td>";//그룹장
+				 content +="<td>"+item.invite_content+"</td>";//내용
+				 content +="<td>"+item.invite_date+"</td>";//날짜
+				 content +="<td>"+"<input class='accept' type='button' id="+item.group_idx+" value='수락'>"+"<input class='refuse' type='button' id="+item.invite_idx+" value='거절'>"+"</td>";//수락 거절
+				 content +="</tr>";
+				 
+				 $("#inviteListBody").append(content);
+				 
+				 content="";
+		      });   
+		}
+		ajaxCall(obj);
+	}
 	
 	function ajaxCall(param){
 		console.log(param);

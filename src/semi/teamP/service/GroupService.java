@@ -13,6 +13,7 @@ import oracle.net.aso.i;
 import semi.teamP.dao.GroupDAO;
 import semi.teamP.dto.GroupInfoDTO;
 import semi.teamP.dto.GroupInviteDTO;
+import semi.teamP.dto.GroupMemberDTO;
 
 public class GroupService {
 	HttpServletRequest request = null;
@@ -44,11 +45,11 @@ public class GroupService {
 		String memberId = (String) request.getSession().getAttribute("loginId");
 		
 		GroupDAO dao = new GroupDAO();
-		ArrayList<String> list = dao.groupMemberList(memberId,groupIdx);
+		ArrayList<GroupMemberDTO> list = dao.groupMemberList(memberId,groupIdx);
 		
 		Gson json = new Gson();
 		HashMap<String, Object> map = new HashMap<>();
-		map.put("list", list);
+		map.put("groupMember", list);
 		String obj = json.toJson(map);
 		response.setContentType("text/html; charset=UTF-8");
 		response.getWriter().println(obj);
@@ -163,6 +164,22 @@ public class GroupService {
 		Gson json = new Gson();
 		HashMap<String, Boolean> map = new HashMap<>();
 		map.put("result", inviteMemberIdChk);
+		String obj = json.toJson(map);
+		response.getWriter().println(obj);
+	}
+
+	//그룹에서 멤버를 추방
+	public void groupMemberOut() throws IOException {
+		String memberId = request.getParameter("groupMemberId");
+		int groupIdx = (int) request.getSession().getAttribute("groupNum");
+		System.out.println("추방할 회원 아이디 : "+memberId);
+		
+		GroupDAO dao = new GroupDAO();
+		boolean success = dao.groupMemberOut(memberId,groupIdx);
+		
+		Gson json = new Gson();
+		HashMap<String, Boolean> map = new HashMap<>();
+		map.put("success", success);
 		String obj = json.toJson(map);
 		response.getWriter().println(obj);
 	}

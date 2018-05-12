@@ -10,11 +10,12 @@ import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.sql.DataSource;
+import javax.sql.DataSource;import org.apache.coyote.RequestGroupInfo;
 
 import oracle.net.aso.i;
 import semi.teamP.dto.GroupInfoDTO;
 import semi.teamP.dto.GroupInviteDTO;
+import semi.teamP.dto.GroupMemberDTO;
 
 public class GroupDAO {
 	Connection conn = null;
@@ -117,8 +118,8 @@ public class GroupDAO {
 		return dto;
 	}
 	
-	public ArrayList<String> groupMemberList(String memberId, int groupIdx) {
-		ArrayList<String> groupMemberList = new ArrayList<>();
+	public ArrayList<GroupMemberDTO> groupMemberList(String memberId, int groupIdx) {
+		ArrayList<GroupMemberDTO> groupMemberList = new ArrayList<>();
 		String sql = "SELECT member_id FROM member_group WHERE member_id!=? AND group_idx=?";
 		try {
 			ps = conn.prepareStatement(sql);
@@ -128,7 +129,10 @@ public class GroupDAO {
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				groupMemberList.add(rs.getString("member_id"));
+				GroupMemberDTO dto = new GroupMemberDTO();
+				dto.setGroup_idx(groupIdx);
+				dto.setGroupMember_id(rs.getString("member_id"));
+				groupMemberList.add(dto);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -275,7 +279,30 @@ public class GroupDAO {
 		return result;
 	}
 
-		
+	
+	//멤버 그룹 추방
+	public boolean groupMemberOut(String memberId, int groupIdx) {
+		boolean success = false;
+
+		String sql = "DELETE FROM member_group WHERE member_id=? AND group_idx=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, memberId);
+			ps.setInt(2, groupIdx);
+			
+			if(ps.executeUpdate()>0) {
+				success = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return success;
+	}
+
+	
 	//인덱스 번호로 그룹 이름 찾기
 	private String groupNameFind(int groupIdx) {
 		String groupName="";
@@ -315,6 +342,7 @@ public class GroupDAO {
 
 		return date;
 	}
+
 
 
 }

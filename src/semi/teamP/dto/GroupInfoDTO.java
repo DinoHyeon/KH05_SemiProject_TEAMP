@@ -8,6 +8,7 @@ public class GroupInfoDTO {
    private String group_StrartDay;
    private String group_EndDay;
    private String group_name;
+   
    public String getMember_id() {
       return member_id;
    }

@@ -223,10 +223,6 @@
 			</table>
 			<div id="groupmemberName">그룹원</div>
 			<table id="groupMemberList">
-				<tr>
-					<td></td>
-					<td></td>
-				</tr>
 			</table>
 			<div id="invite">초대</div>
 		</div>
@@ -260,6 +256,7 @@
 <script>
 	var groupIdx = '${sessionScope.groupNum}';
 	var groupName = "";
+	var groupMemberContent = "";
 	
 	var obj = {};
 	var idx;//idex값을 저장할 전역 변수
@@ -408,13 +405,8 @@
 			$("#groupInfoStartDate").val(data.groupInfo.group_StrartDay);
 			$("#groupInfoEndDate").val(data.groupInfo.group_EndDay);
 			
- 			//그룹 멤버조회
-			obj.url="./groupMemberList";
-			obj.data={groupIdx:groupIdx};
-			obj.success = function(data) {
-				 console.log(data.list);
-			}
-			ajaxCall(obj);
+			//그룹 멤버 리스트
+			groupMemberListCall();
 			
 		};
 		ajaxCall(obj);
@@ -431,6 +423,45 @@
 		//오늘
 		
 	});
+	
+	$(document).on('click','#out', function() {
+		var groupMemberId = $(this).attr("value");
+		
+		obj.url="./memberOut";
+		obj.data = {groupMemberId:groupMemberId};
+		obj.success = function(data){
+			if(data.success){
+				alert(groupMemberId+"님을 추방했습니다.");
+				groupMemberListCall();
+			}else{
+				alert("멤버 추방에 실패했습니다 TT..");
+			}
+		};
+		ajaxCall(obj);
+	});
+	
+	//그룹 멤버조회
+	function groupMemberListCall(){
+		var i = 0;
+		obj.url="./groupMemberList";
+		obj.data={groupIdx:groupIdx};
+		obj.success = function(data) {
+			console.log(data.groupMember);
+			 $("#groupMemberList").empty();
+			 data.groupMember.forEach(function(item,index){
+				 i++;
+				 groupMemberContent += "<tr>";
+				 groupMemberContent += "<td><div id='groupMemberId' value="+item.groupMember_id+">"+item.groupMember_id+"</div></td>";
+				 groupMemberContent += "<td><div id='out' value="+item.groupMember_id+">강퇴</div></td>";
+				 groupMemberContent += "</tr>";
+				 
+				 $("#groupMemberList").append(groupMemberContent);
+				 groupMemberContent="";
+			 })
+		}
+		i=0;
+		ajaxCall(obj);
+	}
 	
 	function ajaxCall(param){
 		console.log(param);
