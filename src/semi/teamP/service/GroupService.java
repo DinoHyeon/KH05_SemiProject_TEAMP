@@ -1,5 +1,6 @@
 package semi.teamP.service;
 
+import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import oracle.net.aso.i;
+import oracle.net.aso.j;
 import semi.teamP.dao.GroupDAO;
 import semi.teamP.dto.GroupInfoDTO;
 import semi.teamP.dto.GroupInviteDTO;
@@ -176,6 +178,23 @@ public class GroupService {
 		
 		GroupDAO dao = new GroupDAO();
 		boolean success = dao.groupMemberOut(memberId,groupIdx);
+		
+		Gson json = new Gson();
+		HashMap<String, Boolean> map = new HashMap<>();
+		map.put("success", success);
+		String obj = json.toJson(map);
+		response.getWriter().println(obj);
+	}
+
+	public void groupInfoUpdate() throws IOException {
+		GroupInfoDTO dto = new GroupInfoDTO();
+		dto.setGroup_idx(Integer.parseInt(request.getParameter("groupInfoIdx")));
+		dto.setGroup_name(request.getParameter("groupInfoName"));
+		dto.setGroup_StrartDay(request.getParameter("groupInfoStartDate"));
+		dto.setGroup_EndDay(request.getParameter("groupInfoEndDate"));
+		
+		GroupDAO dao = new GroupDAO();
+		boolean success = dao.groupInfoUpdate(dto);
 		
 		Gson json = new Gson();
 		HashMap<String, Boolean> map = new HashMap<>();

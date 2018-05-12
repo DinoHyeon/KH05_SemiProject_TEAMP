@@ -181,6 +181,13 @@ public class Controller extends HttpServlet {
 			group = new GroupService(request, response);
 			group.groupDetail();
 			break;
+		
+		case "/groupInfoUpdate":
+			System.out.println("그룹 정보 수정");
+			group = new GroupService(request, response);
+			group.groupInfoUpdate();
+			break;
+			
 		case "/groupMemberList":
 			System.out.println("그룹 멤버 조회 요청");
 			group = new GroupService(request, response);

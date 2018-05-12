@@ -303,6 +303,30 @@ public class GroupDAO {
 	}
 
 	
+	//그룹 정보 수정
+	public boolean groupInfoUpdate(GroupInfoDTO dto) {
+		boolean success = false;
+		String sql = "UPDATE Group_project SET group_name=?, group_startDay=?, group_endDay=? WHERE group_idx=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, dto.getGroup_name());
+			ps.setDate(2, castingDate(dto.getGroup_StrartDay()));
+			ps.setDate(3, castingDate(dto.getGroup_EndDay()));
+			ps.setInt(4, dto.getGroup_idx());
+			
+			if(ps.executeUpdate()>0) {
+				success = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		
+		return success;
+	}
+
+	
 	//인덱스 번호로 그룹 이름 찾기
 	private String groupNameFind(int groupIdx) {
 		String groupName="";
@@ -333,16 +357,16 @@ public class GroupDAO {
 	//string -> date
 	private Date castingDate(String group_Day) {
 		//년
-		int year = Integer.parseInt(group_Day.substring(0,4));
+		int year = Integer.parseInt(group_Day.substring(0,4))-1900;
 		//월
-	    int month = Integer.parseInt(group_Day.substring(5,7));
+	    int month = Integer.parseInt(group_Day.substring(5,7))-1;
 	    //일
 	    int day = Integer.parseInt(group_Day.substring(8,10));
+	    
 	    java.sql.Date date = new java.sql.Date(year, month, day);
-
+	    
 		return date;
 	}
-
 
 
 }

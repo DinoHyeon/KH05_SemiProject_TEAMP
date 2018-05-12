@@ -212,8 +212,7 @@
 		obj.success = function(data){
 			if(data.result){
 				alert("축하드립니다. 그룹가입이 되셨습니다 !");
-				if('${sessionScope.groupIdx}'>0)
-					location.href="main_Group.jsp"
+				location.href="main_Group.jsp"
 			}else{
 				alert("그룹가입에 실패했습니다 TT..");
 			}

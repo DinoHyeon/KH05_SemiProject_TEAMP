@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="./changePw" method="post"">
+<form action="./ChangePw" method="post"">
 	<table>
 		<input type="hidden" name="userId" value="${msg}"/>
 		<tr><td>비밀번호</td></tr>

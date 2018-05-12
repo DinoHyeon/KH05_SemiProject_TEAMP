@@ -195,6 +195,7 @@
         
        	<div id="groupBg"></div><!-- 팝업이 띄워졌을 때 홈페이지에 깔리는 불투명한 배경 -->
        	
+       	
        	<div id="popupContentMaster"><!-- 그룹장일 때 나오는 팝업 창 -->
 			<div class="headerPopupClose">X</div>
 			<h2>그룹 관리</h2>
@@ -206,7 +207,7 @@
 					<td>그룹명</td>
 				</tr>
 				<tr>
-					<td><input id="groupInfoName" type="text"/></td>
+					<td><input type='hidden' id="groupInfoIdx"><input id="groupInfoName" type="text"/></td>
 				</tr>
 				<tr>
 					<td>프로젝트 기간 - 시작</td>
@@ -225,7 +226,9 @@
 			<table id="groupMemberList">
 			</table>
 			<div id="invite">초대</div>
+			<div id="changeGroupInfo">그룹정보 수정</div>
 		</div>
+		
 		
 		<!-- 그룹 초대 팝업 -->
 		<div id="popupContentInvite">
@@ -248,7 +251,6 @@
 				</tr>
 			</table>
 			<input type="button" value="초대" onclick="groupInvite()">
-			<input type="button" value="초대" onclick="changeGroupInfo()">
 			<div id="groupDel">그룹 삭제</div>
 		</div>
         
@@ -366,11 +368,11 @@
 					};
 			obj.success = function(data) {
 				if(data.success){
+					alert($("#inviteMember").val()+"님을 초대했습니다.");
 					$("#inviteMember").val("");
 					$("#inviteGroupName").val("");
 					$("#inviteMsg").val("");
 					$("#inviteMemberChkMsg").html("");
-					alert("초대를 성공했습니다.");
 					$("#popupContentInvite").css("display","none");
 					$("#popupContentMaster").css("display","inline");
 				}
@@ -401,6 +403,7 @@
 			console.log(data.groupInfo);
 			groupName = data.groupInfo.group_name;
 			$("#groupInfoMasterName").html(data.groupInfo.member_id);
+			$("#groupInfoIdx").val(data.groupInfo.group_idx);
 			$("#groupInfoName").val(data.groupInfo.group_name);
 			$("#groupInfoStartDate").val(data.groupInfo.group_StrartDay);
 			$("#groupInfoEndDate").val(data.groupInfo.group_EndDay);
@@ -413,9 +416,43 @@
 	}
 	
 	//그룹 정보 수정
-	function changeGroupInfo() {
-		//오늘
-	}
+	$("#changeGroupInfo").click(function name() {
+		var startDay = new Date($("#groupInfoStartDate").val());
+		var endDay = new Date($("#groupInfoEndDate").val());
+
+		if($("#groupInfoName").val()==""){
+			alert("그룹명을 입력해주세요.")
+			$("#groupInfoName").focus();
+		}else if($("#groupInfoStartDate").val()==""){
+			alert("프로젝트 시작일을 입력해주세요.")
+			$("#groupInfoStartDate").focus();			
+		}else if($("#groupInfoEndDate").val()==""){
+			alert("프로젝트 종료일을 입력해주세요.")
+			$("#groupInfoEndDate").focus();			
+		}else if(startDay>endDay){
+			alert("프로젝트 시작일을 재입력해주세요.")
+			$("#groupInfoStartDate").focus();
+		}else{
+			obj.url="./groupInfoUpdate";
+			obj.data={};
+			obj.data={
+					groupInfoIdx:$('#groupInfoIdx').val(),
+					groupInfoName:$('#groupInfoName').val(),
+					groupInfoStartDate:$('#groupInfoStartDate').val(),
+					groupInfoEndDate:$('#groupInfoEndDate').val()
+					};
+			obj.success = function(data){
+				if(data.success){
+					groupInfoLoad();
+					alert("그룹 정보수정을 완료했습니다.");
+				}else{
+					alert("그룹 정보수정을 완료하지 못 했습니다.");
+				}
+				
+			};
+			ajaxCall(obj);
+		}
+	})
 	
 	//그룹 삭제
 	$("#groupDel").click(function() {
@@ -424,6 +461,8 @@
 		
 	});
 	
+	
+	//회원추방
 	$(document).on('click','#out', function() {
 		var groupMemberId = $(this).attr("value");
 		
