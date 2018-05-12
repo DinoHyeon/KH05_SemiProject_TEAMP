@@ -130,6 +130,16 @@
 <script>
 	var content ="";
 
+	var msg = '${msg}';
+	
+	if(msg == "그룹 생성에 실패했습니다."){
+		alert(msg);
+		location.reload();
+	}else if(msg == "그룹 생성에 성공했습니다."){
+		alert(msg);
+		location.href="main_Group.jsp";
+	}
+	
 	var obj = {};
 	var idx;//idex값을 저장할 전역 변수
 	obj.type="POST";

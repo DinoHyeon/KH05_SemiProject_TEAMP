@@ -174,7 +174,7 @@
 
 	 <div id="header">
             <div id="navi">
-                <button onclick="location.href='memberInfoAccess.jsp'" id="myInfo">내정보</button>
+                <button onclick="location.href='memberInfoForm.jsp'" id="myInfo">내정보</button>
                 <button onclick="location.href='/SemiProject_TeamP/adminList'" id="notice">공지사항</button>
                 <button id="plan">일정</button>
                 <button id="fileBbs">파일게시판</button>
@@ -494,12 +494,6 @@
 	}
 	
 	
-	//비밀번호 체크 클릭
-	function passCheckCss() {
-		$("#passChkBg").css("display","inline");
-		$("#passChkPopup").css("display","inline");
-	}
-	
 	function groupDel() {
 		//그룹 삭제 전 회원 비밀번호로 체크
 		passCheckCss();
@@ -509,8 +503,13 @@
 		obj.data={groupInfoIdx:$('#groupInfoIdx').val()};
 		obj.success = function(data){
 			if(data.success){
-				alert("그룹을 삭제했습니다. 로그인을 다시해주세요.");
-				location.href="index.jsp";
+				if(data.groupIdx
+						!=0){
+					location.href="main_Group.jsp"
+				}else{
+					location.href="main_nonGroup.jsp"
+				}
+				alert("그룹을 삭제했습니다.");
 			}else{
 				alert("그룹 삭제를 못 했습니다.");
 			}

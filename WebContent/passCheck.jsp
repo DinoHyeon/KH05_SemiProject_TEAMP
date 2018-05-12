@@ -64,7 +64,14 @@
 	$("#passChkPopupClose").click(function() {
 		$("#passChkBg").css("display","none");
 		$("#passChkPopup").css("display","none");
+		$("#memberInfoFormBg").css("display","none");
 	})
+	
+	//비밀번호 체크 클릭
+	function passCheckCss() {
+		$("#passChkBg").css("display","inline");
+		$("#passChkPopup").css("display","inline");
+	}
 	
 	//확인 버튼을 눌렀을 때
 	$("#memberPassChk").click(function() {
@@ -83,6 +90,7 @@
 					$("#passCheckResultMsg").html("");
 					$("#passChkBg").css("display","none");
 					$("#passChkPopup").css("display","none");
+					$("#memberInfoFormBg").css("display","none");
 				}else{
 					$("#passCheckResultMsg").html("비밀번호 불일치");
 					$("#passCheckResultMsg").css("color","red");

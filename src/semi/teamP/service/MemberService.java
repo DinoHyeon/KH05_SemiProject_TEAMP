@@ -201,17 +201,18 @@ public class MemberService {
 		response.getWriter().println(obj);
 	}
 
-	public void infoUpdateForm() throws IOException, ServletException {
+	public void infoUpdateForm() throws IOException{
 		String id = (String) request.getSession().getAttribute("loginId");
-		System.out.println("현재 접속한 회원의 아이디  : "+id);
-		
 		MemberDAO dao = new MemberDAO();
 		//아이디 이름 생일 이메일 휴대폰번호
 		MemberDTO dto = dao.infoUpdateForm(id);
 		
-		request.setAttribute("dto", dto);
-		RequestDispatcher dis = request.getRequestDispatcher("memberInfoForm.jsp");
-		dis.forward(request, response);
+		Gson json = new Gson();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("membetInfo", dto);
+		String obj = json.toJson(map);
+		response.setContentType("text/html; charset=UTF-8");
+		response.getWriter().println(obj);
 	}
 
 	public void memberPasswordCheck() throws IOException, ServletException {

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -57,7 +59,7 @@ public class GroupService {
 		response.getWriter().println(obj);
 	}
 	
-	public void groupCreate() throws IOException {
+	public void groupCreate() throws IOException, ServletException {
 		request.setCharacterEncoding("UTF-8");
 		GroupInfoDTO infoDto = new GroupInfoDTO();
 		infoDto.setMember_id(request.getParameter("groupHeadName"));
@@ -69,14 +71,17 @@ public class GroupService {
 		GroupDAO dao = new GroupDAO();
 		int success = dao.createGroup(infoDto);
 		
-		String page= "main_nonGroup.jsp";
+		String page = "main_nonGroup.jsp";
+		String msg = "그룹 생성에 실패했습니다.";
 		
 		if(success != 0) {
 			request.getSession().setAttribute("groupNum", success);
 			request.getSession().setAttribute("memberLv", "master");
-			page = "main_Group.jsp";
+			msg = "그룹 생성에 성공했습니다.";
 		}
-		response.sendRedirect(page);
+		request.setAttribute("msg", msg);
+		RequestDispatcher dis = request.getRequestDispatcher(page);
+		dis.forward(request, response);
 	}
 
 	public void groupDelete() throws IOException {
@@ -88,12 +93,14 @@ public class GroupService {
 		
 		//그룹을 삭제하면 해당 아이디의 그룹세션 삭제, 등급세션 변경
 		if(success) {
-			request.getSession().removeAttribute("groupNum");
+			request.getSession().setAttribute("groupNum",0);
 			request.getSession().setAttribute("memberLv","member");
+			groupIdx = (int) request.getSession().getAttribute("groupNum");
 		}		
 		Gson json = new Gson();
-		HashMap<String, Boolean> map = new HashMap<>();
+		HashMap<String, Object> map = new HashMap<>();
 		map.put("success", success);
+		map.put("groupIdx", groupIdx);
 		String obj = json.toJson(map);
 		response.getWriter().println(obj);
 	

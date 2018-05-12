@@ -228,7 +228,6 @@ public class MemberDAO {
 		}finally {
 			resClose();
 		}
-		
 		return dto;
 	}
 
