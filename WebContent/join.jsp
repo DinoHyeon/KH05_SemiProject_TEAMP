@@ -114,7 +114,7 @@
 	            font-size: 28px;
 	        }
 	    </style>
-	    <title>Insert title here</title>
+	    <title>Team P :: 회원가입</title>
 	</head>
 	<body>
 	    <div id="goIndex">Team P</div>

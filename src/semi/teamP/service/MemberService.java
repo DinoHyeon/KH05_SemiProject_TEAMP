@@ -50,9 +50,8 @@ public class MemberService {
 		String birth = request.getParameter("idYear")+request.getParameter("idMonth")+request.getParameter("idDay");
 		String email = request.getParameter("idEmail");
 		
-		
 		String findId="";
-		String msg = "일치하는 정보가 없습니다.";
+		String msg = "일치하는 회원정보가 없습니다.";
 		String page = "findInfo.jsp";
 		
 		MemberDAO dao = new MemberDAO();
@@ -64,6 +63,7 @@ public class MemberService {
 		}
 		
 		request.setAttribute("msg", msg);
+		request.setAttribute("name", name);
 		RequestDispatcher dis = request.getRequestDispatcher(page);
 		dis.forward(request, response);
 	}
@@ -162,12 +162,12 @@ public class MemberService {
 		
 		MemberDAO dao = new MemberDAO();
 		String result = dao.findPw(dto);
-		String msg = "로그인에 실패했습니다.";
+		String msg = "일치하는 회원정보가 없습니다.";
 		String page = "findInfo.jsp";
 			
 		if(!result.equals("")) {
 			msg = result;
-			page = "changPw.jsp";
+			page = "changePw.jsp";
 		}
 		
 		request.setAttribute("msg", msg);

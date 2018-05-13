@@ -127,7 +127,7 @@
 	            font-size: 28px;
 	        }
         </style>
-        <title>Insert title here</title>
+        <title>Team P :: 아이디찾기/비밀번호 재설정</title>
     </head>
     <body>
     	<div id="goIndex">Team P</div>
@@ -184,7 +184,7 @@
                     <tr><td>휴대폰</td></tr>
                     <tr><td><input type="text" name="pwPhone"/></td></tr>	
                 </table>
-                <input id="findPwBtn" type="button" value="비밀번호 재설정"/>
+               	<input id="findPwBtn" type="button" value="비밀번호 재설정"/>
             </form>
         </div>    
     </body>
@@ -216,6 +216,13 @@
                 $("select[name='pwDay']").append("<option value"+i+">"+i+"</option>");
             }
         })
+        
+        var msg = "${msg}";
+    	
+    	if(msg != ""){
+    		alert(msg);
+    		location.href="findInfo.jsp";
+    	}
         
      	$("#goIndex").click(function(){
 	        location.href="index.jsp"
@@ -253,7 +260,7 @@
             }else if ($("input[name='idEmail']").val()=="") {
                 alert("필수 정보를 모두 입력해주세요.")
             }else{
-                $("#findId").attr("type","submit");
+                $("#findIdBtn").attr("type","submit");
             }
         });
 
@@ -274,7 +281,7 @@
             }else if ($("input[name='pwPhone']").val()=="") {
                 alert("필수 정보를 모두 입력해주세요.")
             }else{
-                $("#findPw").attr("type","submit");
+                $("#findPwBtn").attr("type","submit");
             }
         });
     </script>
