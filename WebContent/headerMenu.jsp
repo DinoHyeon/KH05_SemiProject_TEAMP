@@ -99,6 +99,19 @@
 				height: 100%;
             }
             
+            /* 그룹정보 팝어 */
+            #popupContenMember{
+				position: absolute;
+			    display: none;
+			    z-index: 4;
+			    top: 13%;
+			    left: 18%;
+			    width: 60%;
+			    height: 75%;
+			    background-color: #004C63;
+			}
+			
+            
             /* 그룹관리 팝업 */
          	#popupContentMaster{
 				position: absolute;
@@ -130,6 +143,16 @@
 			}
 		
 			#groupMemberList{
+				position: absolute;
+				border: 4px solid #FFD724;
+				overflow: auto;
+				width: 40%;
+				height: 30%;
+				top: 53%;
+				left: 32%;
+			}
+			
+			#groupInquiryMemberList{
 				position: absolute;
 				border: 4px solid #FFD724;
 				overflow: auto;
@@ -256,6 +279,38 @@
 			<div id="groupDel">그룹 삭제</div>
 		</div>
         
+        <!-- 그룹원일 때 나오는 창 -->
+        <div id="popupContenMember"><!-- 그룹장일 때 나오는 팝업 창 -->
+			<div class="headerPopupClose">X</div>
+			<h2>그룹 정보</h2>
+			<table id="groupInfoInquiry">
+				<tr>
+					<td>그룹장 <span id="groupInfoInquiryMasterName"></span></td>
+				</tr>
+				<tr>
+					<td>그룹명</td>
+				</tr>
+				<tr>
+					<td><input type='hidden' id="groupInfoIdx"><span id="groupInfoInquiryName"></span></td>
+				</tr>
+				<tr>
+					<td>프로젝트 기간 - 시작</td>
+				</tr>	
+				<tr>
+					<td><input id="groupInfoInquiryStartDate" type="date"/></td>
+				</tr>
+				<tr>
+					<td>프로젝트 기간 - 종료</td>
+				</tr>						
+				<tr>
+					<td><input id="groupInfoInquiryEndDate" type="date"/></td>
+				</tr>					
+			</table>
+			<div id="groupmemberName">그룹원</div>
+			<table id="groupInquiryMemberList">
+			</table>
+			<div id="withdrawal">탈퇴</div>
+		</div>
 </body>
 <script>
 	var groupIdx = '${sessionScope.groupNum}';
@@ -297,7 +352,9 @@
 	//그룹원)그룹정보 버튼을 클릭했을 경우
 	$("#groupInfo").click(function() {
 		$("#groupBg").css("display","inline");
+		$("#popupContenMember").css("display","inline");
 		$(".headerPopupClose").css("display","inline");
+		groupInfoLoad();
 	})
 	
 	//그룹장)그룹관리 버튼을 클릭했을 경우
@@ -391,6 +448,11 @@
 			$("#popupContentInvite").css("display","none");
 			$("#popupContentMaster").css("display","inline");
 		}
+		
+		if($("#popupContenMember").css("display")!="none"){
+			$("#groupBg").css("display","none");
+			$("#popupContentMember").css("display","none");
+		}
 
 	})
 	
@@ -403,12 +465,19 @@
 		obj.success = function(data){
 			console.log(data.groupInfo);
 			groupName = data.groupInfo.group_name;
+			//그룹관리
 			$("#groupInfoMasterName").html(data.groupInfo.member_id);
 			$("#groupInfoIdx").val(data.groupInfo.group_idx);
 			$("#groupInfoName").val(data.groupInfo.group_name);
 			$("#groupInfoStartDate").val(data.groupInfo.group_StrartDay);
 			$("#groupInfoEndDate").val(data.groupInfo.group_EndDay);
 			
+			//그룹정보
+			$("#groupInfoInquiryMasterName").html(data.groupInfo.member_id);
+			$("#groupInfoInquiryIdx").val(data.groupInfo.group_idx);
+			$("#groupInfoInquiryName").html(data.groupInfo.group_name);
+			$("#groupInfoInquiryStartDate").val(data.groupInfo.group_StrartDay);
+			$("#groupInfoInquiryEndDate").val(data.groupInfo.group_EndDay);
 			//그룹 멤버 리스트
 			groupMemberListCall();
 			
@@ -472,13 +541,32 @@
 		ajaxCall(obj);
 	});
 	
+	
+	//그룹탈퇴
+	$("#withdrawal").click(function() {
+		obj.url="./groupWithdrawal";
+		obj.data = {groupIdx:groupIdx};
+		obj.success = function(data){
+			if(data.success){
+				alert("그룹에서 탈퇴하셨습니다.");
+				location.href="main_nonGroup.jsp";
+			}else{
+				alert("그룹탈퇴를 실패했습니다 ㅠㅠ");
+			}
+		};
+		ajaxCall(obj);
+	})
+	
 	//그룹 멤버조회
 	function groupMemberListCall(){
 		obj.url="./groupMemberList";
 		obj.data={groupIdx:groupIdx};
 		obj.success = function(data) {
-			console.log(data.groupMember);
+			console.log("멤버 그룹 조회");
 			 $("#groupMemberList").empty();
+			 $("#groupInquiryMemberList").empty();
+			 
+			 //그룹장
 			 data.groupMember.forEach(function(item,index){
 				 groupMemberContent += "<tr>";
 				 groupMemberContent += "<td><div id='groupMemberId' value="+item.groupMember_id+">"+item.groupMember_id+"</div></td>";
@@ -486,6 +574,18 @@
 				 groupMemberContent += "</tr>";
 				 
 				 $("#groupMemberList").append(groupMemberContent);
+				
+				 groupMemberContent="";
+			 })
+			 
+			 //그룹원
+			 data.groupMember.forEach(function(item,index){
+				 groupMemberContent += "<tr>";
+				 groupMemberContent += "<td><div id='groupMemberId' value="+item.groupMember_id+">"+item.groupMember_id+"</div></td>";
+				 groupMemberContent += "</tr>";
+				 
+				 $("#groupInquiryMemberList").append(groupMemberContent);
+				
 				 groupMemberContent="";
 			 })
 		}

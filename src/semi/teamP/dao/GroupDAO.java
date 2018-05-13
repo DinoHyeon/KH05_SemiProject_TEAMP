@@ -93,13 +93,12 @@ public class GroupDAO {
 		return groupIdx;
 	}
 
-	public GroupInfoDTO getGroupInfo(String memberId, int groupIdx) {
+	public GroupInfoDTO getGroupInfo(int groupIdx) {
 		GroupInfoDTO dto = new GroupInfoDTO();
-		String sql = "SELECT * FROM Group_project WHERE member_id=? AND group_idx=?";
+		String sql = "SELECT * FROM Group_project WHERE group_idx=?";
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, memberId);
-			ps.setInt(2, groupIdx);
+			ps.setInt(1, groupIdx);
 			
 			rs = ps.executeQuery();
 			
@@ -354,7 +353,30 @@ public class GroupDAO {
 		return success;
 	}
 
+	
+	//그룹탈퇴
+	public boolean groupWithdrawal(String memberId, int groupIdx) {
+		boolean success = false;
 
+		String sql = "DELETE FROM member_group WHERE member_id=? AND group_idx=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, memberId);
+			ps.setInt(2, groupIdx);
+			
+			if(ps.executeUpdate()>0) {
+				success = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return success;
+	}
+
+	
 	//인덱스 번호로 그룹 이름 찾기
 	private String groupNameFind(int groupIdx) {
 		String groupName="";

@@ -19,7 +19,7 @@ import semi.teamP.service.TodoService;
 
 @WebServlet({ "/login", "/findPw", "/findId", "/ChangePw", "/join", "/idOverlay", "/emailOverlay", "/infoUpdate", "/infoUpdateForm", "/logout", "/withdrawal", "/infoFormAccess", "/memberPasswordCheck"
 	,"/write", "/detail", "/updateForm", "/update", "/delete","/comunityList","/adminList", "/groupList"
-	,"/groupJoin", "/groupDetail", "/groupCreate", "/groupDelete", "/inviteMemberIdChk", "/groupInviteList", "/groupInvite", "/inviteRefuse", "/inviteAccept", "/memberOut", "/groupInfoUpdate", "/groupInfoUpdateForm", "/groupMemberList", "/memberChk" 
+	,"/groupJoin", "/groupDetail", "/groupCreate", "/groupDelete", "/inviteMemberIdChk", "/groupWithdrawal", "/groupInviteList", "/groupInvite", "/inviteRefuse", "/inviteAccept", "/memberOut", "/groupInfoUpdate", "/groupInfoUpdateForm", "/groupMemberList", "/memberChk" 
 	,"/replyWrite", "/replyUpdate", "/replyDelete", "/replyCheck", "/replyUpdateForm"
 	,"/planWrite", "/planWokerPick", "/planChange", "/planDelete", "/planDetail"
 	,"/todoDetail", "/todoWrite", "/todoUpdate", "/todoDelete", "/todoChange"
@@ -198,7 +198,11 @@ public class Controller extends HttpServlet {
 			group = new GroupService(request, response);
 			group.groupMemberOut();
 			break;
-			
+		case "/groupWithdrawal":
+			System.out.println("멤버 탈퇴 요청");
+			group = new GroupService(request, response);
+			group.groupWithdrawal();
+			break;		
 		case "/groupCreate":
 			System.out.println("그룹 생성 요청");
 			group = new GroupService(request, response);

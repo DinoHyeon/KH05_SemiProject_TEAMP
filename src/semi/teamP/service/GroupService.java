@@ -30,11 +30,11 @@ public class GroupService {
 
 	public void groupDetail() throws IOException {
 		int groupIdx = Integer.parseInt(request.getParameter("groupIdx"));
-		String memberId = (String) request.getSession().getAttribute("loginId");
-		System.out.println("그룹 정보 요청한 그룹번호 : "+groupIdx);
-		
+
 		GroupDAO dao = new GroupDAO();
-		GroupInfoDTO dto = dao.getGroupInfo(memberId,groupIdx);
+		GroupInfoDTO dto = dao.getGroupInfo(groupIdx);
+		
+		System.out.println("요청한 그룹 날짜 : "+dto.getGroup_StrartDay());
 		
 		Gson json = new Gson();
 		HashMap<String, Object> map = new HashMap<>();
@@ -223,6 +223,25 @@ public class GroupService {
 		map.put("success", success);
 		String obj = json.toJson(map);
 		response.getWriter().println(obj);
+	}
+
+	public void groupWithdrawal() throws IOException {
+		String memberId = (String) request.getSession().getAttribute("loginId");
+		int groupIdx = Integer.parseInt(request.getParameter("groupIdx"));
+		
+		GroupDAO dao = new GroupDAO();
+		boolean success = dao.groupWithdrawal(memberId,groupIdx);
+		
+		if(success) {
+			request.getSession().removeAttribute("groupNum");
+		}
+		
+		Gson json = new Gson();
+		HashMap<String, Boolean> map = new HashMap<>();
+		map.put("success", success);
+		String obj = json.toJson(map);
+		response.getWriter().println(obj);
+		
 	}
 
 
