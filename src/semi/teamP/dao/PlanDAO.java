@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import semi.teamP.dto.BoardDTO;
 import semi.teamP.dto.PlanDTO;
 
 public class PlanDAO {
@@ -105,6 +107,30 @@ public class PlanDAO {
 			resClose();
 		}
 		return success;
+	}
+
+
+
+	public ArrayList<PlanDTO> list() {
+		ArrayList<PlanDTO> list = new ArrayList<PlanDTO>();
+		String sql="SELECT * FROM bbs_pho ORDER BY idx DESC";
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				PlanDTO dto = new PlanDTO();
+				dto.setPlan_idx(rs.getInt("plan_idx"));
+				dto.setMember_id(rs.getString("member_id"));
+				dto.setPlan_content(rs.getString("plan_content"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return list;
+		
 	}
 }
 

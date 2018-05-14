@@ -199,7 +199,7 @@
             <div id="navi">
                 <button onclick="location.href='memberInfoForm.jsp'" id="myInfo">내정보</button>
                 <button onclick="location.href='/SemiProject_TeamP/adminList'" id="notice">공지사항</button>
-                <button id="plan">일정</button>
+                <button onclick="location.href='plan.jsp" id="plan">일정</button>
                 <button id="fileBbs">파일게시판</button>
                 <button onclick="location.href ='/SemiProject_TeamP/groupList'" id="groupBbs">그룹게시판</button>
                  <button onclick="location.href ='/SemiProject_TeamP/comunityList'" id="comunityBbs">의견나눔게시판</button>
