@@ -1,11 +1,9 @@
 package semi.teamP.dto;
 
-import java.sql.Date;
-
 public class PlanDTO {
    private int plan_idx;
-   private Date plan_startDay;
-   private Date plan_endDay;
+   private String plan_startDay;
+   private String plan_endDay;
    private String plan_content;
    private String plan_state;
    private int group_idx;
@@ -16,16 +14,16 @@ public class PlanDTO {
    public void setPlan_idx(int plan_idx) {
       this.plan_idx = plan_idx;
    }
-   public Date getPlan_startDay() {
+   public String getPlan_startDay() {
       return plan_startDay;
    }
-   public void setPlan_startDay(Date plan_startDay) {
-      this.plan_startDay = plan_startDay;
+   public void setPlan_startDay(String sDate) {
+      this.plan_startDay = sDate;
    }
-   public Date getPlan_endDay() {
+   public String getPlan_endDay() {
       return plan_endDay;
    }
-   public void setPlan_endDay(Date plan_endDay) {
+   public void setPlan_endDay(String plan_endDay) {
       this.plan_endDay = plan_endDay;
    }
    public String getPlan_content() {
