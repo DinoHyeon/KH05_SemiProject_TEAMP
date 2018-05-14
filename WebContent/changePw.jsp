@@ -93,9 +93,9 @@
                 <table>
                     <input type="hidden" name="userId" value="${msg}"/>
                     <tr><td>비밀번호</td></tr>
-                    <tr><td><input type="password" name="changePw" id="userPw"/></td></tr>
+                    <tr><td><input type="password" name="changePw" id="userPw" placeholder="숫자와 영문자 조합 8~16자리"/></td></tr>
                     <tr><td>비밀번호 확인</td></tr>
-                    <tr><td><input type="password" id="userPwChk" onkeyup="chk()"/><span id="userPwChkMsg"></span></td></tr>
+                    <tr><td><input type="password" id="userPwChk" onkeyup="chk()" placeholder="숫자와 영문자 조합 8~16자리"/><span id="userPwChkMsg"></span></td></tr>
                 </table>
                 <input id="changPw" type="button" value="비밀번호 변경">                               
             </form>
@@ -130,7 +130,20 @@
         }
 
         $("#changPw").click(function(){
-            if(!pwChk){
+        	var Pw_char = /^[a-z|0-9]{8,16}$/;
+			var userPw = $("#userPw").val();
+			
+        	if($("#userPw").val()==""||$("#userPwChk").val()==""){
+        		alert("변경하실 비밀번호를 입력해주세요.");
+        		$("#userPw").focus();
+        	}else if(!Pw_char.test(userPw)){
+				alert("비밀번호는 숫자와 영문자 조합으로 8~16자리를 사용해야 합니다.");
+				$("#userPw").val("");
+				$("#userPwChkMsg").html("사용 불가능");
+				$("#userPwChkMsg").css("color","red");
+				$("#userPw").focus();
+				idChk=false;
+			}else if(!pwChk){
                 alert("올바른 비밀번호를 입력해주세요.");
             }else{
                 $("#changPw").attr("type","submit");

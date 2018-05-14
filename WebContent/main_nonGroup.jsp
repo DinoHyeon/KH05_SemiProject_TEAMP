@@ -5,7 +5,7 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Team P</title>
 <style>
 	/* 페이지 영역을 잡기 위한 css 설정입니다. */
     #page{
@@ -39,7 +39,7 @@
 	    background-color: #004C63;
 	}
 	
-	/* 그룹 초대 팝업 */
+	/* 그룹 초대 리스트 팝업 */
 	#inviteListPopup{
 		position: absolute;
 	    display: none;
@@ -51,20 +51,163 @@
 	    background-color: #004C63;
 	}
 	
+     #inviteListPopup table{
+         position: absolute;
+         top: 26%;
+         left: 7.8%;
+         width: 84%;
+         height: 60%;
+         background-color: white;
+         border-collapse: collapse;
+         text-align: center;
+     }
+     
+     #inviteListPopup table td{
+         border: 2px solid #004C63;
+         vertical-align: text-top;
+     }
+     
+     #inviteListPopup h3{
+         position: absolute;
+         top: 87%;
+         left: 16.6%;
+         text-align: center;
+         color: #FFD724;
+     }
+     #inviteListPopup #groupNameTitle{
+         position: absolute;
+         top: 22%;
+         left: 14%;
+         text-align: center;
+         color: #FFD724;
+     }
+     #inviteListPopup #groupMasterNameTitle{
+         position: absolute;
+         top: 22%;
+         left: 31.4%;
+         text-align: center;
+         color: #FFD724;
+     }
+     #inviteListPopup #inviteContentTitle{
+         position: absolute;
+         top: 22%;
+         left: 46.8%;
+         text-align: center;
+         color: #FFD724;
+     }
+     #inviteListPopup #inviteDateTitle{
+         position: absolute;
+         top: 22%;
+         left: 58.9%;
+         text-align: center;
+         color: #FFD724;
+     }
+     #inviteListPopup #inviteResultTitle{
+         position: absolute;
+         top: 22%;
+         left: 75.4%;
+         text-align: center;
+         color: #FFD724;
+     }
+
 	.mainPopupClose{
 		position: absolute;
 		font-size: 18px;
 		font-weight: 900;
-		color: white;
+		color: #FFD724;
 		left: 97%;
 		top: 2%;
-		display: inline;
 	}
 	
-	table td{
-		border: 1px solid white;
-	}
+
+    #create {
+        position: absolute;
+        float: left;
+        width: 12%;
+        height: 6%;
+        background-color: #FFD724;
+        left: 38%;
+        border-radius: 8px;
+        color: #004D65;
+        font-weight: 900;
+        text-align: center;
+        line-height: 37px;
+        top: 52%;
+    }
+
+
 	
+	#inviteListBtn{
+        position: absolute;
+        float: left;
+        width: 12%;
+        height: 6%;
+        background-color: #FFD724;
+        left: 51.5%;
+        border-radius: 8px;
+        color: #004D65;
+        font-weight: 900;
+        text-align: center;
+        line-height: 37px;
+        top: 52%;
+    }
+    
+    #main_nonGroupMsg{
+        text-align: center;
+        position: absolute;
+        top: 33%;
+        left: 32.5%;
+    }
+    
+    .mainPopupTitle{
+        text-align: center;
+        color: #FFD724;
+        position: absolute;
+        top: 4%;
+        left: 42%;
+    }
+    
+    /* 그룹 생성 팝업 CSS */
+    #popupContent table{
+            position: absolute;
+            top: 24%;
+            left: 38%;
+            height: 47%;
+            width: 25.4%;
+        }
+    
+    #popupContent table td{
+        color: white;
+        font-weight: 530;
+    }
+    
+    #popupContent table td input{
+        width: 100%;
+        height: 91%;
+    }
+    
+    #popupContent table td span[id='groupMasterName']{
+		color: #FFD724;
+		font-weight: 550;
+		font-size: 15px;
+    }
+    
+    #createBnt{
+        position: absolute;
+        float: left;
+        width: 25.1%;
+        height: 7%;
+        background-color: #FFD724;
+        left: 38.4%;
+        border-radius: 8px;
+        color: #004D65;
+        font-weight: 900;
+        font-size: 16px;
+        text-align: center;
+        line-height: 37px;
+        top: 76%;
+        border: none;
+    }
 </style>
 </head>
 <body>
@@ -74,57 +217,61 @@
 	</div>
 	
 	
-	<div id="popupContent">
-			<div class="mainPopupClose">X</div>
-			<h1 style="color:#FFD724">그룹 생성</h1>
-			<form action="./groupCreate" method="post">
-				<table>
-					<tr>
-						<input name="groupHeadName" type="hidden" value= ${sessionScope.loginId}>
-						<td>그룹장 : ${sessionScope.loginId}</td>
-					</tr>
-					<tr>
-						<td>그룹명</td>
-					</tr>
-					<tr>
-						<td><input name="groupName" type="text"/></td>
-					</tr>
-					<tr>
-						<td>프로젝트 기간 - 시작</td>
-					</tr>								
-					<tr>
-						<td><input name="startDate" type="date"/></td>
-					</tr>
-				<tr>
-						<td>프로젝트 기간 - 종료</td>
-					</tr>								
-					<tr>
-						<td><input name="endDate" type="date"/></td>
-					</tr>		
-					<tr>
-						<td><input id="createBnt" type="button" value="그룹 생성"></td>
-					</tr>						
-				</table>
-			</form>
-	</div>
-	
-	
+	        <div id="popupContent">
+                <div class="mainPopupClose">X</div>
+                <h1 class="mainPopupTitle">그룹 생성</h1>
+                <form action="./groupCreate" method="post">
+                    <table>
+                        <tr>
+                            <input name="groupHeadName" type="hidden" value= ${sessionScope.loginId}>
+                            <td>그룹장 : <span id="groupMasterName">${sessionScope.loginId}</span></td>
+                        </tr>
+                        <tr>
+                            <td>그룹명</td>
+                        </tr>
+                        <tr>
+                            <td><input name="groupName" type="text"/></td>
+                        </tr>
+                        <tr>
+                            <td>프로젝트 기간 - 시작</td>
+                        </tr>								
+                        <tr>
+                            <td><input name="startDate" type="date"
+                            /></td>
+                        </tr>
+                    <tr>
+                            <td>프로젝트 기간 - 종료</td>
+                        </tr>								
+                        <tr>
+                            <td><input name="endDate" type="date"/></td>
+                        </tr>							
+                    </table>
+                    <input id="createBnt" type="button" value="그룹 생성">
+                </form>
+        </div>
 			
-	<div id="inviteListPopup">
-		<h1 style="color:#FFD724">그룹 초대</h1>
-		<div class="mainPopupClose">X</div>
-		<table id="inviteListBody">
-
-		</table>		
-	</div>
+    <div id="inviteListPopup">
+        <h1 class="mainPopupTitle">그룹 초대</h1>
+        <div class="mainPopupClose">X</div>
+        <div id="groupNameTitle">그룹명</div>
+        <div id="groupMasterNameTitle">그룹장</div>
+        <div id="inviteContentTitle">내용</div>
+        <div id="inviteDateTitle">날짜</div>
+        <div id="inviteResultTitle">수락/거절</div>
+        <table id="inviteListBody">
+        </table>	
+        <h3>※ 한 개의 그룹에만 가입할 수 있으니 신중하게 초대를 수락해주세요 ※</h3>
+    </div>
 		
 		
 	<%@include file="headerMenu.jsp"%>
 	<%@include file="sideMenu.jsp"%>
     <div id="page">
-		<h1>현재 가입되어 있는 그룹이 없습니다 :(</h1>
+		<h3 id="main_nonGroupMsg">현재 가입되어 있는 그룹이 없어요 :(<br>
+            멋진 그룹을 구성하거나 초대를 수락하는 건 어떨까요?
+        </h3>
 		<div id="create">그룹 생성</div>
-		<div id="inviteListBtn">그룹 초대</div>
+		<div id="inviteListBtn">초대 목록</div>
     </div>
 </body>
 <script>
@@ -146,7 +293,40 @@
 	obj.dataType="JSON";
 	obj.error=function(e){console.log(e)};
 
-
+	$(document).ready(function(){
+		if('${sessionScope.loginId}'==""){
+			alert("로그인이 필요한 서비스입니다.");
+			location.href="index.jsp";
+		}
+	});
+    
+    $("#create").mouseenter(function(){
+        $("#create").css("background","#00455A");
+        $("#create").css("color","#FFD724")
+        $("#create").mouseleave(function(){
+            $("#create").css("background","#FFD724");
+            $("#create").css("color","#004D65")
+        })
+    })
+    
+    $("#inviteListBtn").mouseenter(function(){
+        $("#inviteListBtn").css("background","#00455A");
+        $("#inviteListBtn").css("color","#FFD724")
+        $("#inviteListBtn").mouseleave(function(){
+            $("#inviteListBtn").css("background","#FFD724");
+            $("#inviteListBtn").css("color","#004D65")
+        })
+    })
+    
+    $("#createBnt").mouseenter(function(){
+        $("#createBnt").css("background","#00455A");
+        $("#createBnt").css("color","#FFD724")
+        $("#createBnt").mouseleave(function(){
+            $("#createBnt").css("background","#FFD724");
+            $("#createBnt").css("color","#004D65")
+        })
+    })
+    
 	$("#create").click(function() {
 		$("#bg").css("display","inline");
 		$("#popupContent").css("display","inline");
@@ -238,14 +418,6 @@
 		obj.success = function(data) {
 			 
 			  $("#inviteListBody").empty();
-			 
-			  $("#inviteListBody").append("<tr>"
-						+"<td>그룹명</td>"
-						+"<td>그룹장</td>"
-						+"<td>내용</td>"
-						+"<td>날짜</td>"
-						+"<td>수락/거절</td>"
-					+"</tr>");
 			 
 			 data.list.forEach(function(item,index){
 				 content +="<tr>";

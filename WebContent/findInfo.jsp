@@ -154,7 +154,7 @@
                             </td>
                         </tr>
                     <tr><td>이메일</td></tr>
-                    <tr><td><input type="email" name="idEmail"/></td></tr>		
+                    <tr><td><input type="email" name="idEmail" placeholder="teamP@email.com"/></td></tr>		
                 </table>
                 <input id="findIdBtn" type="button" value="아이디 찾기"/>
             </form>
@@ -180,9 +180,9 @@
                             </td>
                         </tr>
                     <tr><td>이메일</td></tr>
-                    <tr><td><input type="email" name="pwEmail"/></td></tr>		
+                    <tr><td><input type="email" name="pwEmail" placeholder="teamP@email.com"/></td></tr>		
                     <tr><td>휴대폰</td></tr>
-                    <tr><td><input type="text" name="pwPhone"/></td></tr>	
+                    <tr><td><input type="text" name="pwPhone" placeholder="010-1234-1234"/></td></tr>	
                 </table>
                	<input id="findPwBtn" type="button" value="비밀번호 재설정"/>
             </form>
@@ -247,40 +247,87 @@
             })
         })
 
+        
         //아이디 찾기
         $("#findIdBtn").click(function(){
+            var Name_char = /^[ㄱ-ㅎ|가-힣]+$/;
+    		var userName = $("input[name='idUserName']").val();
+    		
+    		var email_char = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    		var userEmail = $("input[name='idEmail']").val();
+        	
             if($("select[name='idYear']").val()==""){
                 alert("필수 정보를 모두 입력해주세요.")
+                $("select[name='idYear']").focus();
             }else if ($("select[name='idMonth']").val()=="") {
                 alert("필수 정보를 모두 입력해주세요.")
+                $("select[name='idMonth']").focus();
             }else if ($("select[name='idDay']").val()=="") {
                 alert("필수 정보를 모두 입력해주세요.")
+                $("select[name='idDay']").focus();
             }else if($("input[name='idUserName']").val()==""){
                 alert("필수 정보를 모두 입력해주세요.")
-            }else if ($("input[name='idEmail']").val()=="") {
+                $("select[name='idUserName']").focus();
+            }else if(!Name_char.test(userName)){//이름 입력제한
+				alert("이름은 한글입력만 가능합니다.")
+				$("input[name='idUserName']").val("");
+				$("select[name='idUserName']").focus();
+			}else if ($("input[name='idEmail']").val()=="") {
                 alert("필수 정보를 모두 입력해주세요.")
-            }else{
+            }else if(!email_char.test(userEmail)){
+            	alert("올바른 이메일 형식이 아닙니다.")
+            	$("input[name='idEmail']").val("");
+            	$("input[name='idEmail']").focus();
+			}else{
                 $("#findIdBtn").attr("type","submit");
             }
         });
 
         //비밀번호 찾기
         $("#findPwBtn").click(function(){
+            var Name_char = /^[ㄱ-ㅎ|가-힣]+$/;
+    		var userName = $("input[name='pwUserName']").val();
+    		
+    		var email_char = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    		var userEmail = $("input[name='pwEmail']").val();
+    		
+			var Phone_char = /^\d{3}-\d{3,4}-\d{4}$/;
+			var userPhone = $("input[name='pwPhone']").val()
+        	
             if($("select[name='pwYear']").val()==""){
                 alert("필수 정보를 모두 입력해주세요.")
+                $("select[name='pwYear']").focus();
             }else if ($("select[name='pwMonth']").val()=="") {
                 alert("필수 정보를 모두 입력해주세요.")
+                $("select[name='pwMonth']").focus();
             }else if ($("select[name='pwDay']").val()=="") {
                 alert("필수 정보를 모두 입력해주세요.")
+                $("select[name='pwDay']").focus();
             }else if($("input[name='pwUserName']").val()==""){
                 alert("필수 정보를 모두 입력해주세요.")
-            }else if ($("select[name='pwUserId']").val()=="") {
+                $("select[name='pwUserName']").focus();
+            }else if(!Name_char.test(userName)){//이름 입력제한
+				alert("이름은 한글입력만 가능합니다.")
+				$("input[name='pwUserName']").val("");
+				$("select[name='pwUserName']").focus();
+			}else if ($("select[name='pwUserId']").val()=="") {
                 alert("필수 정보를 모두 입력해주세요.")
+                $("select[name='pwUserId']").focus();
             }else if ($("input[name='pwEmail']").val()=="") {
                 alert("필수 정보를 모두 입력해주세요.")
-            }else if ($("input[name='pwPhone']").val()=="") {
+                $("select[name='pwEmail']").focus();
+            }else if(!email_char.test(userEmail)){
+            	alert("올바른 이메일 형식이 아닙니다.")
+            	$("input[name='pwEmail']").val("");
+                $("select[name='pwEmail']").focus();
+			}else if ($("input[name='pwPhone']").val()=="") {
                 alert("필수 정보를 모두 입력해주세요.")
-            }else{
+                $("select[name='pwPhone']").focus();
+            }else if(!Phone_char.test(userPhone)){
+				alert("휴대폰 번호는 '-'를 포함하여 작성해주세요.'");
+				$("select[name='pwPhone']").val("");
+				$("select[name='pwPhone']").focus();
+			}else{
                 $("#findPwBtn").attr("type","submit");
             }
         });

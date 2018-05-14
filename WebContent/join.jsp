@@ -131,9 +131,9 @@
 				</td>
 			</tr>
 			<tr><td>비밀번호</td></tr>
-			<tr><td><input type="password" id="userPw"/></td></tr>
+			<tr><td><input type="password" id="userPw" onkeyup="passInputChk()" placeholder="숫자와 영문자 조합 8~16자리"/></td></tr>
 			<tr><td>비밀번호 확인</td></tr>
-			<tr><td><input type="password" id="userPwChk" onkeyup="chk()"/><span id="userPwChkMsg"></span></td></tr>
+			<tr><td><input type="password" id="userPwChk" onkeyup="chk()" placeholder="숫자와 영문자 조합 8~16자리"/><span id="userPwChkMsg"></span></td></tr>
 			<tr><td>생년월일</td></tr>
 			<tr>
 				<td>
@@ -149,11 +149,11 @@
 				</td>
 			</tr>
 			<tr><td>휴대폰 번호</td></tr>
-			<tr><td><input type="text" id="phone"/></td></tr>
+			<tr><td><input type="text" id="phone" placeholder="010-1234-1234"/></td></tr>
 			<tr><td>이메일</td></tr>
 			<tr>
 				<td>
-					<input type="email" id="email"/>
+					<input type="email" id="email" placeholder="teamP@email.com">
 					<input id="emailOverlay" type="button" value="이메일 중복 체크"/>
 					<span id="emailOverlayMsg"></span>
 				</td>
@@ -228,10 +228,20 @@
 	    $("#goIndex").click(function(){
 	        location.href="index.jsp"
 	    })
+
 	    
 		//아이디 중복확인 버튼을 눌렀을 때 아이디 중복여부 검사
 		$("#idOverlay").click(function(){
-			if($("#userId").val()==""){
+	    	var input_char = /^[a-z|0-9]+$/;
+			var userId = $("#userId").val();
+			
+			if(!input_char.test(userId)){
+				alert("소문자와 숫자만 입력이 가능합니다.")
+				$("#userId").val("");
+				$("#idOverlayMsg").html("사용 불가능");
+				$("#idOverlayMsg").css("color","red");
+				idChk=false;
+			}else if($("#userId").val()==""){
 				$("#idOverlayMsg").html("미입력");
 				$("#idOverlayMsg").css("color","red");
 				idChk=false;
@@ -254,6 +264,19 @@
 			}
 		});
 		
+		//비밀번호 입력 제한
+		function passInputChk() {
+			var input_char = /^[a-z|0-9]+$/;
+			var userPw = $("#userPw").val();
+			if(!input_char.test(userPw)){
+				alert("소문자와 숫자만 입력이 가능합니다.")
+				$("#userPw").val("");
+				$("#userPwChkMsg").html("사용 불가능");
+				$("#userPwChkMsg").css("color","red");
+				idChk=false;
+			}
+		}
+		
 		//비밀번호 일치 확인
 		function chk(){
 		    if($("#userPw").val()==$("#userPwChk").val()){
@@ -269,7 +292,13 @@
 		
 		//이메일 중복확인 버튼을 눌렀을 때 이메일 중복여부 검사
 		$("#emailOverlay").click(function(){
-			if($("#email").val()==""){
+			var email_char = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+			var userEmail = $("#email").val();
+			if(!email_char.test(userEmail)){
+				$("#emailOverlayMsg").html("올바른 이메일 형식이 아닙니다.");
+				$("#emailOverlayMsg").css("color","red");
+				emailChk=false;
+			}else if($("#email").val()==""){
 				$("#emailOverlayMsg").html("미입력");
 				$("#emailOverlayMsg").css("color","red");
 				emailChk=false;
@@ -291,21 +320,46 @@
 				ajaxCall(obj);
 			}
 		});
+
 		
 		//입력하지 않은 값이 있는지 확인하고 데이터 전송
 		$("#join").click(function(){
+			var Name_char = /^[ㄱ-ㅎ|가-힣]+$/;
+			var userName = $("#userName").val();
+			
+			var Pw_char = /^[a-z|0-9]{8,16}$/;
+			var userPw = $("#userPw").val();
+			
+			var Phone_char = /^\d{3}-\d{3,4}-\d{4}$/;
+			var userPhone = $("#phone").val();
+			
 			if(!idChk){
 				alert("아이디 중복 체크를 실행 해 주세요!")
 			}else if($("#userName").val() == ""){
 				alert("필수 정보를 모두 입력해주세요.")
 				$("#userName").focus();
+			}else if(!Name_char.test(userName)){//이름 입력제한
+				alert("이름은 한글입력만 가능합니다.")
+				$("#userName").val("");
+				$("#userName").focus();
 			}else if(!pwChk){
 				//비밀번호 입력 확인
 				alert("필수 정보를 모두 입력해주세요.")
 				$("#userPw").focus();
+			}else if(!Pw_char.test(userPw)){
+				alert("비밀번호는 숫자와 영문자 조합으로 8~16자리를 사용해야 합니다.")
+				$("#userPw").val("");
+				$("#userPwChkMsg").html("사용 불가능");
+				$("#userPwChkMsg").css("color","red");
+				$("#userPw").focus();
+				idChk=false;
 			}else if($("#phone").val() == ""){
 				//휴대폰 번호 확인
 				alert("필수 정보를 모두 입력해주세요.")
+				$("#phone").focus();
+			}else if(!Phone_char.test(userPhone)){
+				alert("휴대폰 번호는 '-'를 포함하여 작성해주세요.'");
+				$("#phone").val("");
 				$("#phone").focus();
 			}else if($("#year").val()=="" & $("#month").val()=="" & $("#day").val()==""){
 				//생년월일

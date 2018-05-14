@@ -24,6 +24,13 @@
     </div>
 </body>
 <script>
+	$(document).ready(function() {
+		if(${sessionScope.loginId}==""||${sessionScope.groupNum}==0){
+			alert("로그인이 필요한 서비스입니다.");
+			location.href="index.jsp";
+		}
+	});
+	
 	//그룹 삭제 *그룹관리가 있는 페이지에는 모두 입력해야합니다.
 	$("#groupDel").click(function() {
 		//그룹 삭제 함수 호출

@@ -209,7 +209,7 @@
         
         <!-- 가입한 그룹이 없을 경우 나오는 header -->
       	<div id="Nongroup">
-			<h3 style="color: white;">가입하신 그룹이 없습니다.</h3>
+			<h3 style="color: white;">현재 참여하고 있는 그룹이 없습니다.</h3>
 	 	</div>
         <!-- 가입한 그룹이 있을 경우 나오는 header -->
         <div id="group">
