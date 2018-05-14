@@ -76,8 +76,6 @@ public class MemberService {
 		MemberDAO dao = new MemberDAO();
 		int success = dao.changePw(id, pw);
 		
-		System.out.println(success);
-		
 		if(success>0) {
 			request.setAttribute("msg", "비밀번호 변경이 완료되었습니다.");
 			RequestDispatcher dis = request.getRequestDispatcher("index.jsp");
@@ -125,8 +123,6 @@ public class MemberService {
 		String memberLv = dto.getMember_lv();
 		String memberName = dto.getMember_name();
 		int groupNum = dto.getMember_groupNum();
-		
-		System.out.println("현재 가입한 그룹 번호 : "+groupNum);
 		
 		boolean success = false;
 		
