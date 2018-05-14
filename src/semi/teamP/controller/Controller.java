@@ -17,9 +17,9 @@ import semi.teamP.service.ReplyService;
 import semi.teamP.service.TodoService;
 
 
-@WebServlet({ "/login", "/findPw", "/findId", "/ChangePw", "/join", "/idOverlay", "/emailOverlay", "/infoUpdate", "/infoUpdateForm", "/logout", "/withdrawal", "/infoFormAccess", "/memberDataAccess"
-	,"/write", "/detail", "/updateForm", "/update", "/delete","/comunityList","/adminList"
-	,"/groupJoin", "/groupDetail", "/groupCreate", "/groupDelete", "/inviteMemberIdChk", "/groupInviteList", "/groupInvite", "/inviteRefuse", "/inviteAccept", "/memberOut", "/groupInfoUpdate", "/groupInfoUpdateForm", "/groupMemberList", "/memberChk" 
+@WebServlet({ "/login", "/findPw", "/findId", "/ChangePw", "/join", "/idOverlay", "/emailOverlay", "/infoUpdate", "/infoUpdateForm", "/logout", "/withdrawal", "/infoFormAccess", "/memberPasswordCheck"
+	,"/write", "/detail", "/updateForm", "/update", "/delete","/comunityList","/adminList", "/groupList"
+	,"/groupJoin", "/groupDetail", "/groupCreate", "/groupDelete", "/inviteMemberIdChk", "/groupWithdrawal", "/groupInviteList", "/groupInvite", "/inviteRefuse", "/inviteAccept", "/memberOut", "/groupInfoUpdate", "/groupInfoUpdateForm", "/groupMemberList", "/memberChk" 
 	,"/replyWrite", "/replyUpdate", "/replyDelete", "/replyCheck", "/replyUpdateForm"
 	,"/planWrite", "/planWokerPick", "/planChange", "/planDelete", "/planDetail"
 	,"/todoDetail", "/todoWrite", "/todoUpdate", "/todoDelete", "/todoChange"
@@ -98,10 +98,10 @@ public class Controller extends HttpServlet {
 			member.emailOverlay();
 			break;
 		
-		case "/memberDataAccess":
-			System.out.println("회원 중요 정보 접근 요청");
+		case "/memberPasswordCheck":
+			System.out.println("회원 비밀번호 확인 요청");
 			member = new MemberService(request, response);
-			member.memberDataAccess();
+			member.memberPasswordCheck();
 			break;
 			
 		case "/infoUpdate":
@@ -170,17 +170,39 @@ public class Controller extends HttpServlet {
 			board.adminList();
 			break;
 			
+		case "/groupList":
+			System.out.println("그룹 리스트 요청");
+			board = new BoardService(request, response);
+			board.groupList();
+			break;
+			
 		case "/groupDetail":
 			System.out.println("그룹 정보 보기 요청");
 			group = new GroupService(request, response);
 			group.groupDetail();
 			break;
+		
+		case "/groupInfoUpdate":
+			System.out.println("그룹 정보 수정");
+			group = new GroupService(request, response);
+			group.groupInfoUpdate();
+			break;
+			
 		case "/groupMemberList":
 			System.out.println("그룹 멤버 조회 요청");
 			group = new GroupService(request, response);
 			group.groupMemberList();
 			break;
-		
+		case "/memberOut":
+			System.out.println("그룹 멤버 추방 요청");
+			group = new GroupService(request, response);
+			group.groupMemberOut();
+			break;
+		case "/groupWithdrawal":
+			System.out.println("멤버 탈퇴 요청");
+			group = new GroupService(request, response);
+			group.groupWithdrawal();
+			break;		
 		case "/groupCreate":
 			System.out.println("그룹 생성 요청");
 			group = new GroupService(request, response);

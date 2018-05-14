@@ -99,6 +99,19 @@
 				height: 100%;
             }
             
+            /* 그룹정보 팝어 */
+            #popupContenMember{
+				position: absolute;
+			    display: none;
+			    z-index: 4;
+			    top: 13%;
+			    left: 18%;
+			    width: 60%;
+			    height: 75%;
+			    background-color: #004C63;
+			}
+			
+            
             /* 그룹관리 팝업 */
          	#popupContentMaster{
 				position: absolute;
@@ -139,6 +152,16 @@
 				left: 32%;
 			}
 			
+			#groupInquiryMemberList{
+				position: absolute;
+				border: 4px solid #FFD724;
+				overflow: auto;
+				width: 40%;
+				height: 30%;
+				top: 53%;
+				left: 32%;
+			}
+			
 			#groupMemberList > td{
 				border: none;
 			}
@@ -170,13 +193,15 @@
         </style>
 </head>
 <body>
+	<%@include file="passCheck.jsp"%>
+
 	 <div id="header">
             <div id="navi">
-                <button onclick="location.href='memberInfoAccess.jsp'" id="myInfo">내정보</button>
+                <button onclick="location.href='memberInfoForm.jsp'" id="myInfo">내정보</button>
                 <button onclick="location.href='/SemiProject_TeamP/adminList'" id="notice">공지사항</button>
                 <button id="plan">일정</button>
                 <button id="fileBbs">파일게시판</button>
-                <button id="groupBbs">그룹게시판</button>
+                <button onclick="location.href ='/SemiProject_TeamP/groupList'" id="groupBbs">그룹게시판</button>
                  <button onclick="location.href ='/SemiProject_TeamP/comunityList'" id="comunityBbs">의견나눔게시판</button>
             </div>
         </div>
@@ -195,6 +220,7 @@
         
        	<div id="groupBg"></div><!-- 팝업이 띄워졌을 때 홈페이지에 깔리는 불투명한 배경 -->
        	
+       	
        	<div id="popupContentMaster"><!-- 그룹장일 때 나오는 팝업 창 -->
 			<div class="headerPopupClose">X</div>
 			<h2>그룹 관리</h2>
@@ -206,7 +232,7 @@
 					<td>그룹명</td>
 				</tr>
 				<tr>
-					<td><input id="groupInfoName" type="text"/></td>
+					<td><input type='hidden' id="groupInfoIdx"><input id="groupInfoName" type="text"/></td>
 				</tr>
 				<tr>
 					<td>프로젝트 기간 - 시작</td>
@@ -223,13 +249,11 @@
 			</table>
 			<div id="groupmemberName">그룹원</div>
 			<table id="groupMemberList">
-				<tr>
-					<td></td>
-					<td></td>
-				</tr>
 			</table>
 			<div id="invite">초대</div>
+			<div id="changeGroupInfo">그룹정보 수정</div>
 		</div>
+		
 		
 		<!-- 그룹 초대 팝업 -->
 		<div id="popupContentInvite">
@@ -252,14 +276,46 @@
 				</tr>
 			</table>
 			<input type="button" value="초대" onclick="groupInvite()">
-			<input type="button" value="초대" onclick="changeGroupInfo()">
 			<div id="groupDel">그룹 삭제</div>
 		</div>
         
+        <!-- 그룹원일 때 나오는 창 -->
+        <div id="popupContenMember"><!-- 그룹장일 때 나오는 팝업 창 -->
+			<div class="headerPopupClose">X</div>
+			<h2>그룹 정보</h2>
+			<table id="groupInfoInquiry">
+				<tr>
+					<td>그룹장 <span id="groupInfoInquiryMasterName"></span></td>
+				</tr>
+				<tr>
+					<td>그룹명</td>
+				</tr>
+				<tr>
+					<td><input type='hidden' id="groupInfoIdx"><span id="groupInfoInquiryName"></span></td>
+				</tr>
+				<tr>
+					<td>프로젝트 기간 - 시작</td>
+				</tr>	
+				<tr>
+					<td><input id="groupInfoInquiryStartDate" type="date"/></td>
+				</tr>
+				<tr>
+					<td>프로젝트 기간 - 종료</td>
+				</tr>						
+				<tr>
+					<td><input id="groupInfoInquiryEndDate" type="date"/></td>
+				</tr>					
+			</table>
+			<div id="groupmemberName">그룹원</div>
+			<table id="groupInquiryMemberList">
+			</table>
+			<div id="withdrawal">탈퇴</div>
+		</div>
 </body>
 <script>
 	var groupIdx = '${sessionScope.groupNum}';
 	var groupName = "";
+	var groupMemberContent = "";
 	
 	var obj = {};
 	var idx;//idex값을 저장할 전역 변수
@@ -296,15 +352,16 @@
 	//그룹원)그룹정보 버튼을 클릭했을 경우
 	$("#groupInfo").click(function() {
 		$("#groupBg").css("display","inline");
+		$("#popupContenMember").css("display","inline");
 		$(".headerPopupClose").css("display","inline");
+		groupInfoLoad();
 	})
 	
 	//그룹장)그룹관리 버튼을 클릭했을 경우
 	$("#groupManage").click(function() {
-
+		passCheckCss();
 		//그룹정보 호출 함수
 		groupInfoLoad();
-		
 		$("#groupBg").css("display","inline");
 		$("#popupContentMaster").css("display","inline");
 		$(".headerPopupClose").css("display","inline")
@@ -369,11 +426,11 @@
 					};
 			obj.success = function(data) {
 				if(data.success){
+					alert($("#inviteMember").val()+"님을 초대했습니다.");
 					$("#inviteMember").val("");
 					$("#inviteGroupName").val("");
 					$("#inviteMsg").val("");
 					$("#inviteMemberChkMsg").html("");
-					alert("초대를 성공했습니다.");
 					$("#popupContentInvite").css("display","none");
 					$("#popupContentMaster").css("display","inline");
 				}
@@ -391,6 +448,11 @@
 			$("#popupContentInvite").css("display","none");
 			$("#popupContentMaster").css("display","inline");
 		}
+		
+		if($("#popupContenMember").css("display")!="none"){
+			$("#groupBg").css("display","none");
+			$("#popupContentMember").css("display","none");
+		}
 
 	})
 	
@@ -403,34 +465,157 @@
 		obj.success = function(data){
 			console.log(data.groupInfo);
 			groupName = data.groupInfo.group_name;
+			//그룹관리
 			$("#groupInfoMasterName").html(data.groupInfo.member_id);
+			$("#groupInfoIdx").val(data.groupInfo.group_idx);
 			$("#groupInfoName").val(data.groupInfo.group_name);
 			$("#groupInfoStartDate").val(data.groupInfo.group_StrartDay);
 			$("#groupInfoEndDate").val(data.groupInfo.group_EndDay);
 			
- 			//그룹 멤버조회
-			obj.url="./groupMemberList";
-			obj.data={groupIdx:groupIdx};
-			obj.success = function(data) {
-				 console.log(data.list);
-			}
-			ajaxCall(obj);
+			//그룹정보
+			$("#groupInfoInquiryMasterName").html(data.groupInfo.member_id);
+			$("#groupInfoInquiryIdx").val(data.groupInfo.group_idx);
+			$("#groupInfoInquiryName").html(data.groupInfo.group_name);
+			$("#groupInfoInquiryStartDate").val(data.groupInfo.group_StrartDay);
+			$("#groupInfoInquiryEndDate").val(data.groupInfo.group_EndDay);
+			//그룹 멤버 리스트
+			groupMemberListCall();
 			
 		};
 		ajaxCall(obj);
 	}
 	
 	//그룹 정보 수정
-	function changeGroupInfo() {
-		//오늘
+	$("#changeGroupInfo").click(function name() {
+		var startDay = new Date($("#groupInfoStartDate").val());
+		var endDay = new Date($("#groupInfoEndDate").val());
+
+		if($("#groupInfoName").val()==""){
+			alert("그룹명을 입력해주세요.")
+			$("#groupInfoName").focus();
+		}else if($("#groupInfoStartDate").val()==""){
+			alert("프로젝트 시작일을 입력해주세요.")
+			$("#groupInfoStartDate").focus();			
+		}else if($("#groupInfoEndDate").val()==""){
+			alert("프로젝트 종료일을 입력해주세요.")
+			$("#groupInfoEndDate").focus();			
+		}else if(startDay>endDay){
+			alert("프로젝트 시작일을 재입력해주세요.")
+			$("#groupInfoStartDate").focus();
+		}else{
+			obj.url="./groupInfoUpdate";
+			obj.data={};
+			obj.data={
+					groupInfoIdx:$('#groupInfoIdx').val(),
+					groupInfoName:$('#groupInfoName').val(),
+					groupInfoStartDate:$('#groupInfoStartDate').val(),
+					groupInfoEndDate:$('#groupInfoEndDate').val()
+					};
+			obj.success = function(data){
+				if(data.success){
+					groupInfoLoad();
+					alert("그룹 정보수정을 완료했습니다.");
+				}else{
+					alert("그룹 정보수정을 완료하지 못 했습니다.");
+				}
+			};
+			ajaxCall(obj);
+		}
+	})
+	
+	
+	//회원추방
+	$(document).on('click','#out', function() {
+		var groupMemberId = $(this).attr("value");
+		passCheckCss();
+		obj.url="./memberOut";
+		obj.data = {groupMemberId:groupMemberId};
+		obj.success = function(data){
+			if(data.success){
+				alert(groupMemberId+"님을 추방했습니다.");
+				groupMemberListCall();
+			}else{
+				alert("멤버 추방에 실패했습니다 TT..");
+			}
+		};
+		ajaxCall(obj);
+	});
+	
+	
+	//그룹탈퇴
+	$("#withdrawal").click(function() {
+		obj.url="./groupWithdrawal";
+		obj.data = {groupIdx:groupIdx};
+		obj.success = function(data){
+			if(data.success){
+				alert("그룹에서 탈퇴하셨습니다.");
+				location.href="main_nonGroup.jsp";
+			}else{
+				alert("그룹탈퇴를 실패했습니다 ㅠㅠ");
+			}
+		};
+		ajaxCall(obj);
+	})
+	
+	//그룹 멤버조회
+	function groupMemberListCall(){
+		obj.url="./groupMemberList";
+		obj.data={groupIdx:groupIdx};
+		obj.success = function(data) {
+			console.log("멤버 그룹 조회");
+			 $("#groupMemberList").empty();
+			 $("#groupInquiryMemberList").empty();
+			 
+			 //그룹장
+			 data.groupMember.forEach(function(item,index){
+				 groupMemberContent += "<tr>";
+				 groupMemberContent += "<td><div id='groupMemberId' value="+item.groupMember_id+">"+item.groupMember_id+"</div></td>";
+				 groupMemberContent += "<td><div id='out' value="+item.groupMember_id+">강퇴</div></td>";
+				 groupMemberContent += "</tr>";
+				 
+				 $("#groupMemberList").append(groupMemberContent);
+				
+				 groupMemberContent="";
+			 })
+			 
+			 //그룹원
+			 data.groupMember.forEach(function(item,index){
+				 groupMemberContent += "<tr>";
+				 groupMemberContent += "<td><div id='groupMemberId' value="+item.groupMember_id+">"+item.groupMember_id+"</div></td>";
+				 groupMemberContent += "</tr>";
+				 
+				 $("#groupInquiryMemberList").append(groupMemberContent);
+				
+				 groupMemberContent="";
+			 })
+		}
+
+		ajaxCall(obj);
 	}
 	
-	//그룹 삭제
-	$("#groupDel").click(function() {
+	
+	function groupDel() {
 		//그룹 삭제 전 회원 비밀번호로 체크
+		passCheckCss();
 		//오늘
-		
-	});
+		obj.url="./groupDelete";
+		obj.data={};
+		obj.data={groupInfoIdx:$('#groupInfoIdx').val()};
+		obj.success = function(data){
+			if(data.success){
+				if(data.groupIdx
+						!=0){
+					location.href="main_Group.jsp"
+				}else{
+					location.href="main_nonGroup.jsp"
+				}
+				alert("그룹을 삭제했습니다.");
+			}else{
+				alert("그룹 삭제를 못 했습니다.");
+			}
+		};
+		ajaxCall(obj);
+	};
 	
 	function ajaxCall(param){
 		console.log(param);

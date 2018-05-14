@@ -50,9 +50,8 @@ public class MemberService {
 		String birth = request.getParameter("idYear")+request.getParameter("idMonth")+request.getParameter("idDay");
 		String email = request.getParameter("idEmail");
 		
-		
 		String findId="";
-		String msg = "일치하는 정보가 없습니다.";
+		String msg = "일치하는 회원정보가 없습니다.";
 		String page = "findInfo.jsp";
 		
 		MemberDAO dao = new MemberDAO();
@@ -64,6 +63,7 @@ public class MemberService {
 		}
 		
 		request.setAttribute("msg", msg);
+		request.setAttribute("name", name);
 		RequestDispatcher dis = request.getRequestDispatcher(page);
 		dis.forward(request, response);
 	}
@@ -162,12 +162,12 @@ public class MemberService {
 		
 		MemberDAO dao = new MemberDAO();
 		String result = dao.findPw(dto);
-		String msg = "로그인에 실패했습니다.";
+		String msg = "일치하는 회원정보가 없습니다.";
 		String page = "findInfo.jsp";
 			
 		if(!result.equals("")) {
 			msg = result;
-			page = "changPw.jsp";
+			page = "changePw.jsp";
 		}
 		
 		request.setAttribute("msg", msg);
@@ -201,36 +201,34 @@ public class MemberService {
 		response.getWriter().println(obj);
 	}
 
-	public void infoUpdateForm() throws IOException, ServletException {
+	public void infoUpdateForm() throws IOException{
 		String id = (String) request.getSession().getAttribute("loginId");
-		System.out.println("현재 접속한 회원의 아이디  : "+id);
-		
 		MemberDAO dao = new MemberDAO();
 		//아이디 이름 생일 이메일 휴대폰번호
 		MemberDTO dto = dao.infoUpdateForm(id);
 		
-		request.setAttribute("dto", dto);
-		RequestDispatcher dis = request.getRequestDispatcher("memberInfoForm.jsp");
-		dis.forward(request, response);
+		Gson json = new Gson();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("membetInfo", dto);
+		String obj = json.toJson(map);
+		response.setContentType("text/html; charset=UTF-8");
+		response.getWriter().println(obj);
 	}
 
-	public void memberDataAccess() throws IOException, ServletException {
+	public void memberPasswordCheck() throws IOException, ServletException {
 		String id = (String) request.getSession().getAttribute("loginId");
 		String pw = request.getParameter("memberPass");
 		
 		System.out.println(id+" / "+pw);
 		
 		MemberDAO dao = new MemberDAO();
-		boolean success = dao.memberDataAccess(id,pw);
+		boolean success = dao.memberPasswordCheck(id,pw);
 		
-		if(success) {
-			response.sendRedirect("./infoUpdateForm");
-		}else {
-			request.setAttribute("msg", "비밀번호가 일치하지 않습니다.");
-			RequestDispatcher dis = request.getRequestDispatcher("memberInfoAccess.jsp");
-			dis.forward(request, response);
-		}
-		
+		Gson json = new Gson();
+		HashMap<String, Boolean> map = new HashMap<String, Boolean>();
+		map.put("success", success);
+		String obj = json.toJson(map);
+		response.getWriter().println(obj);
 	}
 
 

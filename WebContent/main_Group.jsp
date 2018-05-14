@@ -24,5 +24,10 @@
     </div>
 </body>
 <script>
+	//그룹 삭제 *그룹관리가 있는 페이지에는 모두 입력해야합니다.
+	$("#groupDel").click(function() {
+		//그룹 삭제 함수 호출
+		groupDel();
+	});
 </script>
 </html>

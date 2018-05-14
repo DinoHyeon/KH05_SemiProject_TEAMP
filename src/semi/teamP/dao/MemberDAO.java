@@ -228,13 +228,12 @@ public class MemberDAO {
 		}finally {
 			resClose();
 		}
-		
 		return dto;
 	}
 
-	public boolean memberDataAccess(String id, String pw) {
+	public boolean memberPasswordCheck(String id, String pw) {
 		boolean success = false;
-		String sql = "SELECT member_id, member_lv, member_name FROM member WHERE member_id=? AND member_pw=?";
+		String sql = "SELECT * FROM member WHERE member_id=? AND member_pw=?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, id);

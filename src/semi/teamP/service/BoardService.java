@@ -22,11 +22,14 @@ public class BoardService {
 
 	// 글쓰기
 	public void write() throws IOException {
+		
 		BoardDTO dto = new BoardDTO();
 		dto.setMember_id((String)request.getSession().getAttribute("loginId"));
 		dto.setBbs_name(request.getParameter("bbs_name"));
 		dto.setBbs_subject(request.getParameter("bbs_subject"));
 		dto.setBbs_content(request.getParameter("bbs_content"));
+		dto.setGroup_idx((int)request.getSession().getAttribute("groupNum"));	
+		
 		BoardDAO dao = new BoardDAO();
 		int idx = dao.write(dto);
 		
@@ -104,6 +107,15 @@ public class BoardService {
 		RequestDispatcher dis = request.getRequestDispatcher("TeamPBbs/adminBbs.jsp");
 		dis.forward(request, response);
 		
+	}
+	//그룹 리스트 불러오기
+	public void groupList() throws ServletException, IOException {
+		int group_idx = (int)request.getSession().getAttribute("groupNum");
+		BoardDAO dao = new BoardDAO();
+		ArrayList<BoardDTO> list = dao.groupList(group_idx);
+		request.setAttribute("list", list);
+		RequestDispatcher dis = request.getRequestDispatcher("TeamPBbs/groupBbs.jsp");
+		dis.forward(request, response);
 	}
 
 }

@@ -5,31 +5,132 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<title>Insert title here</title>
+<title>Team P</title>
 <style>
-	table,td{
-		border: 1px solid black;
-		border-collapse: collapse;
+	table{
+        position: absolute;
+        float: left;
+        left: 40%;
+        top: 33%;
+        width: 40%;
+        height: 22%;
+        color: white;
 	}
 	
 	input{
 		border-width: 0px;
+        margin: 5px;
+        width: 40%;
+        height: 79%;
 	}
+    
+    body{
+        background-color: #004D65;
+    }
+    
+    #join{
+        width: 6%;
+        height: 5%;
+        background-color: #FFD724;
+        border-radius: 8px;
+        position: absolute;
+        left: 93%;
+        top: 2%;
+        text-align: center;
+        line-height: 37px;
+        font-weight: 600;
+        color: #004D65;
+    }
+    
+    #login{
+        position: absolute;
+        float: left;
+        width: 16%;
+        height: 5%;
+        background-color: #FFD724;
+        left: 40.5%;
+        border-radius: 8px;
+        color: #004D65;
+        font-weight: 900;
+        text-align: center;
+        line-height: 40px;
+        top: 58%;
+    }
+    
+    #findIdPw{
+       position: absolute;
+        float: left;
+        width: 16%;
+        height: 5%;
+        background-color: #FFD724;
+        left: 40.5%;
+        border-radius: 8px;
+        color: #004D65;
+        font-weight: 900;
+        text-align: center;
+        line-height: 37px;
+        top: 65%;
+    }
+    
+    #title{
+    position: absolute;
+    left: 43%;
+    top: 23%;
+    font-size: 50px;
+    font-weight: 900;
+    color: #FFD724;
+    }
 </style>
 </head>
 <body>
-	<button onclick="location.href='join.jsp'">회원가입</button>
-	TeamP
+    <div id="join">회원가입</div>
+	<div id="title">TeamP</div>
 	<table>
 		<tr><td>아이디</td></tr>
 		<tr><td><input type="text" id="userId"/></td></tr>
 		<tr><td>비밀번호</td></tr>
 		<tr><td><input type="password" id="userPw"/></td></tr>
-		<tr><td><button id="login">로그인</button></td></tr>
 	</table>
-	<button onclick="location.href='findInfo.jsp'">아이디/비밀번호 찾기</button>
+    <div id="login">로그인</div>
+	<div id="findIdPw">아이디/비밀번호 찾기</div>
 </body>
+
 <script>
+	$("#login").mouseenter(function(){
+	    $("#login").css("background","#00455A");
+	    $("#login").css("color","#FFD724")
+	    $("#login").mouseleave(function(){
+	        $("#login").css("background","#FFD724");
+	        $("#login").css("color","#004D65")
+	    })
+	})
+
+	$("#join").mouseenter(function(){
+        $("#join").css("background","#00455A");
+        $("#join").css("color","#FFD724")
+        $("#join").mouseleave(function(){
+            $("#join").css("background","#FFD724");
+            $("#join").css("color","#004D65")
+        })
+    })
+    
+    $("#findIdPw").mouseenter(function(){
+        $("#findIdPw").css("background","#00455A");
+        $("#findIdPw").css("color","#FFD724")
+        $("#findIdPw").mouseleave(function(){
+            $("#findIdPw").css("background","#FFD724");
+            $("#findIdPw").css("color","#004D65")
+        })
+    })
+	
+	$("#join").click(function() {
+		location.href='join.jsp';
+	})
+
+	$("#findIdPw").click(function() {
+		location.href='findInfo.jsp';
+	})
+	
 	$("#login").click(function() {
 		$.ajax({
 			type:"post",

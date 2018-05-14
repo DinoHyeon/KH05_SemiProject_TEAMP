@@ -68,21 +68,21 @@ public class BoardDAO {
 	//글쓰기
 	public int write(BoardDTO dto) {
 		long idx = 0;
-		String sql = "INSERT INTO Bbs(bbs_idx, bbs_name, bbs_subject, bbs_content, member_id) "
-				+ "VALUES(BBS_IDX_SEQ.NEXTVAL,?,?,?,?)";
+		String sql = "INSERT INTO Bbs(bbs_idx, bbs_name, bbs_subject, bbs_content, group_idx, member_id) "
+				+ "VALUES(BBS_IDX_SEQ.NEXTVAL,?,?,?,?,?)";
 		try {
 			ps = conn.prepareStatement(sql, new String[] {"bbs_idx"});
 			ps.setString(1, dto.getBbs_name());
 			ps.setString(2, dto.getBbs_subject());
 			ps.setString(3, dto.getBbs_content());
-			ps.setString(4, dto.getMember_id());
+			ps.setInt(4, dto.getGroup_idx());
+			ps.setString(5, dto.getMember_id());		
 			ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
 			if(rs.next()) {
 				idx = rs.getLong(1);
 				dto.setBbs_idx((int) idx);
 			}
-			System.out.println(dto.getBbs_idx());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -173,6 +173,33 @@ public class BoardDAO {
 		String sql = "SELECT * FROM Bbs WHERE member_id = 'admin' ORDER BY bbs_idx DESC";
 		try {
 			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				BoardDTO dto = new BoardDTO();
+				dto.setBbs_idx(rs.getInt("bbs_idx"));
+				dto.setBbs_name(rs.getString("bbs_name"));
+				dto.setBbs_subject(rs.getString("bbs_subject"));
+				dto.setBbs_date(rs.getDate("bbs_date"));
+				dto.setBbs_bHit(rs.getInt("bbs_bHit"));
+				dto.setMember_id(rs.getString("member_id"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return list;
+	}
+	
+	//그룹 리스트 불러오기
+	public ArrayList<BoardDTO> groupList(int group_idx) {
+		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
+		String sql = "SELECT * FROM Bbs WHERE bbs_name = 'groupBbs' AND group_idx = ? ORDER BY bbs_idx DESC";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, group_idx);
+			ps.executeUpdate();
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				BoardDTO dto = new BoardDTO();

@@ -4,7 +4,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style>
@@ -41,7 +40,7 @@
 				<tr>
 					<td>${bbs.bbs_idx}</td>
 					<td>${bbs.bbs_name}</td>
-					<td><a href="detail?idx=${bbs.bbs_idx}" onclick="location.reload()">${bbs.bbs_subject }</a></td>
+					<td><a href="detail?idx=${bbs.bbs_idx}">${bbs.bbs_subject }</a></td>
 					<td>${bbs.member_id }</td>
 					<td>${bbs.bbs_date }</td>
 					<td>${bbs.bbs_bHit }</td>
@@ -49,13 +48,13 @@
 			</c:forEach>
 		</table>
 		
-		<c:if test="${sessionScope.loginId != 'admin'}">
-			<button onclick="location.href = 'TeamPBbs/writeForm.jsp'">글쓰기</button>
+		<!-- 마스터 일때만 버튼 보이기 -->
+		<c:if test="${sessionScope.memberLv == 'master' }">
+			<button onclick="location.href = 'TeamPBbs/gmWriteForm.jsp'">글쓰기</button>
 		</c:if>
 		
     </div>
 </body>
 <script>
-
 </script>
 </html>

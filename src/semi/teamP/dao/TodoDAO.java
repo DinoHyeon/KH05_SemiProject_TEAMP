@@ -63,13 +63,14 @@ public class TodoDAO {
 
 	public ArrayList<TodoDTO> list(String loginId) {
 		ArrayList<TodoDTO> list = new ArrayList<TodoDTO>(); //list변수만들어주고
-		String sql="SELECT todo_content,member_id FROM Todo WHERE member_id=? ORDER BY todo_idx DESC";
+		String sql="SELECT todo_idx,todo_content,member_id FROM Todo WHERE member_id=? ORDER BY todo_idx DESC";
 		try {
 			ps=conn.prepareStatement(sql);
 			ps.setString(1, loginId);
 			rs=ps.executeQuery();
 			while(rs.next()){ 
 				TodoDTO dto = new TodoDTO();	
+				dto.setTo_do_idx(rs.getInt("todo_idx"));
 				dto.setTodo_content(rs.getString("todo_content"));
 				dto.setMember_id(rs.getString("member_id"));
 				list.add(dto);//dto 를 list 에 담기
@@ -83,16 +84,14 @@ public class TodoDAO {
 	}
 
 
-	public int delete(String[] delList) {
+	public int delete(String delcontent) {
 		String sql="DELETE FROM Todo WHERE todo_idx=?";
 		int delCnt=0;
 		try {
-			for(int i=0; i<delList.length; i++) {
 				ps=conn.prepareStatement(sql);
-				ps.setInt(1,Integer.parseInt(delList[i]));
-				delCnt += ps.executeUpdate();
+				ps.setInt(1,Integer.parseInt(delcontent));
+				delCnt=ps.executeUpdate();
 				ps.close();	
-			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
