@@ -9,6 +9,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import oracle.net.aso.a;
 import oracle.net.aso.s;
 import semi.teamP.dto.MemberDTO;
 
@@ -283,4 +284,23 @@ public class MemberDAO {
 		resClose();
 		return success;
 	}
+	
+
+	public boolean withdrawal(String memberId) {
+		boolean success = false;
+		String sql = "DELETE FROM member WHERE member_id = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, memberId);
+			if(ps.executeUpdate()>0) {
+				success = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return success;
+	}
+
 }

@@ -1,12 +1,15 @@
 package semi.teamP.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
 
 import semi.teamP.service.AdminService;
 import semi.teamP.service.BoardService;
@@ -18,7 +21,7 @@ import semi.teamP.service.TodoService;
 
 
 @WebServlet({ "/login", "/findPw", "/findId", "/ChangePw", "/join", "/idOverlay", "/emailOverlay", "/infoUpdate", "/infoUpdateForm", "/logout", "/withdrawal", "/infoFormAccess", "/memberPasswordCheck"
-	,"/write", "/detail", "/updateForm", "/update", "/delete","/comunityList","/adminList", "/groupList"
+	,"/write", "/detail", "/updateForm", "/update", "/delete","/comunityList","/adminList", "/groupList", "/createMenuSession"
 	,"/groupJoin", "/groupDetail", "/groupCreate", "/groupDelete", "/inviteMemberIdChk", "/groupWithdrawal", "/groupInviteList", "/groupInvite", "/inviteRefuse", "/inviteAccept", "/memberOut", "/groupInfoUpdate", "/groupInfoUpdateForm", "/groupMemberList", "/memberChk" 
 	,"/replyWrite", "/replyUpdate", "/replyDelete", "/replyCheck", "/replyUpdateForm"
 	,"/planWrite", "/planWokerPick", "/planChange", "/planDelete", "/planDetail"
@@ -56,6 +59,19 @@ public class Controller extends HttpServlet {
 		AdminService admin = null;
 		
 		switch (subAddr) {
+		case "/createMenuSession":
+			System.out.println("메뉴세션 생성 요청");
+			String menu = request.getParameter("menuName");
+			request.getSession().setAttribute("menuName", menu);
+			if(request.getSession().getAttribute("menuName")!=null) {
+				Gson json = new Gson();
+				HashMap<String, String> map = new HashMap<>();
+				map.put("menu", menu);
+				String obj = json.toJson(map);
+				response.getWriter().println(obj);
+			}
+			break;
+			
 		case "/login":
 			System.out.println("로그인 요청");
 			member = new MemberService(request, response);
@@ -199,7 +215,7 @@ public class Controller extends HttpServlet {
 			group.groupMemberOut();
 			break;
 		case "/groupWithdrawal":
-			System.out.println("멤버 탈퇴 요청");
+			System.out.println("그룹 탈퇴 요청");
 			group = new GroupService(request, response);
 			group.groupWithdrawal();
 			break;		

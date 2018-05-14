@@ -107,9 +107,23 @@ public class MemberService {
 		request.getSession().removeAttribute("groupNum");
 	}
 
-	public void withdrawal() {
-		// TODO Auto-generated method stub
+	public void withdrawal() throws IOException {
+		String memberId = request.getParameter("memberId");
+		System.out.println("회원 탈퇴 요청 아이디 : "+memberId);
 		
+		MemberDAO dao = new MemberDAO();
+		boolean success = dao.withdrawal(memberId);
+		
+		if(success) {
+			//로그인 세션
+			request.getSession().removeAttribute("userId");
+		}
+		
+		Gson json = new Gson();
+		HashMap<String, Boolean> map = new HashMap<>();
+		map.put("succcess", success);
+		String obj = json.toJson(map);
+		response.getWriter().println(obj);
 	}
 
 	public void login() throws IOException{

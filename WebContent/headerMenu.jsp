@@ -20,7 +20,7 @@
             
             #navi{
                 position: absolute;
-                background-color: none;
+                background-color:white;
                 left : 61%;
                 top : 15.7%;
                 width: 45%;
@@ -28,7 +28,7 @@
             
             #navi button{
                 border: none;
-                background-color: white;
+                background-color:white;
                 font-size: 14px;
                 padding : 3%;
                 color : #004C63;
@@ -197,12 +197,12 @@
 
 	 <div id="header">
             <div id="navi">
-                <button onclick="location.href='memberInfoForm.jsp'" id="myInfo">내정보</button>
-                <button onclick="location.href='/SemiProject_TeamP/adminList'" id="notice">공지사항</button>
-                <button id="plan">일정</button>
-                <button id="fileBbs">파일게시판</button>
-                <button onclick="location.href ='/SemiProject_TeamP/groupList'" id="groupBbs">그룹게시판</button>
-                 <button onclick="location.href ='/SemiProject_TeamP/comunityList'" id="comunityBbs">의견나눔게시판</button>
+                <button class="menu" onclick="location.href='memberInfoForm.jsp'" id="myInfo">내정보</button>
+                <button class="menu" onclick="location.href='/SemiProject_TeamP/adminList'" id="notice">공지사항</button>
+                <button class="menu" id="plan">일정</button>
+                <button class="menu" id="fileBbs">파일게시판</button>
+                <button class="menu" onclick="location.href ='/SemiProject_TeamP/groupList'" id="groupBbs">그룹게시판</button>
+                 <button class="menu" onclick="location.href ='/SemiProject_TeamP/comunityList'" id="comunityBbs">의견나눔게시판</button>
             </div>
         </div>
         
@@ -347,6 +347,40 @@
 			//member(그룹원)인 경우 
 			$("#groupManage").css("display","none")
 		}
+		
+		if('${sessionScope.menuName}'!=""){
+			switch ('${sessionScope.menuName}') {
+			case "myInfo":
+				$("#myInfo").css("font-weight","600");
+				break;
+			case "notice":
+				$("#notice").css("font-weight","600");
+				break;
+			case "plan":
+				$("#plan").css("font-weight","600");
+				break;
+			case "fileBbs":
+				$("#fileBbs").css("font-weight","600");
+				break;
+			case "groupBbs":
+				$("#groupBbs").css("font-weight","600");
+				break;	
+			case "comunityBbs":
+				$("#comunityBbs").css("font-weight","600");
+				break;					
+			}
+		}
+	})
+	
+	//메뉴 클릭시 세션부여
+	$(".menu").click(function() {
+		obj.url="./createMenuSession";
+		obj.data={};
+		obj.data={menuName:$(this).attr("id")};
+		obj.success = function(data) {
+			
+		}
+		ajaxCall(obj);
 	})
 	
 	//그룹원)그룹정보 버튼을 클릭했을 경우

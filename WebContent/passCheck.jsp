@@ -72,10 +72,11 @@
 	        font-size: 16px;
 	    }
 	    
-	    #passChkPopup #passwordMsg{
+	   #passCheckResultMsg{
 	        position: absolute;
-	        left: 5.3%;
-	        top: 35%;
+	        left: 69.3%;
+	        top: 75%;
+	        font-size: 12px;
 	        color: white;          
 	        font-weight: 500
 	    }
@@ -109,18 +110,20 @@
 		</div>
 	</body>
 	<script>
-		$("#passChkPopupClose").click(function() {
+		var pwChkResult = false;
+	
+ 		$("#passChkPopupClose").click(function() {
 			$("#passChkBg").css("display","none");
 			$("#passChkPopup").css("display","none");
 			$("#memberInfoFormBg").css("display","none");
-			if(${sessionScope.menu}=="myInfo"){
+			if('${sessionScope.menuName}'=="myInfo"){
 				if(${sessionScope.groupNum}!=0){
-					location.href="main_Group.jsp"
+					location.href="main_Group.jsp";
 				}else{
-					location.href="main_nonGroup.jsp"
+					location.href="main_nonGroup.jsp";
 				}
 			}
-		})
+		}) 
 		
 	    $("#memberPassChk").mouseenter(function(){
 	        $("#memberPassChk").css("background","#00455A");
@@ -139,30 +142,29 @@
 		
 		//확인 버튼을 눌렀을 때
 		$("#memberPassChk").click(function() {
-			memberPassChk();
+			pwChkResult = memberPassChk();
 		});
 	
 		function memberPassChk() {
-			var success;
 			obj.url="./memberPasswordCheck";
 			obj.data={memberPass:$("#memberPass").val()};
 			obj.success = function(data){
+				pwChkResult = false;
 					if(data.success){
-						//왜 변수에 값이 안들어가지..?
-						var success = true;
+						pwChkResult = true;
 						$("#memberPass").val("");
 						$("#passCheckResultMsg").html("");
 						$("#passChkBg").css("display","none");
 						$("#passChkPopup").css("display","none");
 						$("#memberInfoFormBg").css("display","none");
 					}else{
-						$("#passCheckResultMsg").html("비밀번호 불일치");
+						$("#passCheckResultMsg").html("불일치");
 						$("#passCheckResultMsg").css("color","red");
-						var success = true;
+						pwChkResult = false;
 					}
 				 };
 			ajaxCall(obj);
-			return success;
+			return pwChkResult;
 		}
 	
 		function ajaxCall(param){
