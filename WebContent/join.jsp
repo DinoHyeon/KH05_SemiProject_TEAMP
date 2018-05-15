@@ -352,7 +352,7 @@
 				$("#userPwChkMsg").html("사용 불가능");
 				$("#userPwChkMsg").css("color","red");
 				$("#userPw").focus();
-				idChk=false;
+				pwChk = false;
 			}else if($("#phone").val() == ""){
 				//휴대폰 번호 확인
 				alert("필수 정보를 모두 입력해주세요.")

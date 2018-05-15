@@ -116,12 +116,12 @@ public class MemberService {
 		
 		if(success) {
 			//로그인 세션
-			request.getSession().removeAttribute("userId");
+			request.getSession().removeAttribute("loginId");
 		}
 		
 		Gson json = new Gson();
 		HashMap<String, Boolean> map = new HashMap<>();
-		map.put("succcess", success);
+		map.put("success", success);
 		String obj = json.toJson(map);
 		response.getWriter().println(obj);
 	}

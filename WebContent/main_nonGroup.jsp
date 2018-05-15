@@ -378,36 +378,40 @@
 	//거절 버튼을 클릭했을 때) 초대번호만 있으면 된다.
 	$(document).on('click','.refuse', function() {
 		var inviteIdx = $(this).attr("id");
-		
-		obj.url="./inviteRefuse";
-		obj.data={inviteIdx:inviteIdx};
-		obj.success = function(data){
-			console.log(data);
-			if(data.result){
-				alert("초대 거절을 성공했습니다");
-				inviteListCall();
-			}else{
-				alert("초대 거절에 실패했습니다");
-			}
-		};
-		ajaxCall(obj);
+		var con = confirm("초대를 거절 하시겠습니까?");
+		if(con){
+			obj.url="./inviteRefuse";
+			obj.data={inviteIdx:inviteIdx};
+			obj.success = function(data){
+				console.log(data);
+				if(data.result){
+					alert("초대 거절을 성공했습니다");
+					inviteListCall();
+				}else{
+					alert("초대 거절에 실패했습니다");
+				}
+			};
+			ajaxCall(obj);
+		}
 	});
 
 	//수락 버튼을 클릭했을 때) 그룹번호만 있으면 된다.
 	$(document).on('click','.accept', function() {
 		var groupIdx = $(this).attr("id");
-		
-		obj.url="./inviteAccept";
-		obj.data = {groupIdx:groupIdx};
-		obj.success = function(data){
-			if(data.result){
-				alert("축하드립니다. 그룹가입이 되셨습니다 !");
-				location.href="main_Group.jsp"
-			}else{
-				alert("그룹가입에 실패했습니다 TT..");
-			}
-		};
-		ajaxCall(obj);
+		var con = confirm("초대를 수락 하시겠습니까?");
+		if(con){
+			obj.url="./inviteAccept";
+			obj.data = {groupIdx:groupIdx};
+			obj.success = function(data){
+				if(data.result){
+					alert("축하드립니다. 그룹가입이 되셨습니다 !");
+					location.href="main_Group.jsp"
+				}else{
+					alert("그룹가입에 실패했습니다 TT..");
+				}
+			};
+			ajaxCall(obj);
+		}
 	});
 	
 	

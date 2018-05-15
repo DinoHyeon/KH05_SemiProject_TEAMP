@@ -142,30 +142,25 @@
 		
 		//확인 버튼을 눌렀을 때
 		$("#memberPassChk").click(function() {
-			pwChkResult = memberPassChk();
+				obj.url="./memberPasswordCheck";
+				obj.data={memberPass:$("#memberPass").val()};
+				obj.success = function(data){
+						if(data.success){
+							$("#memberPass").val("");
+							$("#passCheckResultMsg").html("");
+							$("#passChkBg").css("display","none");
+							$("#passChkPopup").css("display","none");
+							$("#memberInfoFormBg").css("display","none");
+							$("#memberWithdrawal").bind("click");
+						}else{
+							$("#passCheckResultMsg").html("불일치");
+							$("#passCheckResultMsg").css("color","red");
+						}
+					 };
+				ajaxCall(obj);
 		});
 	
-		function memberPassChk() {
-			obj.url="./memberPasswordCheck";
-			obj.data={memberPass:$("#memberPass").val()};
-			obj.success = function(data){
-				pwChkResult = false;
-					if(data.success){
-						pwChkResult = true;
-						$("#memberPass").val("");
-						$("#passCheckResultMsg").html("");
-						$("#passChkBg").css("display","none");
-						$("#passChkPopup").css("display","none");
-						$("#memberInfoFormBg").css("display","none");
-					}else{
-						$("#passCheckResultMsg").html("불일치");
-						$("#passCheckResultMsg").css("color","red");
-						pwChkResult = false;
-					}
-				 };
-			ajaxCall(obj);
-			return pwChkResult;
-		}
+		
 	
 		function ajaxCall(param){
 			console.log(param);

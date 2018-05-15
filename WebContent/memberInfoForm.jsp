@@ -179,28 +179,33 @@
 		var email="";
 		
 		$(document).ready(function(){
-			passCheckCss();
-			$("#passChkBg").css("display","none");
-			$("#memberInfoFormBg").css("display","inline");
-			
-			/* 생일 출력 */			
-			obj.url="./infoUpdateForm";
-			obj.data={};
-			obj.success=function(data){
-				console.log(data.membetInfo);
-				$("#memberInfoName").html(data.membetInfo.member_name);
-				$("#memberInfoId").html(data.membetInfo.member_Id);
-				$("#memberEamil").val(data.membetInfo.member_email);
-				email = data.membetInfo.member_email;
-				$("#memberPhone").val(data.membetInfo.member_phone);
+			if('${sessionScope.loginId}'==""){
+				alert("로그인이 필요한 서비스입니다.");
+				location.href="index.jsp";
+			}else{
+				passCheckCss();
+				$("#passChkBg").css("display","none");
+				$("#memberInfoFormBg").css("display","inline");
 				
-				var birth=data.membetInfo.member_birth;
-				var year = birth.substring(0,4);
-				var month = birth.substring(4,6);
-				var day = birth.substring(6,8);
-				$("#memberBitrh").html(year+"년 "+month+"월"+day+"일");
-			};
-			ajaxCall(obj);
+				/* 생일 출력 */			
+				obj.url="./infoUpdateForm";
+				obj.data={};
+				obj.success=function(data){
+					console.log(data.membetInfo);
+					$("#memberInfoName").html(data.membetInfo.member_name);
+					$("#memberInfoId").html(data.membetInfo.member_Id);
+					$("#memberEamil").val(data.membetInfo.member_email);
+					email = data.membetInfo.member_email;
+					$("#memberPhone").val(data.membetInfo.member_phone);
+					
+					var birth=data.membetInfo.member_birth;
+					var year = birth.substring(0,4);
+					var month = birth.substring(4,6);
+					var day = birth.substring(6,8);
+					$("#memberBitrh").html(year+"년 "+month+"월"+day+"일");
+				};
+				ajaxCall(obj);
+			}
 		});
 	    
 	 $("#emailOverlay").mouseenter(function(){
@@ -320,25 +325,22 @@
 		
 		//회원탈퇴
 		$("#memberWithdrawal").click(function() {
-			passCheckCss();	
-			$("#passChkBg").css("display","none");
-			$("#memberInfoFormBg").css("display","inline");
-			if(pwChkResult()){//수정해야지...
+			var con = confirm("정말 탈퇴 하시겠습니까?");
+			if(con){//어떤 조건을 통해 비밀번호가 올바르게 입력되었는지 확인 할 수 있는가
 				obj.url="./withdrawal";
 				obj.data={};
 				obj.data.memberId='${sessionScope.loginId}';
-	
 				obj.success=function(data){
 					if(data.success){
 						alert("회원탈퇴를 정상적으로 처리했습니다.");
-						if('${sessionScope.loginId}'==null){
-							location.href="index.jsp"
-						}
+						location.href="index.jsp";
 					}else{
 						alert("회원탈퇴를 실패했습니다.");
 					}
 				}
 				ajaxCall(obj);
+			}else{
+				alert("회원탈퇴를 취소했습니다.");
 			}
 		})
 		

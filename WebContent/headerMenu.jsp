@@ -18,6 +18,16 @@
                 background-color: white;
             }
             
+            #header #TeamPTitle{
+           		position: absolute;
+				top: 11%;
+				left: 2%;
+				font-weight: 900;
+				color : #566A70;
+                background-color: white;
+                font-size: 50px;
+            }
+            
             #navi{
                 position: absolute;
                 background-color:white;
@@ -196,7 +206,9 @@
 	<%@include file="passCheck.jsp"%>
 
 	 <div id="header">
+	 		<div id="TeamPTitle">TeamP</div>
             <div id="navi">
+           		 <button class="menu" id="main">메인</button>
                 <button class="menu" onclick="location.href='memberInfoForm.jsp'" id="myInfo">내정보</button>
                 <button class="menu" onclick="location.href='/SemiProject_TeamP/adminList'" id="notice">공지사항</button>
                 <button class="menu" id="plan">일정</button>
@@ -350,6 +362,9 @@
 		
 		if('${sessionScope.menuName}'!=""){
 			switch ('${sessionScope.menuName}') {
+			case "main":
+				$("#main").css("font-weight","600");
+				break;
 			case "myInfo":
 				$("#myInfo").css("font-weight","600");
 				break;
@@ -381,6 +396,14 @@
 			
 		}
 		ajaxCall(obj);
+	})
+	
+	$("#main").click(function() {
+		if('${sessionScope.groupNum}'!=0){
+			location.href="main_Group.jsp";
+		}else{
+			location.href="main_nonGroup.jsp";
+		}
 	})
 	
 	//그룹원)그룹정보 버튼을 클릭했을 경우
@@ -637,8 +660,7 @@
 		obj.data={groupInfoIdx:$('#groupInfoIdx').val()};
 		obj.success = function(data){
 			if(data.success){
-				if(data.groupIdx
-						!=0){
+				if(data.groupIdx!=0){
 					location.href="main_Group.jsp"
 				}else{
 					location.href="main_nonGroup.jsp"
