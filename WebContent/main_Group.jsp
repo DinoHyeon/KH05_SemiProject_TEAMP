@@ -130,7 +130,7 @@ function ajaxCall(param){
 </body>
 <script>
 	$(document).ready(function() {
-		if('${sessionScope.loginId}'==""||${sessionScope.groupNum}==0){
+		if('${sessionScope.loginId}'==""||'${sessionScope.groupNum}'==0){
 			alert("로그인이 필요한 서비스입니다.");
 			location.href="index.jsp";
 		}
