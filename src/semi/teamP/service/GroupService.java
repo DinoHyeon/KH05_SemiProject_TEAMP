@@ -1,6 +1,5 @@
 package semi.teamP.service;
 
-import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,8 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import oracle.net.aso.i;
-import oracle.net.aso.j;
 import semi.teamP.dao.GroupDAO;
 import semi.teamP.dto.GroupInfoDTO;
 import semi.teamP.dto.GroupInviteDTO;

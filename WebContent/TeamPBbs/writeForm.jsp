@@ -41,44 +41,106 @@
 <body>
 	<%@include file="../headerMenu.jsp"%>
 	<%@include file="../sideMenu.jsp"%>
+	
+	<!-- 
+		writeForm.jsp
+		그룹에 가입되어 있지 않는 회원이 글을 작성 하는 경우 
+		(그룹에 가입되어있지않은 회원 : 관리자 아님, 그룹장일수가 없기때문에 의견나눔게시판에만 글 등록이 가능해야함) 	
+		 
+		 그룹에 가입되어 있는 회원이 글을 작성하는 경우 
+		 (그룹에 가입되어있는 회원 : 관리자 아님, 그룹장일수가 있으므로 의견나눔게시판, 그룹게시판에 글 등록이 모두가능해야함)
+	--> 
+	
     <div id="page">
-		<form action="../write" method="get">
-		
-		<c:if test="${sessionScope.loginId != 'admin' }">
-			<input type="hidden" name="bbs_name" value="freeBbs"/>
-		</c:if>
-		
-		<c:if test="${sessionScope.loginId == 'admin'}">
-			<input type="hidden" name="bbs_name" value = "adminBbs"/>
-		</c:if>
-		
-		<table>
-			<tr>
-				<th>작성자</th>
-				<td><input id="sessionId" type ="text" value="${sessionScope.loginId}" readonly="readonly" /></td>
-			</tr>
-			<tr>
-				<th>제목</th>
-				<td><input type ="text" name="bbs_subject"/></td>
-			</tr>
-			<tr>
-				<th>내용</th>
-				<td><textarea rows="20" name="bbs_content" ></textarea></td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<c:if test="${sessionScope.loginId == 'admin'}">
-						<a href="../adminList">리스트가기</a>
-					</c:if>
-					<c:if test="${sessionScope.loginId != 'admin'}">
-						<a href="../comunityList">리스트가기</a>
-					</c:if>		
-						&nbsp;&nbsp;&nbsp;&nbsp;
-						<button>저장</button>		
-				</td>
-			</tr>
-		</table>
-	</form>
+    
+    	<!-- 그룹번호 세션값이 groupNum (로그인시 디폴트값:0) 이 0 일때  == 그룹에 가입되어있지 않으면 -->
+    	<c:if test="${groupNum == 0}">
+    		<!-- /write 컨트롤러 에서 처리 -->
+			<form action="../write" method="get">
+			
+			<!-- 세션아이디가 admin 이 아닐때  == 의견나눔게시판 말고는 작성할 곳이 없으므로 freeBbs를 hidden 타입으로 보냄 -->
+			<c:if test="${sessionScope.loginId != 'admin' }">
+				<input type="hidden" name="bbs_name" value="freeBbs"/>
+			</c:if>
+			
+			<!-- 세션아이디가 admin 일떼 == 공지사항 말고는 작성할 곳이 없으므로 adminBbs를 hidden 타입으로 보냄 -->
+			<c:if test="${sessionScope.loginId == 'admin'}">
+				<input type="hidden" name="bbs_name" value = "adminBbs"/>
+			</c:if>
+			
+			<table>
+				<tr>
+					<th>작성자</th>
+					<td><input id="sessionId" type ="text" value="${sessionScope.loginId}" readonly="readonly" /></td>
+				</tr>
+				<tr>
+					<th>제목</th>
+					<td><input type ="text" name="bbs_subject"/></td>
+				</tr>
+				<tr>
+					<th>내용</th>
+					<td><textarea rows="20" name="bbs_content" ></textarea></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<!-- admin 일시 공지사항게시판에 글을 작성한 것이므로 adminList 로 복귀 -->
+						<c:if test="${sessionScope.loginId == 'admin'}">
+							<a href="../adminList">리스트가기</a>
+						</c:if>
+						<!-- admin이 아닐시 의견나눔게시판에 글을 작성한 것이므로 comunityList로 복귀 -->
+						<c:if test="${sessionScope.loginId != 'admin'}">
+							<a href="../comunityList">리스트가기</a>
+						</c:if>		
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<button>저장</button>		
+					</td>
+				</tr>
+			</table>
+		</form>
+	</c:if>
+	
+	<!-- 그룹번호 세션값이 groupNum (로그인시 디폴트값:0) 이 0이 아닐때  == 그룹에 가입되어 있으면 -->
+	<c:if test="${groupNum != 0}">
+			<!-- /groupWrite 컨트롤러에서 처리 -->
+			<form action="../groupWrite" method="get">
+			
+			<c:if test="${sessionScope.loginId != 'admin' }">
+				<input type="hidden" name="bbs_name" value="freeBbs"/>
+			</c:if>
+			
+			<c:if test="${sessionScope.loginId == 'admin'}">
+				<input type="hidden" name="bbs_name" value = "adminBbs"/>
+			</c:if>
+			
+			<table>
+				<tr>
+					<th>작성자</th>
+					<td><input id="sessionId" type ="text" value="${sessionScope.loginId}" readonly="readonly" /></td>
+				</tr>
+				<tr>
+					<th>제목</th>
+					<td><input type ="text" name="bbs_subject"/></td>
+				</tr>
+				<tr>
+					<th>내용</th>
+					<td><textarea rows="20" name="bbs_content" ></textarea></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<c:if test="${sessionScope.loginId == 'admin'}">
+							<a href="../adminList">리스트가기</a>
+						</c:if>
+						<c:if test="${sessionScope.loginId != 'admin'}">
+							<a href="../comunityList">리스트가기</a>
+						</c:if>		
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<button>저장</button>		
+					</td>
+				</tr>
+			</table>
+		</form>
+	</c:if>
+	
     </div>
 </body>
 <script>

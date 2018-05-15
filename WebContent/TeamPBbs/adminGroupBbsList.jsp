@@ -28,8 +28,8 @@
 	<%@include file="../sideMenu.jsp"%>
 	
 	<!--
-	groupBbs.jsp 
-	그룹별로 그룹게시글을 볼 수 있는 페이지
+	adminGroupBbsList.jsp 
+	관리자(admin) 로그인 시 모든 그룹의 글 보기 및 삭제 가능하게 하는 기능
 	-->
 	
     <div id="page">
@@ -53,15 +53,7 @@
 				</tr>
 			</c:forEach>
 		</table>
-		
-		<!--
-		 그룹을 생성하는순간 그룹장이 되고 memberLv 세션값이 master가 됨
-		그룹장만 글을 작성할수 있으므로 마스터 일때만 버튼을 보여주면 됨 
-		-->
-		<c:if test="${sessionScope.memberLv == 'master'}">
-			<button onclick="location.href = 'TeamPBbs/gmWriteForm.jsp'">글쓰기</button>
-		</c:if>
-		
+	
     </div>
 </body>
 <script>

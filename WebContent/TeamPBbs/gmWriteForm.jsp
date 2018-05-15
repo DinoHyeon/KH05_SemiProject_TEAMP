@@ -42,11 +42,16 @@
 	<%@include file="../headerMenu.jsp"%>
 	<%@include file="../sideMenu.jsp"%>
 
-	<!-- 그룹장만 쓸수있는 페이지 -->
+	<!--
+	gmWriteForm.jsp 
+	그룹장만 글을 작성 할 수 있는 페이지
+	각 그룹들은 자신의 그룹의 글만 볼 수 있다.
+	-->
 	
     <div id="page">
-		<form action="../write" method="get">
-
+    	<!-- /groupWrite 컨트롤러에서 처리 -->
+		<form action="../groupWrite" method="get">
+		<!-- Bbs 테이블에 bbs_name 값을 groupBbs 로 추가  -->
 		<input type="hidden" name="bbs_name" value="groupBbs"/>
 		
 		<table>

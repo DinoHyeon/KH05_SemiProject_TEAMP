@@ -39,6 +39,12 @@
 <body>
 	<%@include file="../headerMenu.jsp"%>
 	<%@include file="../sideMenu.jsp"%>
+	
+	<!--
+	updateForm.jsp 
+	수정 공용 페이지
+	-->
+	
     <div id="page">
 		<form action="update" method="get">
 		<table>

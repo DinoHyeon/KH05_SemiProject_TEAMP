@@ -19,21 +19,44 @@ public class BoardService {
 		this.request = request;
 		this.response = response;
 	}
-
-	// 글쓰기
-	public void write() throws IOException {
-		
+	
+	//글쓰기(그룹이 있는 사람)
+	public void groupWrite() throws ServletException, IOException {
 		BoardDTO dto = new BoardDTO();
+		//로그인 세션값 dto에 담기
+		dto.setMember_id((String)request.getSession().getAttribute("loginId"));
+		//글쓰기폼의 파라미터값 dto에 담기
+		dto.setBbs_name(request.getParameter("bbs_name"));
+		dto.setBbs_subject(request.getParameter("bbs_subject"));
+		dto.setBbs_content(request.getParameter("bbs_content"));
+		//그룹번호 세션값 dto에 담기
+		dto.setGroup_idx(((int)request.getSession().getAttribute("groupNum")));	
+		
+		BoardDAO dao = new BoardDAO();
+		int idx = dao.groupWrite(dto);
+		
+		//그룹번호값이 0이 아닌경우(그룹이 있는경우) 해당페이지로 보냄 
+		if(idx > 0 && dto.getGroup_idx() != 0) {
+			response.sendRedirect("detail?idx=" + dto.getBbs_idx());
+		}
+	}
+
+	// 글쓰기(그룹이 없는 사람)
+	public void write() throws IOException, ServletException {
+		BoardDTO dto = new BoardDTO();
+		
 		dto.setMember_id((String)request.getSession().getAttribute("loginId"));
 		dto.setBbs_name(request.getParameter("bbs_name"));
 		dto.setBbs_subject(request.getParameter("bbs_subject"));
 		dto.setBbs_content(request.getParameter("bbs_content"));
-		dto.setGroup_idx((int)request.getSession().getAttribute("groupNum"));	
-		
+			
 		BoardDAO dao = new BoardDAO();
 		int idx = dao.write(dto);
-		
-		if(idx > 0) {
+		int groupNum = (int) request.getSession().getAttribute("groupNum");
+		//EL태그사용을 위한 값셋팅
+		request.setAttribute("groupNum", groupNum);
+		//그룹번호가 0이면(그룹이 없으면) 해당 페이지로 보냄
+		if(idx > 0 && groupNum == 0) {
 			response.sendRedirect("detail?idx=" + dto.getBbs_idx());
 		}
 	}
@@ -57,10 +80,19 @@ public class BoardService {
 	      BoardDTO dto =  dao.detail(request.getParameter("idx"));
 	      //가져온 데이터를 request 에 담기      
 	      request.setAttribute("info", dto);
-	      //특정한 페이지로 이동 
-	      RequestDispatcher dis = request.getRequestDispatcher("TeamPBbs/detail.jsp");
-	      dis.forward(request, response);
 	      
+	      /*******************************
+	       *detail 컨트롤러는 여러번의 응답을 요청받는다 
+	       * 
+	       * dis.foward() 는 한번의 응답만 요청받아서 끝내버린다
+	       * 
+	       * dis.include(request,response)사용 !!!!!!!!!!!!!!
+	       * 응답을 끝내고 대기했다가 다른 응답이 오면 다시 처리해준다
+	       * response.setCharacterEncoding("UTF-8"); 후에 인코딩이 필요함. 안해주면 ???로 뜸
+	       * *****************************/
+	      RequestDispatcher dis = request.getRequestDispatcher("TeamPBbs/detail.jsp");
+	      response.setCharacterEncoding("UTF-8");
+	      dis.include(request, response);
 	   }
 	
 	//게시판 삭제
@@ -69,6 +101,7 @@ public class BoardService {
       String idx = request.getParameter("idx");
       BoardDAO dao = new  BoardDAO();
       if(dao.del(idx) > 0) {
+    	  
     	  if(!request.getSession().getAttribute("loginId").equals("admin")) {
     		  response.sendRedirect("comunityList");
     	  }else {
@@ -108,13 +141,21 @@ public class BoardService {
 		dis.forward(request, response);
 		
 	}
-	//그룹 리스트 불러오기
+	//그룹 리스트 불러오기(그룹장 및 그룹원)
 	public void groupList() throws ServletException, IOException {
 		int group_idx = (int)request.getSession().getAttribute("groupNum");
 		BoardDAO dao = new BoardDAO();
 		ArrayList<BoardDTO> list = dao.groupList(group_idx);
 		request.setAttribute("list", list);
 		RequestDispatcher dis = request.getRequestDispatcher("TeamPBbs/groupBbs.jsp");
+		dis.forward(request, response);
+	}
+	//그룹 리스트 불러오기(관리자)
+	public void adminGroupBbsList() throws ServletException, IOException {
+		BoardDAO dao = new BoardDAO();
+		ArrayList<BoardDTO> list = dao.adminGroupBbsList();
+		request.setAttribute("list", list);
+		RequestDispatcher dis = request.getRequestDispatcher("TeamPBbs/adminGroupBbsList.jsp");
 		dis.forward(request, response);
 	}
 

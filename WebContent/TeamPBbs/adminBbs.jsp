@@ -26,6 +26,12 @@
 <body>
 	<%@include file="../headerMenu.jsp"%>
 	<%@include file="../sideMenu.jsp"%>
+	
+	<!--
+	adminBbs.jsp 
+	관리자가 작성한 글의 리스트를 불러오는 페이지
+	-->
+
     <div id="page">
 		<table>
 			<tr>
@@ -36,6 +42,8 @@
 				<th>날짜</th>
 				<th>조회수</th>
 			</tr>
+			
+			<!-- 셋팅된 dto값을 테이블에 뿌려준다 -->
 			<c:forEach items="${list}" var="bbs">
 				<tr>
 					<td>${bbs.bbs_idx}</td>
@@ -47,9 +55,12 @@
 				</tr>
 			</c:forEach>
 		</table>
+		
+		<!-- 아이디가 (세션에 저장된 아이디) 'admin'인 사람만 글쓰기 버튼을 보여준다-->
 		<c:if test="${sessionScope.loginId == 'admin'}">
 			<button onclick="location.href = 'TeamPBbs/writeForm.jsp'">글쓰기</button>
 		</c:if>
+		
     </div>
 </body>
 <script>

@@ -25,6 +25,12 @@
 <body>
 <%@include file="../headerMenu.jsp"%>
 <%@include file="../sideMenu.jsp"%>
+
+<!-- 
+	detail.jsp
+	의견나눔게시판, 공지사항게시판, 그룹게시판 글 작성시 이동하는 상세보기 페이지 (모두 detail.jsp를 공유함)
+ -->
+
 <div id=page>
    
    <div id="list">
@@ -44,13 +50,30 @@
    
 
    <tr>      
-   	
+   		<!-- dto에 셋팅된 bbs_name을 사용하여 리스트돌아가기 클릭시 각각의 페이지로 분기 시키기 -->
       <td colspan="2">
-	     	<a href="#" onclick="history.go(-1)">리스트 </a> 
+	     	 <c:if test="${info.bbs_name == 'freeBbs'}">
+	     	 	<a href ="/SemiProject_TeamP/comunityList">리스트</a>
+	     	 </c:if>
+	     	 
+	     	 <c:if test="${info.bbs_name == 'adminBbs'}">
+	     	 	<a href ="/SemiProject_TeamP/adminList">리스트</a>
+	     	 </c:if>
+	     	 
+	     	 <c:if test="${info.bbs_name == 'groupBbs'}">
+	     	 	<a href ="/SemiProject_TeamP/groupList">리스트</a>
+	     	 </c:if> 
 	         &nbsp;&nbsp;&nbsp;&nbsp;
+	         
+	         <!-- 자신의 글만 수정가능 -->
+	         <c:if test="${sessionScope.loginId == info.member_id}">
 	         <a href="./updateForm?idx=${info.bbs_idx}">수정</a>
+	         </c:if>
 	         &nbsp;&nbsp;&nbsp;&nbsp;
+	         <!-- 자신 과 관리자만 삭제 가능 -->
+	         <c:if test="${sessionScope.loginId == info.member_id || sessionScope.loginId == 'admin'}">
 	         <a href="./delete?idx=${info.bbs_idx}">삭제</a>
+	  		</c:if>
       </td>
    </tr>
    

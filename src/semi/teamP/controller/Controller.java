@@ -21,7 +21,7 @@ import semi.teamP.service.TodoService;
 
 
 @WebServlet({ "/login", "/findPw", "/findId", "/ChangePw", "/join", "/idOverlay", "/emailOverlay", "/infoUpdate", "/infoUpdateForm", "/logout", "/withdrawal", "/infoFormAccess", "/memberPasswordCheck"
-	,"/write", "/detail", "/updateForm", "/update", "/delete","/comunityList","/adminList", "/groupList", "/createMenuSession"
+	,"/write", "/detail", "/updateForm", "/update", "/delete","/comunityList","/adminList", "/groupList", "/createMenuSession" , "/groupWrite" , "/adminGroupBbsList"
 	,"/groupJoin", "/groupDetail", "/groupCreate", "/groupDelete", "/inviteMemberIdChk", "/groupWithdrawal", "/groupInviteList", "/groupInvite", "/inviteRefuse", "/inviteAccept", "/memberOut", "/groupInfoUpdate", "/groupInfoUpdateForm", "/groupMemberList", "/memberChk" 
 	,"/replyWrite", "/replyUpdate", "/replyDelete", "/replyCheck", "/replyUpdateForm"
 	,"/planWrite", "/planlist", "/planChange", "/planDelete", "/planDetail"
@@ -149,7 +149,12 @@ public class Controller extends HttpServlet {
 			board = new BoardService(request, response);
 			board.write();
 			break;
-
+		
+		case "/groupWrite":
+			System.out.println("글쓰기(그룹이있는사람) 요청");
+			board = new BoardService(request, response);
+			board.groupWrite();
+			
 		case "/detail":
 			System.out.println("게시글 상세보기 요청");
 			board = new BoardService(request, response);
@@ -186,6 +191,12 @@ public class Controller extends HttpServlet {
 			board.adminList();
 			break;
 			
+		case "/adminGroupBbsList":
+			System.out.println("그룹 리스트 요청(관리자)");
+			board = new BoardService(request, response);
+			board.adminGroupBbsList();
+			break;
+			
 		case "/groupList":
 			System.out.println("그룹 리스트 요청");
 			board = new BoardService(request, response);
@@ -209,6 +220,7 @@ public class Controller extends HttpServlet {
 			group = new GroupService(request, response);
 			group.groupMemberList();
 			break;
+			
 		case "/memberOut":
 			System.out.println("그룹 멤버 추방 요청");
 			group = new GroupService(request, response);

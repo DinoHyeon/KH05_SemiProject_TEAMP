@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -213,7 +214,17 @@
                 <button class="menu" onclick="location.href='/SemiProject_TeamP/adminList'" id="notice">공지사항</button>
                 <button class="menu" id="plan">일정</button>
                 <button class="menu" id="fileBbs">파일게시판</button>
-                <button class="menu" onclick="location.href ='/SemiProject_TeamP/groupList'" id="groupBbs">그룹게시판</button>
+                
+                 <!-- 관리자 로그인시 adminGroupList로 분기시켜 모든 그룹의 글 보기 및 삭제 가능 하게 하기-->
+                <c:if test="${sessionScope.loginId == 'admin'}">
+                	 <button onclick="location.href ='/SemiProject_TeamP/adminGroupBbsList'" id="groupBbs">그룹게시판</button>
+                </c:if>
+                
+                <!-- 관리자가 아니면(그룹장 및 그룹원) 자신이 속한 그룹의 글들만 조회 가능 -->
+                <c:if test="${sessionScope.loginId != 'admin'}">
+                	 <button onclick="location.href ='/SemiProject_TeamP/groupList'" id="groupBbs">그룹게시판</button>
+                </c:if>
+                
                  <button class="menu" onclick="location.href ='/SemiProject_TeamP/comunityList'" id="comunityBbs">의견나눔게시판</button>
             </div>
         </div>
