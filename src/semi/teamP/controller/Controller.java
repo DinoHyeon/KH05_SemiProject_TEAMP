@@ -24,7 +24,7 @@ import semi.teamP.service.TodoService;
 	,"/write", "/detail", "/updateForm", "/update", "/delete","/comunityList","/adminList", "/groupList", "/createMenuSession" , "/groupWrite" , "/adminGroupBbsList"
 	,"/groupJoin", "/groupDetail", "/groupCreate", "/groupDelete", "/inviteMemberIdChk", "/groupWithdrawal", "/groupInviteList", "/groupInvite", "/inviteRefuse", "/inviteAccept", "/memberOut", "/groupInfoUpdate", "/groupInfoUpdateForm", "/groupMemberList", "/memberChk" 
 	,"/replyWrite", "/replyUpdate", "/replyDelete", "/replyCheck", "/replyUpdateForm"
-	,"/planWrite", "/planlist", "/planChange", "/planDelete", "/planDetail"
+	,"/planWrite", "/planlist", "/planChange", "/planDelete", "/planDetail", "/planTableList"
 	,"/todoDetail", "/todoWrite", "/todoUpdate", "/todoDelete", "/todoChange"
 	,"/adMemberList", "/adMemberDel", "/adGroupList", "/adGroupDel", "/adGroupSession" })
 public class Controller extends HttpServlet {
@@ -330,6 +330,12 @@ public class Controller extends HttpServlet {
 			System.out.println("일정 상세보기 요청");
 			plan = new PlanService(request, response);
 			plan.planDetail();
+			break;
+		
+		case "/planTableList":
+			System.out.println("일정 테이블 호출 요청");
+			plan = new PlanService(request, response);
+			plan.planTableList();
 			break;
 			
 		case "/todoDetail":
