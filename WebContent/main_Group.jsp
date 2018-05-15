@@ -54,11 +54,13 @@
         z-index: 2;
     }
     
-    .fc .fc-toolbar > * > :first-child {
-        margin-left: 0;
-        color: #004D65;
-    }
-
+    .fc-today {
+	    background: #8EC7D0 !important;
+	    border: none !important;
+	    border-top: 1px solid #ddd !important;
+	    font-weight: bold;
+	} 
+    
     .fc-sun {color:#e31b23}
     .fc-sat {color:#007dc3}
     
@@ -94,14 +96,13 @@ $(document).ready(function(){
            var date = yy+"/"+mm+"/"+dd;
            $(this).css('background-color', '#FFD724');
            $("td.fc-day.fc-widget-content").not($(this)).css('background-color', 'white')
-           
-	   		obj.url="./todatPlanList";
+/* 	   		obj.url="./todatPlanList";
 	   		obj.data={};
 	   		obj.data={menuName:$(this).attr("id")};
 	   		obj.success = function(data) {
 	   			
 	   		}
-	   		ajaxCall(obj);
+	   		ajaxCall(obj); */
          }
     });
 });

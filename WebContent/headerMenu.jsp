@@ -31,7 +31,7 @@
             #navi{
                 position: absolute;
                 background-color:white;
-                left : 61%;
+                left : 56%;
                 top : 15.7%;
                 width: 45%;
             }

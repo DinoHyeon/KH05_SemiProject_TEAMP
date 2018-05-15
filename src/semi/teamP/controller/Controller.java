@@ -297,7 +297,7 @@ public class Controller extends HttpServlet {
 			break;
 			
 		case "/planlist":
-			System.out.println("일정 수행자 등록 요청");
+			System.out.println("일정 리스트 요청");
 			plan = new PlanService(request, response);
 			plan.planlist();
 			break;
