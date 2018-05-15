@@ -1,7 +1,11 @@
 package semi.teamP.service;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,8 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import oracle.net.aso.s;
+import semi.teamP.dao.GroupDAO;
 import semi.teamP.dao.PlanDAO;
 import semi.teamP.dto.BoardDTO;
+import semi.teamP.dto.GroupInfoDTO;
 import semi.teamP.dto.PlanDTO;
 
 public class PlanService {
@@ -81,6 +88,52 @@ public class PlanService {
 		// TODO Auto-generated method stub
 		
 	}
-
 	
+	//WBS형식 테이블 추출
+	public void planTableList() throws IOException{
+		int groupIdx=42;//해당 그룹 번호 request로 받아야한다. -> 해당 그룹의 프로젝트 시작기간, 종료기간을 받기 위해
+		
+		GroupDAO dao = new GroupDAO();
+		GroupInfoDTO dto = dao.getGroupInfo(groupIdx);//그룹의 정보를 받는다.
+		String inputGroupStartDay = dto.getGroup_StrartDay();//yyyy-MM-dd
+		String inputGroupEndDay = dto.getGroup_EndDay();//yyyy-MM-dd
+		
+		//시작날짜와 종료날짜 사이의 날짜 구하기
+		final String DATE_PATTERN = "yyyy-MM-dd";
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+		Date DateGroupEndDay = null;
+		Date DateGroupStartDay = null;
+		try {
+			DateGroupStartDay = sdf.parse(inputGroupStartDay);
+			DateGroupEndDay = sdf.parse(inputGroupEndDay);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		ArrayList<String> groupPeriod = new ArrayList<String>();//프로젝트 기간사이에 있는 날짜 출력 'yyyy-MM-dd'
+		ArrayList<String> groupPeriodMonth = new ArrayList<String>();//프로젝트 기간사이에 있는 일 출력 'MM'
+		ArrayList<String> groupPeriodDay = new ArrayList<String>();//프로젝트 기간사이에 있는 일 출력 'dd'
+		Date currentDay = DateGroupStartDay;
+		while(currentDay.compareTo(DateGroupEndDay) <= 0) {
+			groupPeriod.add(sdf.format(currentDay));
+			Calendar c = Calendar.getInstance();
+			c.setTime(currentDay);
+			c.add(Calendar.DAY_OF_MONTH, 1);
+			currentDay = (Date) c.getTime();
+		}
+		
+		//월,일 리스트에 값 넣기
+		for(int i=0; i<groupPeriod.size(); i++) {
+			groupPeriodMonth.add(groupPeriod.get(i).substring(5, 7));//달
+			groupPeriodDay.add(groupPeriod.get(i).substring(8, 10));//일
+		}
+		
+		Gson json = new Gson();
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("date", groupPeriod);
+		map.put("month", groupPeriodMonth);
+		map.put("day", groupPeriodDay);
+		String obj = json.toJson(map);
+		response.getWriter().println(obj);
+	}
 }
