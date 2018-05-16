@@ -95,20 +95,35 @@ public class BoardService {
 	      dis.include(request, response);
 	   }
 	
-	//게시판 삭제
-   public void delete() throws IOException {
+	//의견나눔게시판 삭제
+   public void comunityBbsDelete() throws IOException {
       //파라메터 추출
       String idx = request.getParameter("idx");
       BoardDAO dao = new  BoardDAO();
       if(dao.del(idx) > 0) {
-    	  
+    	  //관리자가 아니면(일반유저) 삭제시 comunityList 호출
     	  if(!request.getSession().getAttribute("loginId").equals("admin")) {
     		  response.sendRedirect("comunityList");
-    	  }else {
+    	  }else {//관리자면 관리자 의견나눔게시판 관리페이지 호출
     		  response.sendRedirect("adminList");
     	  }
       }  
    }
+   
+   //그룹게시판 삭제
+   public void groupBbsDelete() throws IOException {
+	   //파라메터 추출
+	      String idx = request.getParameter("idx");
+	      BoardDAO dao = new  BoardDAO();
+	      if(dao.del(idx) > 0) {
+	    	  //관리자가 아니면(일반유저) 삭제시 groupList 호출
+	    	  if(!request.getSession().getAttribute("loginId").equals("admin")) {
+	    		  response.sendRedirect("groupList");
+	    	  }else {//관리자면 관리자 그룹게시판 관리페이지 호출
+	    		  response.sendRedirect("adminGroupBbsList");
+	    	  }
+	      }  
+	}
 
 	//수정
 	public void update() throws IOException {
@@ -150,6 +165,7 @@ public class BoardService {
 		RequestDispatcher dis = request.getRequestDispatcher("TeamPBbs/groupBbs.jsp");
 		dis.forward(request, response);
 	}
+	
 	//그룹 리스트 불러오기(관리자)
 	public void adminGroupBbsList() throws ServletException, IOException {
 		BoardDAO dao = new BoardDAO();
@@ -157,6 +173,132 @@ public class BoardService {
 		request.setAttribute("list", list);
 		RequestDispatcher dis = request.getRequestDispatcher("TeamPBbs/adminGroupBbsList.jsp");
 		dis.forward(request, response);
+	}
+
+	//파일 게시판 불러오기
+   public void fileList() throws ServletException, IOException {
+      int group_idx = (int)request.getSession().getAttribute("groupNum");
+      //DB 이용해서 데이터 가져오기
+      BoardDAO dao = new BoardDAO();
+      ArrayList<BoardDTO> list = dao.filelist(group_idx);
+      //가져온 데이터를 request 에 담기
+      request.setAttribute("list", list);
+      //특정한 페이지로 이동 
+      RequestDispatcher dis = request.getRequestDispatcher("TeamPBbs/fileBbs.jsp");
+      dis.forward(request, response);
+
+   }
+
+   //파일게시판 글쓰기 
+   public void fileWrite() throws IOException {
+      //1. PhotoUpload 에게 request 를 전달
+      PhotoUpload upload = new PhotoUpload(request,response);
+      //2. regist 메서드를 사용해서 사진 등록
+      //3. 제목, 내용, 작성자, 파일명을 받는다  BoardDTO
+      BoardDTO dto = upload.regist();
+      System.out.println(dto.getBbs_content());
+      System.out.println(dto.getNewFileName());
+      //4. DAO 에 dto 를 전달하여 DB 에 추가해 달라고 요청
+      BoardDAO dao = new BoardDAO();
+      int pk = dao.fileWrite(dto);      
+      //5. 결과에 따라 페이지 이동 
+      //실패(글쓰기 폼 )
+      String page = "TeamPBbs/fileWriteForm.jsp";
+      if(pk > 0) {
+         //성공(상세보기) = 글쓰기 한 후 idx를 반환
+         page = "fileDetail?idx=" + pk;
+      }
+      response.sendRedirect(page);
+      
+   }
+	
+   //파일게시판 수정
+	public void fileUpdate() throws IOException {
+		PhotoUpload upload = new PhotoUpload(request,response);
+		BoardDTO dto = upload.regist();
+		//DB 이용 해서 글 수정
+		BoardDAO dao = new BoardDAO();
+		String oldFileName = null;
+		//올린 파일이 있는가? 있다면 기존파일명은?
+		
+		dao.fileUpdate(dto); //DB를 이용해서 글 수정
+		
+		if(dto.getNewFileName() != null) { //새로 올리는 파일이 있을 경우
+			//올린 파일이 있다는 것은 기존 파일을 지워야 하는 것을 의미하므로 파일명을 알아야한다.
+			oldFileName = dao.fileNameCall(dto.getBbs_idx());
+			dao = new BoardDAO(); // update()에서 자원을 닫았으므로 다시 객체화
+			dao.fileNameUpdate(dto.getBbs_idx(),dto.getNewFileName(), oldFileName);
+			//기존 파일을 폴더에서 삭제
+			upload.del(oldFileName);
+		}
+		response.sendRedirect("fileDetail?idx=" + dto.getBbs_idx());
+	}
+	
+	
+	//파일게시판 수정 폼
+	public void fileUpdateForm() throws ServletException, IOException {
+		String idx = request.getParameter("idx");
+		//상세정보 가져오기(DB)
+		BoardDAO dao = new BoardDAO();
+		BoardDTO dto = dao.fileDetail(idx);
+		//수정 보기 페이지에 뿌려 준다.
+		request.setAttribute("dto", dto);
+		RequestDispatcher dis = request.getRequestDispatcher("TeamPBbs/fileUpdateForm.jsp");
+		dis.forward(request, response);
+	}
+
+	//파일게시판 상세보기
+	public void fileDetail() throws ServletException, IOException {
+		 //DB 에 개별 데이터 요청
+	      BoardDAO dao = new BoardDAO();
+	      BoardDTO dto =  dao.fileDetail(request.getParameter("idx"));
+	      //가져온 데이터를 request 에 담기      
+	      request.setAttribute("info", dto);  
+	      RequestDispatcher dis = request.getRequestDispatcher("TeamPBbs/fileDetail.jsp");
+	      dis.forward(request, response);
+	}
+	
+	//파일게시판 삭제
+	public void fileDelete() throws IOException {
+		String idx = request.getParameter("idx");
+		BoardDAO dao = new BoardDAO();
+		String fileName = dao.fileNameCall(Integer.parseInt(idx));
+		//CASCADE 조건을 주었으므로 Bbs테이블을 지우면 Bbs_file의 자식도 지워지기 때문에  del() DAO 를 사용하여도 무관함
+		if(dao.del(idx) > 0) {
+			if(fileName != null) {
+				PhotoUpload upload = new PhotoUpload(request,response);
+				upload.del(fileName);
+			}
+		}
+		if(request.getSession().getAttribute("loginId").equals("admin")) {
+			response.sendRedirect("adminFileBbsList");
+		}else {
+			response.sendRedirect("fileList");
+		}
+		
+	}
+	
+	//파일게시판 (관리자모드)
+	public void adminFileBbsList() throws ServletException, IOException {
+		BoardDAO dao = new BoardDAO();
+		ArrayList<BoardDTO> list = dao.adminFileBbsList();
+		request.setAttribute("list", list);
+		RequestDispatcher dis = request.getRequestDispatcher("TeamPBbs/adminFileBbsList.jsp");
+		dis.forward(request, response);
+	}
+
+	//첨부파일 다운로드
+	public void fileDownLoad() throws IOException {
+		request.setCharacterEncoding("UTF-8");
+		String idx = request.getParameter("idx");
+		BoardDAO dao = new BoardDAO();
+		String fileName = dao.fileNameCall(Integer.parseInt(idx));
+		
+		if(fileName != null) {
+			PhotoUpload upload = new PhotoUpload(request,response);
+			upload.downLoad(fileName);
+		}
+		
 	}
 
 }

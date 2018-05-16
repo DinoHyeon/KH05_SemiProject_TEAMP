@@ -176,27 +176,26 @@ public class BoardDAO {
 	//리스트 불러오기
 		public ArrayList<BoardDTO> list() {
 			ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
-			//bbs_name 이 freeBbs 인 것만 select 해서 뿌림
-			String sql = "SELECT * FROM Bbs WHERE bbs_name='freeBbs' ORDER BY bbs_idx DESC";
-			try {
-				ps = conn.prepareStatement(sql);
-				rs = ps.executeQuery();
-				while(rs.next()) {
-					BoardDTO dto = new BoardDTO();
-					dto.setBbs_idx(rs.getInt("bbs_idx"));
-					dto.setBbs_name(rs.getString("bbs_name"));
-					dto.setBbs_subject(rs.getString("bbs_subject"));
-					dto.setBbs_date(rs.getDate("bbs_date"));
-					dto.setBbs_bHit(rs.getInt("bbs_bHit"));
-					dto.setMember_id(rs.getString("member_id"));
-					list.add(dto);
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}finally {
-				resClose();
-			}
-			return list;
+		      String sql = "SELECT * FROM Bbs WHERE bbs_name = 'freeBbs' ORDER BY bbs_idx DESC";
+		      try {
+		    	 ps = conn.prepareStatement(sql);
+		         rs = ps.executeQuery();
+		         while(rs.next()) {
+		            BoardDTO dto = new BoardDTO();
+		            dto.setBbs_idx(rs.getInt("bbs_idx"));
+		            dto.setBbs_name(rs.getString("bbs_name"));
+		            dto.setBbs_subject(rs.getString("bbs_subject"));
+		            dto.setBbs_date(rs.getDate("bbs_date"));
+		            dto.setBbs_bHit(rs.getInt("bbs_bHit"));
+		            dto.setMember_id(rs.getString("member_id"));
+		            list.add(dto);
+		         }
+		      } catch (SQLException e) {
+		         e.printStackTrace();
+		      }finally {
+		         resClose();
+		      }
+		      return list;
 		}
 	
 	//관리자게시판 리스트 불러오기
@@ -278,6 +277,189 @@ public class BoardDAO {
 			resClose();
 		}
 		return list;
-	}	
+	}
 
+	//파일 리스트 불러오기 
+	   public ArrayList<BoardDTO> filelist(int group_idx) {
+	      ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
+	      String sql = "SELECT * FROM Bbs WHERE bbs_name = 'fileBbs' AND group_idx = ? ORDER BY bbs_idx DESC";
+	      try {
+	         ps = conn.prepareStatement(sql);
+	         ps.setInt(1, group_idx);
+	         ps.executeUpdate();
+	         rs = ps.executeQuery();
+	         while(rs.next()) {
+	            BoardDTO dto = new BoardDTO();
+	            dto.setBbs_idx(rs.getInt("bbs_idx"));
+	            dto.setBbs_name(rs.getString("bbs_name"));
+	            dto.setBbs_subject(rs.getString("bbs_subject"));
+	            dto.setBbs_date(rs.getDate("bbs_date"));
+	            dto.setBbs_bHit(rs.getInt("bbs_bHit"));
+	            dto.setMember_id(rs.getString("member_id"));
+	            list.add(dto);
+	         }
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }finally {
+	         resClose();
+	      }
+	      return list;
+	   }
+
+	   //파일 게시판 글쓰기
+	   public int fileWrite(BoardDTO dto) {
+		      String sql ="INSERT INTO Bbs(bbs_idx, bbs_name, bbs_subject, bbs_content, group_idx, member_id) "
+		      		+ "VALUES(BBS_IDX_SEQ.NEXTVAL,?,?,?,?,?)";
+		      long fk = 0;
+		      try {
+		         //ojdbc 8 버전 이상에서 가능
+		         //2번째 인자 값은 값을 넣고 반환 해줄 컬럼
+		         //new String[] {"반환받을 컬럼명"}
+		         //new int[]{"반환받을 컬럼 번호"}
+		         ps = conn.prepareStatement(sql, new String[] {"bbs_idx"});
+		         ps.setString(1, dto.getBbs_name());
+		         ps.setString(2, dto.getBbs_subject());
+		         ps.setString(3, dto.getBbs_content());
+		         ps.setInt(4, dto.getGroup_idx());
+		         ps.setString(5, dto.getMember_id());
+		         ps.executeUpdate();         
+		         rs = ps.getGeneratedKeys(); //이 과정으로 원하는 컬럼을 받아 올 수 있다
+		         String fileName = dto.getNewFileName();
+		         System.out.println("fileName : " +fileName);
+		         if(rs.next()) {
+		            fk = rs.getLong(1); //넣은 값의 idx 받아오기
+		            if(fileName != null) {            
+		               //idx 를 이용해서 photo 테이블에 데이터 넣기 
+		               sql = "INSERT INTO Bbs_file (file_index,bbs_idx,newFileName) VALUES(file_index_seq.NEXTVAL,?,?)";
+		               ps = conn.prepareStatement(sql);
+		               ps.setLong(1, fk);
+		               ps.setString(2, fileName);
+		               ps.executeUpdate();
+		            }
+		         }         
+		      } catch (SQLException e) {         
+		         e.printStackTrace();
+		         return 0;
+		      }finally {
+		         resClose();
+		      }
+		      return (int)fk;//idx 값 변환
+		   }
+
+	//파일게시판 상세정보 
+	public BoardDTO fileDetail(String idx) {
+		BoardDTO dto = null;
+		String sql = "SELECT * FROM Bbs WHERE bbs_idx = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, Integer.parseInt(idx));
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				upHit(idx);
+				dto = new BoardDTO();
+				dto.setBbs_idx(rs.getInt("bbs_idx"));
+	            dto.setMember_id(rs.getString("member_id"));
+	            dto.setBbs_content(rs.getString("bbs_content"));
+	            dto.setBbs_subject(rs.getString("bbs_subject"));
+	            dto.setBbs_date(rs.getDate("bbs_date"));
+	            dto.setBbs_bHit(rs.getInt("bbs_bHit"));       
+	            dto.setBbs_name(rs.getString("bbs_name"));
+			}
+			
+			//파일명 추출
+			String newFileName = fileNameCall(dto.getBbs_idx());
+			
+			if(newFileName != null) {
+				dto.setNewFileName(newFileName);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return dto;
+	}
+	
+	//게시글에 해당하는 파일명 추출
+	public String fileNameCall(int idx) {
+		String sql = "SELECT newFileName FROM Bbs_file WHERE bbs_idx = ?";
+		String fileName = null;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, idx);
+			rs = ps.executeQuery();
+			fileName = rs.next() ? rs.getString("newFileName") : null ;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return fileName;
+	}
+	
+	//파일 수정
+	public void fileNameUpdate(int bbs_idx, String newFileName, String oldFileName) {
+		String sql = "";
+		try { // 기존파일이 있는경우
+			if(oldFileName != null) {
+				sql = "UPDATE Bbs_file SET newFileName = ? WHERE bbs_idx = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, newFileName);
+				ps.setInt(2, bbs_idx);
+			}else { // 없는경우
+				sql = "INSERT INTO Bbs_file VALUES(file_index_seq.NEXTVAL,?,?,?)";
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, bbs_idx);
+				ps.setString(2, "noFile");
+				ps.setString(3, newFileName);
+			}
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+	}
+	
+	//파일게시판 수정
+	public int fileUpdate(BoardDTO dto) {
+		int success = 0;
+		String sql = "UPDATE Bbs SET bbs_subject = ?, bbs_content = ? WHERE bbs_idx = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, dto.getBbs_subject());
+			ps.setString(2, dto.getBbs_content());
+			ps.setInt(3, dto.getBbs_idx());
+			success = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return success;
+	}
+	
+	//파일게시판 관리자모드
+	public ArrayList<BoardDTO> adminFileBbsList() {
+		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
+		//bbs_name 이 groupBbs 인 게시글 전부 불러오기 (관리자모드를 위함)
+		String sql = "SELECT * FROM Bbs WHERE bbs_name = 'fileBbs' ORDER BY bbs_idx DESC";
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				BoardDTO dto = new BoardDTO();
+				dto.setBbs_idx(rs.getInt("bbs_idx"));
+				dto.setBbs_name(rs.getString("bbs_name"));
+				dto.setBbs_subject(rs.getString("bbs_subject"));
+				dto.setBbs_date(rs.getDate("bbs_date"));
+				dto.setBbs_bHit(rs.getInt("bbs_bHit"));
+				dto.setMember_id(rs.getString("member_id"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return list;
+	}
+	
 }

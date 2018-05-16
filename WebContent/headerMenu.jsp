@@ -213,7 +213,14 @@
                 <button class="menu" onclick="location.href='memberInfoForm.jsp'" id="myInfo">내정보</button>
                 <button class="menu" onclick="location.href='/SemiProject_TeamP/adminList'" id="notice">공지사항</button>
                 <button class="menu" onclick="location.href='plan.jsp'" id="plan">일정</button>
-                <button class="menu" id="fileBbs">파일게시판</button>
+                
+                 <c:if test = "${sessionScope.loginId == 'admin' }">
+                	<button onclick="location.href ='/SemiProject_TeamP/adminFileBbsList'" id="fileBbs">파일게시판</button>
+                </c:if>
+                
+                <c:if test = "${sessionScope.loginId != 'admin'}">
+                	<button onclick="location.href ='/SemiProject_TeamP/fileList'" id="fileBbs">파일게시판</button>
+                </c:if>
                 
                  <!-- 관리자 로그인시 adminGroupList로 분기시켜 모든 그룹의 글 보기 및 삭제 가능 하게 하기-->
                 <c:if test="${sessionScope.loginId == 'admin'}">

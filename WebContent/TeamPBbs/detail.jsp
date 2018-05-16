@@ -60,9 +60,14 @@
 	     	 	<a href ="/SemiProject_TeamP/adminList">리스트</a>
 	     	 </c:if>
 	     	 
-	     	 <c:if test="${info.bbs_name == 'groupBbs'}">
+	     	 <c:if test="${sessionScope.loginId != 'admin' && info.bbs_name == 'groupBbs'}">
 	     	 	<a href ="/SemiProject_TeamP/groupList">리스트</a>
 	     	 </c:if> 
+	     	 
+	     	 <c:if test="${sessionScope.loginId == 'admin' && info.bbs_name == 'groupBbs'}">
+	     	 	<a href ="/SemiProject_TeamP/adminGroupBbsList">리스트</a>
+	     	 </c:if> 
+	     	 
 	         &nbsp;&nbsp;&nbsp;&nbsp;
 	         
 	         <!-- 자신의 글만 수정가능 -->
@@ -70,10 +75,17 @@
 	         <a href="./updateForm?idx=${info.bbs_idx}">수정</a>
 	         </c:if>
 	         &nbsp;&nbsp;&nbsp;&nbsp;
+	         
 	         <!-- 자신 과 관리자만 삭제 가능 -->
-	         <c:if test="${sessionScope.loginId == info.member_id || sessionScope.loginId == 'admin'}">
-	         <a href="./delete?idx=${info.bbs_idx}">삭제</a>
-	  		</c:if>
+	         
+	         <!-- 관리자와 로그인한유저만 의견나눔게시판 삭제 가능-->
+	         <c:if test="${(sessionScope.loginId == info.member_id || sessionScope.loginId == 'admin') && info.bbs_name == 'freeBbs'}">  
+	        	 <a href="./comunityBbsDelete?idx=${info.bbs_idx}">삭제</a>
+	  		 </c:if>
+			<!-- 관리자와 로그인한유저(그룹장)만 그룹게시판 삭제 가능-->
+			 <c:if test="${(sessionScope.loginId == info.member_id || sessionScope.loginId == 'admin') && info.bbs_name == 'groupBbs'}">  
+	        	 <a href="./groupBbsDelete?idx=${info.bbs_idx}">삭제</a>
+	  		 </c:if>
       </td>
    </tr>
    

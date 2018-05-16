@@ -21,7 +21,8 @@ import semi.teamP.service.TodoService;
 
 
 @WebServlet({ "/login", "/findPw", "/findId", "/ChangePw", "/join", "/idOverlay", "/emailOverlay", "/infoUpdate", "/infoUpdateForm", "/logout", "/withdrawal", "/infoFormAccess", "/memberPasswordCheck"
-	,"/write", "/detail", "/updateForm", "/update", "/delete","/comunityList","/adminList", "/groupList", "/createMenuSession" , "/groupWrite" , "/adminGroupBbsList"
+	,"/write", "/detail", "/updateForm", "/update", "/comunityBbsDelete","/groupBbsDelete","/comunityList","/adminList", "/groupList", "/createMenuSession" , "/groupWrite" , "/adminGroupBbsList"
+	,"/fileList", "/fileWrite", "/fileUpdate", "/fileUpdateForm", "/fileDetail", "/fileDelete", "/fileDownLoad", "/adminFileBbsList"
 	,"/groupJoin", "/groupDetail", "/groupCreate", "/groupDelete", "/inviteMemberIdChk", "/groupWithdrawal", "/groupInviteList", "/groupInvite", "/inviteRefuse", "/inviteAccept", "/memberOut", "/groupInfoUpdate", "/groupInfoUpdateForm", "/groupMemberList", "/memberChk" 
 	,"/replyWrite", "/replyUpdate", "/replyDelete", "/replyCheck", "/replyUpdateForm"
 	,"/planWrite", "/planlist", "/planChange", "/planDelete", "/planDetail", "/planTableList","/planDayList"
@@ -144,6 +145,7 @@ public class Controller extends HttpServlet {
 			member.withdrawal();
 			break;
 			
+			
 		case "/write":
 			System.out.println("게시글 글 등록 요청");
 			board = new BoardService(request, response);
@@ -173,10 +175,16 @@ public class Controller extends HttpServlet {
 			board.update();
 			break;
 			
-		case "/delete":
+		case "/comunityBbsDelete":
 			System.out.println("게시글 삭제 요청");
 			board = new BoardService(request, response);	
-			board.delete();
+			board.comunityBbsDelete();
+			break;
+			
+		case "/groupBbsDelete":
+			System.out.println("게시글 삭제 요청");
+			board = new BoardService(request, response);	
+			board.groupBbsDelete();
 			break;
 			
 		case "/comunityList":
@@ -202,6 +210,54 @@ public class Controller extends HttpServlet {
 			board = new BoardService(request, response);
 			board.groupList();
 			break;
+			
+		case "/fileList":
+	         System.out.println("파일게시판  리스트 요청");
+	         board = new BoardService(request, response);
+	         board.fileList();
+	         break;   
+	      
+	    case "/fileWrite":   
+	         System.out.println("파일 게시글 글 등록 요청");
+	         board = new BoardService(request, response);
+	         board.fileWrite();
+	         break; 
+	         
+	    case "/fileUpdate":
+	    	System.out.println("파일 게시글 수정 요청");
+	    	board = new BoardService(request, response);
+	    	board.fileUpdate();
+	    	break;
+	    	
+	    case "/fileUpdateForm":
+	    	System.out.println("파일 게시글 수정 폼 요청");
+	    	board = new BoardService(request, response);
+	    	board.fileUpdateForm();
+	    	break;
+	    	
+	    case "/fileDetail":
+	    	System.out.println("파일 게시글 상세보기 요청");
+	    	board = new BoardService(request, response);
+	    	board.fileDetail();
+	    	break;
+	    	
+	    case "/fileDelete":
+	    	System.out.println("파일 게시글 삭제 요청");
+	    	board = new BoardService(request, response);
+	    	board.fileDelete();
+	    	break;
+	    	
+	    case "/fileDownLoad":
+	    	System.out.println("첨부파일 다운로드 요청");
+	    	board = new BoardService(request, response);
+	    	board.fileDownLoad();
+	    	break;
+	    	    	
+	    case "/adminFileBbsList":
+	    	System.out.println("파일게시판 관리자 모드");
+	    	board = new BoardService(request, response);
+	    	board.adminFileBbsList();
+	    	break;
 			
 		case "/groupDetail":
 			System.out.println("그룹 정보 보기 요청");
