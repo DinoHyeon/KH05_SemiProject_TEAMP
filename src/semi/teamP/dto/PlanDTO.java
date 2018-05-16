@@ -4,10 +4,14 @@ public class PlanDTO {
    private int plan_idx;
    private String plan_startDay;
    private String plan_endDay;
+   private String plan_title;
    private String plan_content;
    private String plan_state;
+   private String plan_plan_finishDate;
    private int group_idx;
    private String member_id;
+   
+   
    public int getPlan_idx() {
       return plan_idx;
    }
@@ -26,6 +30,12 @@ public class PlanDTO {
    public void setPlan_endDay(String plan_endDay) {
       this.plan_endDay = plan_endDay;
    }
+   public String getPlan_title() {
+	   return plan_title;
+   }
+   public void setPlan_title(String plan_title) {
+	   this.plan_title = plan_title;
+   }
    public String getPlan_content() {
       return plan_content;
    }
@@ -38,7 +48,13 @@ public class PlanDTO {
    public void setPlan_state(String plan_state) {
       this.plan_state = plan_state;
    }
-   public int getGroup_idx() {
+   public String getPlan_plan_finishDate() {
+	   return plan_plan_finishDate;
+	}
+	public void setPlan_plan_finishDate(String plan_plan_finishDate) {
+		this.plan_plan_finishDate = plan_plan_finishDate;
+	}
+	public int getGroup_idx() {
       return group_idx;
    }
    public void setGroup_idx(int group_idx) {

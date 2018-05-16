@@ -119,12 +119,11 @@ public class GroupDAO {
 	
 	public ArrayList<GroupMemberDTO> groupMemberList(String memberId, int groupIdx) {
 		ArrayList<GroupMemberDTO> groupMemberList = new ArrayList<>();
-		String sql = "SELECT member_id FROM member_group WHERE member_id!=? AND group_idx=?";
+		String sql = "SELECT member_id FROM member_group WHERE group_idx=?";
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, memberId);
-			ps.setInt(2, groupIdx);
-			
+			ps.setInt(1, groupIdx);
+	
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
@@ -378,7 +377,7 @@ public class GroupDAO {
 
 	
 	//인덱스 번호로 그룹 이름 찾기
-	private String groupNameFind(int groupIdx) {
+	public String groupNameFind(int groupIdx) {
 		String groupName="";
 		String sql = "SELECT group_name FROM Group_project WHERE group_idx=?";
 		try {
@@ -397,7 +396,7 @@ public class GroupDAO {
 
 	
 	//date -> string
-	private String castingString(Date date) {
+	public String castingString(Date date) {
 		String dateString = "20";
 		SimpleDateFormat sdfr = new SimpleDateFormat("yy-MM-dd");
 		dateString += sdfr.format(date);
@@ -405,7 +404,7 @@ public class GroupDAO {
 	}
 	
 	//string -> date
-	private Date castingDate(String group_Day) {
+	public Date castingDate(String group_Day) {
 		//년
 		int year = Integer.parseInt(group_Day.substring(0,4))-1900;
 		//월
