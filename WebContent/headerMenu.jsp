@@ -212,7 +212,7 @@
            		 <button class="menu" id="main">메인</button>
                 <button class="menu" onclick="location.href='memberInfoForm.jsp'" id="myInfo">내정보</button>
                 <button class="menu" onclick="location.href='/SemiProject_TeamP/adminList'" id="notice">공지사항</button>
-                <button class="menu" id="plan">일정</button>
+                <button class="menu" onclick="location.href='plan.jsp'" id="plan">일정</button>
                 <button class="menu" id="fileBbs">파일게시판</button>
                 
                  <!-- 관리자 로그인시 adminGroupList로 분기시켜 모든 그룹의 글 보기 및 삭제 가능 하게 하기-->
@@ -661,10 +661,7 @@
 		ajaxCall(obj);
 	}
 	
-	
-	function groupDel() {
-		//그룹 삭제 전 회원 비밀번호로 체크
-		passCheckCss();
+	$("#groupDel").click(function() {
 		//오늘
 		obj.url="./groupDelete";
 		obj.data={};
@@ -682,7 +679,8 @@
 			}
 		};
 		ajaxCall(obj);
-	};
+	})
+
 	
 	function ajaxCall(param){
 		console.log(param);
