@@ -125,6 +125,7 @@ $(document).ready(function(){
 			content +="<td>"+item.plan_state+"</td>";
 			content += "</tr>"; 
 		});		
+		$("#PlanTable").empty();
 		$("#PlanTable").append(content);
 	}
 });

@@ -43,7 +43,7 @@
             }
             
             
-            #groupName{
+            #groupState{
                 position: absolute;
                color: #FFD724;
                 width: 83%;
@@ -51,6 +51,17 @@
                font-weight: 900;
                font-size: 16px;
                 text-align: center;
+            }
+            
+            #groupName{
+               position: absolute;
+               color: #FFD724;
+               width: 83%;
+               top: 10.5%;
+               left: 8%;
+               font-weight: 900;
+               font-size: 28px;
+               text-align: center;
             }
           
              #Todo{
@@ -61,6 +72,7 @@
             	font-weight: 500;
             	font-size: 16px;
                 text-align: center;
+                backgour-color: "black";
             }
             #content{
                 background-color: #004D65;
@@ -127,148 +139,138 @@
 </style>
 </head>
 <body>
-        <div id="mainInfo">
-           <div id="TeamP">Team P</div>
-            <div id="userName"></div>
-            <div id="groupName">현재 그룹이 없어요:(</div>
-            <div id="Todo">할일 입력란
-            <input id="content" type="text" maxlength="15"/><button id="insert">+</button> 
-            <P>
-             <div>할일 리스트<button id="slide">▲</button></div>
-           <div class="scrollbar" id="TodoList">
-            <table id="TodoTable">
-            	<!-- <tr>
-            		<th>할일 내용</th>
-            	</tr> -->
-            	
-            </table>
-            </div>
-            </div>
-           </div>
+	<div id="mainInfo">
+		<div id="TeamP">Team P</div>
+			<div id="userName"></div>
+			<div id="groupState">현재 그룹이 없어요:(</div>
+			<span id="groupName"></span>
+			<div id="Todo">할일 입력란
+				<input id="content" type="text" maxlength="15"/><button id="insert">+</button> 
+				<div>할일 리스트<button id="slide">▲</button></div>
+				<div class="scrollbar" id="TodoList">
+				<table id="TodoTable">	
+				</table>
+				</div>
+			</div>
+	</div>
 </body>
 <script>
-var obj = {};		
-obj.type="post";
-obj.dataType="json";
-obj.error=function(e){console.log(e)};
+	var content = "";	
+	var obj = {};
+	obj.type = "post";
+	obj.dataType = "json";
+	obj.error = function(e) {
+		console.log(e)
+	};
 
-//페이지가 로드되었을 때 session에 그룹번호가 없는 경우 화면을 다르게 보여줘야한다.
-$(document).ready(function() {
+	//페이지가 로드되었을 때 session에 그룹번호가 없는 경우 화면을 다르게 보여줘야한다.
+	$(document).ready(function() {
+				$("#content").keyup(function() {
+							if ($(this).val().length > $(this).attr('maxlength')) {
+								alert('제한길이 초과');
+								$(this).val($(this).val().substr(0,$(this).attr('maxlength')));
+							}
+						});
 
-	 $("#content").keyup(function(){
-	        if ($(this).val().length > $(this).attr('maxlength')) {
-	            alert('제한길이 초과');
-	            $(this).val($(this).val().substr(0, $(this).attr('maxlength')));
-	        }
-	    });
+				$("#TodoList").scroll(function() {
+							var scrollHeight = $("#scrolltest").scrollTop()
+									+ $(window).height();
+							var documentHeight = $("#scrolltest").height;
+							if (scrollHeight == documentHeight) {
+								$("#TodoTable").appendTo('content');
+							}
+						});
 
-
- 	$("#TodoList").scroll(function(){
-		var scrollHeight=$("#scrolltest").scrollTop()+$(window).height();
-		var documentHeight=$("#scrolltest").height;
-		if(scrollHeight==documentHeight){
-			$("#TodoTable").appendTo('content');
-		}
-	}); 
-	
-	//로그인상태인지 확인
-	if('${sessionScope.loginId}'==""){
-		alert("로그인이 필요한 서비스입니다.");
-		location.href="index.jsp";
-		//로그인상태면 할일 리스트 뽑아오는todoDetail실행
-	}else if('${sessionScope.loginId}'!==""){
-		obj.url="./todoDetail"
-		obj.success = function(data){
-			if(data.login){ //true이면
-				//리스트 보여주기
-				listPrint(data.list);
-			}
-		}
-		ajaxCall(obj);
-	}
-	//세션에 저장되어 있는 groupNum이 0이라면(*0은 현재 가입되어 있는 그룹이 없는 것을 의미)
-	if('${sessionScope.groupNum}'==0){
-		//button의 css속성 값을 변경
-		$("input[type='button']").css("display","inline");
-	}else{
-		$("#groupName").html("현재 가입된 그룹명은"+'${sessionScope.groupname}');
-	}
-})
-    	$("button").click(function(){
-		$("button").css("font-weight","normal");
-		$(this).css("font-weight","900");
+				//로그인상태인지 확인
+				if ('${sessionScope.loginId}' == "") {
+					alert("로그인이 필요한 서비스입니다.");
+					location.href = "index.jsp";
+					//로그인상태면 할일 리스트 뽑아오는todoDetail실행
+				} else if ('${sessionScope.loginId}' !== "") {
+					$("#TodoTable").empty();
+					listPrint();
+				}
+				
+				//세션에 저장되어 있는 groupNum이 0이라면(*0은 현재 가입되어 있는 그룹이 없는 것을 의미)
+				if ('${sessionScope.groupNum}' == 0) {
+					//button의 css속성 값을 변경
+					$("input[type='button']").css("display", "inline");
+				} else {
+					$("#groupState").html('');
+					$("#groupName").html('${sessionScope.groupname}');
+				}
 	})
- $("#insert").click(function(){
-        	$.ajax({
-    			type:"post",
-    			url:"./todoWrite",
-    			data:{
-    				content:$("#content").val()
-    			},
-    			dataType:"json",
-    			success:function(data){//인자 값은 서버에서 주는 메세지
-    				console.log(data);
-    				if(data.success){
-    					location.reload();
-    				}else{
-    					alert("할일 등록실패")
-    				}
-
-    			}
-    		});
-        	ajaxCall(obj);
-        });
-				var content ="";
-			function listPrint(list){
-				console.log(list);
-				//var content ="";
-				//idx, user_name, subject, reg_date, bHit
-				list.forEach(function(item, idx){
-					content += "<tr>";					
-					//content +="<td><div class='tododel' id="+item.to_do_idx+">삭제</div></td>";//삭제div
-					content +="<td><input onclick='del()' class='tododel' value='-' type='button' id="+item.to_do_idx+"></td>";
-					content +="<td>"+item.todo_content+"</td>";
-					content += "</tr>"; 
-				});		
-				
-				$("#TodoTable").append(content);
+	
+	
+	$("button").click(function() {
+		$("button").css("font-weight", "normal");
+		$(this).css("font-weight", "900");
+	})
+	
+	$("#insert").click(function() {
+		if($("#content").val()==""){
+			alert("내용을 입력해주세요.");
+			$("#content").focus();
+		}else{
+			$.ajax({
+				type : "post",
+				url : "./todoWrite",
+				data : {content : $("#content").val()},
+				dataType : "json",
+				success : function(data) {//인자 값은 서버에서 주는 메세지
+					if (data.success) {
+						$("#TodoTable").empty();
+						listPrint();
+						$("#content").val("");
+					} else {
+						alert("할일 등록실패")
+					}
+				}
+			});
+			ajaxCall(obj);
+		}
+	});
+	
+	function listPrint() {
+		obj.url = "./todoDetail"
+			obj.success = function(data) {
+					data.list.forEach(function(item, idx) {
+								content += "<tr>";
+								content += "<td><input onclick='del()' class='tododel' value='-' type='button' id="+item.to_do_idx+"></td>";
+								content += "<td>" + item.todo_content + "</td>";
+								content += "</tr>";
+					});
+					$("#TodoTable").empty();
+					$("#TodoTable").append(content);
+				 	content = "";
 			}
-			
-			
-			
-	        function del(){
-				console.log("삭제");
-				
-	        	$.ajax({
-	    			type:"post",
-	    			url:"./todoDelete",
-	    			data:{
-	    				delcontent:$(".tododel").attr('id')
-	    				
-	    			},
-	    			dataType:"json",
-	    			success:function(data){//인자 값은 서버에서 주는 메세지
-	    				console.log(data);
-	    				if(data.success){
-	    					location.reload();
-	    				}else{
-	    					alert("삭제 실패")
-	    				}
+			ajaxCall(obj);
+	}
 
-	    			}
-	    		});
-	        	ajaxCall(obj);
-	        }; 
+	function del() {
+		$.ajax({
+			type : "post",
+			url : "./todoDelete",
+			data : {delcontent : $(".tododel").attr('id')},
+			dataType : "json",
+			success : function(data) {//인자 값은 서버에서 주는 메세지
+				if (data.success) {
+					listPrint(data.list)
+				} else {
+					alert("삭제 실패")
+				}
+			}
+		});
+		ajaxCall(obj);
+	};
 
-	     $("#slide").click(function(){
-	            $("#TodoList").slideToggle("slow");
-	            
-	        })
-		
-	    	
-        function ajaxCall(param){
-    		$.ajax(param);
-    	}
-        
+	$("#slide").click(function() {
+		$("#TodoList").slideToggle("slow");
+
+	})
+
+	function ajaxCall(param) {
+		$.ajax(param);
+	}
 </script>
 </html>
