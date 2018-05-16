@@ -190,6 +190,8 @@ $(document).ready(function() {
 	if('${sessionScope.groupNum}'==0){
 		//button의 css속성 값을 변경
 		$("input[type='button']").css("display","inline");
+	}else{
+		$("#groupName").html("현재 가입된 그룹명은"+'${sessionScope.groupname}');
 	}
 })
     	$("button").click(function(){

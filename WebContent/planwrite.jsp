@@ -90,6 +90,13 @@
 			<tr>
 				<td><input type="text" id="pickmem"/></td>
 			</tr>
+			<tr>
+				<th>타이틀</th>
+			</tr>
+			
+			<tr>
+				<td><input type="text" id="title"/></td>
+			</tr>
 			<tr><td>시작일</td></tr>
 			<tr>
 				<td>
@@ -141,6 +148,7 @@
 			obj.data={};
 			//수행자,시작일,마감일,메모
 			obj.data.userName= $("#pickmem").val();
+			obj.data.title=$("#title").val();
 			obj.data.syear = $("#syear").val();
 			obj.data.smonth = $("#smonth").val();
 			obj.data.sday = $("#sday").val();
@@ -152,7 +160,7 @@
 				console.log(data);
 				if(data.success>0){
 					alert("글 쓰기에 성공 하였습니다.");
-					location.href = "plan.jsp";
+					location.href = "main_Group.jsp";
 				}else{
 					alert("글 쓰기에 실패 하였습니다.");
 				}

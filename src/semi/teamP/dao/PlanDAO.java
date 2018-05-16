@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 
 import semi.teamP.dto.BoardDTO;
 import semi.teamP.dto.PlanDTO;
+import semi.teamP.dto.TodoDTO;
 
 public class PlanDAO {
 	Connection conn = null;
@@ -44,61 +45,20 @@ public class PlanDAO {
 
 
 
-	/*public Integer write(String userName, String sDate, String eDate, String memo) {
+
+	public int write(PlanDTO dto,int groupIdx) {
 		int success = 0;
-		plan_idx NUMBER(20) PRIMARY KEY,
-		   plan_endDay DATE NOT NULL,
-		   plan_content NVARCHAR2(100),
-		   plan_startDay DATE NOT NULL,
-		   plan_state NVARCHAR2(50) DEFAULT '준비중',
-		   group_idx NUMBER(20),
-		   member_id NVARCHAR2(50)
-		String sql = "INSERT INTO plan(plan_idx,member_id,plan_startDay,plan_endDay,plan_content)"
-				+"VALUES(plan_idx_seq,?,?,?,?)";
-		try {
-			ps= conn.prepareStatement(sql,new String[] {"plan_idx"} );
-			ps.setString(1, userName);
-			ps.setString(2, sDate);
-			ps.setString(3, eDate);
-			ps.setString(4, memo);
-			ps.executeUpdate();
-			rs = ps.getGeneratedKeys();
-			if(rs.next()) {
-				success = (int) rs.getLong(1);
-				
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			resClose();
-		}
 		
-		return success;
-	}*/
-
-
-
-
-
-
-	public int write(PlanDTO dto) {
-		int success = 0;
-		/*plan_idx NUMBER(20) PRIMARY KEY,
-		   plan_endDay DATE NOT NULL,
-		   plan_content NVARCHAR2(100),
-		   plan_startDay DATE NOT NULL,
-		   plan_state NVARCHAR2(50) DEFAULT '준비중',
-		   group_idx NUMBER(20),
-		   member_id NVARCHAR2(50)*/
-		String sql = "INSERT INTO plan (plan_idx,plan_startDay,plan_content,plan_endDay,member_id) "
-				+ "VALUES(plan_idx_seq.NEXTVAL,?,?,?,?)";
+		String sql = "INSERT INTO plan (plan_idx,plan_startDay,plan_content,plan_endDay,member_id,plan_title,group_idx) "
+				+ "VALUES(plan_idx_seq.NEXTVAL,?,?,?,?,?,?)";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, dto.getPlan_startDay());
 			ps.setString(2, dto.getPlan_content());
 			ps.setString(3, dto.getPlan_endDay());
 			ps.setString(4, dto.getMember_id());
-			
+			ps.setString(5, dto.getPlan_title());
+			ps.setInt(6, groupIdx);
 			
 			success = ps.executeUpdate();
 		} catch (SQLException e) {
@@ -131,6 +91,32 @@ public class PlanDAO {
 		}
 		return list;
 		
+	}
+
+
+
+	public ArrayList<PlanDTO> list(String date,int groupIdx) {
+		ArrayList<PlanDTO> list = new ArrayList<PlanDTO>(); //list변수만들어주고
+		String sql="SELECT * FROM Plan WHERE plan_startDay<=? AND plan_endDay>=? AND group_idx =? ORDER BY plan_idx DESC";
+		try {
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, date);
+			ps.setString(2, date);
+			ps.setInt(3, groupIdx);
+			rs=ps.executeQuery();
+			while(rs.next()){ 
+				PlanDTO dto = new PlanDTO();	
+				dto.setMember_id(rs.getString("member_id"));
+				dto.setPlan_title(rs.getString("plan_title"));
+				dto.setPlan_state(rs.getString("plan_state"));
+				list.add(dto);//dto 를 list 에 담기
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return list;
 	}
 }
 

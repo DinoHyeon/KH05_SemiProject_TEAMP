@@ -38,8 +38,8 @@
     #page #todayPlanDetail{        
         position: absolute;
         top: 0%;
-        left: 51%;
-        width: 49%;
+        left: 55%;
+        width: 45%;
         height: 100%;
 		background-color: white;
     }   
@@ -72,6 +72,12 @@
 <script type="text/javascript" src="http://fullcalendar.io/js/fullcalendar-3.9.0/fullcalendar.js"></script>
 <script src='http://fullcalendar.io/js/fullcalendar-3.9.0/locale/ko.js'></script>
 <script type="text/javascript">
+
+var obj = {};		
+obj.type="post";
+obj.dataType="json";
+obj.error=function(e){console.log(e)};
+
 $(document).ready(function(){
     $("#calender").fullCalendar({
           defaultDate : new Date()
@@ -84,27 +90,43 @@ $(document).ready(function(){
             right: 'today prev,next'
         }
         , events: [
-/*                {
-                  title : "All Day Event"
-                , start : "2016-05-01"
-            },*/
+               {
+                  title : "data.title"
+                , start : "2018-05-01"
+                , end : "2018-05-13"
+            },
         ]
         , dayClick: function(date, allDay, jsEvent, view) {
+        	
            var yy=date.format("YYYY");
            var mm=date.format("MM");
            var dd=date.format("DD");
            var date = yy+"/"+mm+"/"+dd;
+           
            $(this).css('background-color', '#FFD724');
            $("td.fc-day.fc-widget-content").not($(this)).css('background-color', 'white')
-/* 	   		obj.url="./todatPlanList";
-	   		obj.data={};
-	   		obj.data={menuName:$(this).attr("id")};
-	   		obj.success = function(data) {
-	   			
+	   		obj.url="./planDayList";
+	   		obj.data={date:date};
+	   		obj.success = function(data) {console.log(data);
+	   			listPrint(data.list);
 	   		}
-	   		ajaxCall(obj); */
+	   		ajaxCall(obj); 
          }
     });
+    var content ="";
+	function listPrint(list){
+		console.log(list);
+		var content ="";
+		//idx, user_name, subject, reg_date, bHit
+		list.forEach(function(item, idx){
+			content += "<tr>";					
+			content +="<td>"+item.member_id+"</td>";
+			content +="<td>"+item.plan_title+"</td>";
+			content +="<td>"+item.plan_state+"</td>";
+			content += "</tr>"; 
+		});		
+		$("#PlanTable").append(content);
+	}
 });
 
 function ajaxCall(param){
@@ -121,10 +143,46 @@ function ajaxCall(param){
         
         </div>
         <div id="todayPlan">
-        
+         <table id="PlanTable">
+            <tr>
+            	<th>수행자</th>
+            	<th>타이틀</th>
+            	<th>상태</th>
+            </tr> 
+            	
+            </table>
         </div>
         <div id="sectionDivisionLine"></div>
         <div id="todayPlanDetail">
+        	<h3>세부일정</h3>
+			<table>
+				<tr>
+					<td>일정번호</td>
+					<td><span id="memberInfoName"></span></td>
+				</tr>
+				<tr>
+					<td>수행자</td>
+					<td><span id="memberInfoId"></span></td>
+				</tr>			
+				<tr>
+					<td>타이틀</td>
+					<td><span id="memberBitrh"></span></td>
+				</tr>			
+				<tr>
+					<td>일정내용</td>
+					<td><input id="memberEamil" onkeyup="pushEmail()" type="email" value=${dto.member_email}></td>
+				</tr>			
+				<tr>
+					<td>시작날짜</td>
+					<td><input id="memberPhone" type="text" value=${dto.member_phone}></td>
+				</tr>							
+				<tr>
+					<td>종료예정날짜</td>
+					<td>
+						<input id="memberChangePass" type="password" onkeyup="passChk()"/>
+					</td>
+				</tr>
+			</table>
         </div>
     </div>
 </body>

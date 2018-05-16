@@ -16,9 +16,11 @@ import com.google.gson.Gson;
 import oracle.net.aso.s;
 import semi.teamP.dao.GroupDAO;
 import semi.teamP.dao.PlanDAO;
+import semi.teamP.dao.TodoDAO;
 import semi.teamP.dto.BoardDTO;
 import semi.teamP.dto.GroupInfoDTO;
 import semi.teamP.dto.PlanDTO;
+import semi.teamP.dto.TodoDTO;
 
 public class PlanService {
 	HttpServletRequest request = null;
@@ -47,7 +49,9 @@ public class PlanService {
 		//글쓰기 서비스
 		//1.파라메터 추출
 		request.setCharacterEncoding("UTF-8");
+		int groupIdx =(int) request.getSession().getAttribute("groupNum");
 		String userName =request.getParameter("userName");
+		String title =request.getParameter("title");
 		String sDate=request.getParameter("syear")+request.getParameter("smonth")
 		+request.getParameter("sday");
 		String eDate =request.getParameter("eyear")+request.getParameter("emonth")
@@ -55,14 +59,15 @@ public class PlanService {
 		String memo = request.getParameter("memo");
 		PlanDTO dto = new PlanDTO();
 		dto.setMember_id(userName);
+		dto.setPlan_title(title);
 		dto.setPlan_startDay(sDate);
 		dto.setPlan_endDay(eDate);
 		dto.setPlan_content(memo);
-		
+		System.out.println(groupIdx+"지금 가지고 있는 그룹idx값");
 		
 		//2.DAO 요청
 		PlanDAO dao = new PlanDAO();
-		int success = dao.write(dto);
+		int success = dao.write(dto,groupIdx);
 		//3.결과값 json변환
 		Gson json = new Gson();
 		HashMap<String, Integer> map = new HashMap<>();
@@ -136,4 +141,25 @@ public class PlanService {
 		String obj = json.toJson(map);
 		response.getWriter().println(obj);
 	}
+	
+	public void planDayList() throws IOException {
+		PlanDAO dao=new PlanDAO();
+		String date= (String)request.getParameter("date");
+		int groupIdx =(int) request.getSession().getAttribute("groupNum");
+		System.out.println("선택한 날짜는:"+date);
+		//데이터가 담긴 어레이리스트 
+		ArrayList<PlanDTO> list= dao.list(date,groupIdx);
+		//response 반환
+		Gson json = new Gson();
+		HashMap<String, Object>map=new HashMap<>();
+		request.setAttribute("list", list); 
+		map.put("list",list);//리스트 넣고
+		String obj = json.toJson(map);
+		response.setContentType("text/html; charset=UTF-8");//한글있으니까 깨짐방지
+		response.getWriter().println(obj);
+		
+	}
+		
+		
+	
 }

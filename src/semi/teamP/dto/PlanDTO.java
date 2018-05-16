@@ -8,9 +8,17 @@ public class PlanDTO {
    private String plan_state;
    private int group_idx;
    private String member_id;
-   public int getPlan_idx() {
-      return plan_idx;
-   }
+   private String plan_title;
+
+	public String getPlan_title() {
+		return plan_title;
+	}
+	public void setPlan_title(String plan_title) {
+		this.plan_title = plan_title;
+	}
+	public int getPlan_idx() {
+	      return plan_idx;
+	   }
    public void setPlan_idx(int plan_idx) {
       this.plan_idx = plan_idx;
    }
@@ -50,6 +58,4 @@ public class PlanDTO {
    public void setMember_id(String member_id) {
       this.member_id = member_id;
    }
-
-
 }
