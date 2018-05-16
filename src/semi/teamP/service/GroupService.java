@@ -26,12 +26,11 @@ public class GroupService {
 	}
 
 	public void groupDetail() throws IOException {
-		int groupIdx = Integer.parseInt(request.getParameter("groupIdx"));
+		int groupIdx = (int) request.getSession().getAttribute("groupNum");
 
 		GroupDAO dao = new GroupDAO();
 		GroupInfoDTO dto = dao.getGroupInfo(groupIdx);
 		
-		System.out.println("요청한 그룹 날짜 : "+dto.getGroup_StrartDay());
 		String groupName=dto.getGroup_name();
 		request.getSession().setAttribute("groupname", groupName);
 		System.out.println(groupName+"지금나의 그룹명");

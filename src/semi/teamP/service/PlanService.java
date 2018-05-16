@@ -32,7 +32,7 @@ public class PlanService {
 		this.response = response;
 	}
 	public void planlist() throws IOException {
-		int groupIdx = 0;
+		int groupIdx = (int) request.getSession().getAttribute("groupNum");
 		PlanDAO dao = new PlanDAO();
 		//데이터가 담긴 어레이 리스트
 		ArrayList<PlanDTO> list = dao.list(groupIdx);//리스트 직접 뽑아 볼 것		

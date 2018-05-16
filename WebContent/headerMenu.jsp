@@ -245,6 +245,9 @@
         <div id="group">
             <div id="groupInfo">그룹 정보</div><!-- 현재 로그인한 회원의 레벨이 member인 경우 -->
             <div id="groupManage">그룹 관리</div><!-- 현재 로그인한 회원의 레벨이 master인 경우 -->
+            <div id="groupPeriod"></div><!-- 프로젝트 기간 -->
+            <div id="groupDday"></div><!-- 프로젝트 남은 기간 -->
+            <div id="groupProgress"></div><!-- 프로젝트 달성률 -->
         </div>
         
         
@@ -346,6 +349,13 @@
 	var groupIdx = '${sessionScope.groupNum}';
 	var groupName = "";
 	var groupMemberContent = "";
+	var groupStartDay="";
+	var groupEndDay="";
+	var groupDday="";
+	
+	var totalPlan=0;
+	var finishPlan=0;
+	var groupProgress=0;
 	
 	var obj = {};
 	var idx;//idex값을 저장할 전역 변수
@@ -355,15 +365,46 @@
 
 
 	$(document).ready(function() {
+		var currentDate = new Date();
+		var currentDateYear = currentDate.getFullYear();
+		var currentDateMonth = currentDate.getMonth()+1;
+		var currentDateDay =  currentDate.getDate();
 		
-		
+		var currentDay = currentDateYear+"-"+currentDateMonth+"-"+currentDateDay;
 		//그룹가입 여부에 따른 header
 		if(groupIdx!=0){
-			console.log("그룹 있음");
 			//그룹이 있을 경우 nongroup를 none으로
 			$("#Nongroup").css("display","none");
+			//상단 부분 출력
+			obj.url="./groupDetail";
+			obj.data={};
+			obj.success = function(data){
+				groupStartDay=data.groupInfo.group_StrartDay;//시작일
+				groupEndDay=data.groupInfo.group_EndDay;//종료일
+				groupDday=BetweenDate(currentDay,groupEndDay);//남은 기간
+				
+				$("#groupPeriod").html(groupDday+"일 남았습니다.");
+				$("#groupDday").html(groupStartDay+" ~ "+groupEndDay);
+			}
+			ajaxCall(obj);
+			
+			obj.url="./planlist";
+			obj.data={};
+			obj.success = function(data){
+				data.list.forEach(function(item,index){
+					totalPlan+=1;
+					if(item.plan_state=='완료'){
+						finishPlan+=1;
+					}
+				 })
+				if(finishPlan!=0){
+					groupProgress=totalPlan/finishPlan;
+				}
+				console.log(groupProgress);
+				$("#groupProgress").html(groupProgress+" %");
+			}
+			ajaxCall(obj);
 		}else{
-			console.log("그룹 없음");
 			//그룹이 없을 경우 nongroup를 inline으로
 			$("#Nongroup").css("display","inline")
 		}
@@ -687,7 +728,34 @@
 		};
 		ajaxCall(obj);
 	})
+	
+	
 
+	
+	//해당 그룹의 달성률
+	function groupProgress(){
+		obj.url="./groupDelete";
+		obj.data={};
+		obj.success = function(data){
+
+		}
+		ajaxCall(obj);
+	};
+
+	
+	function BetweenDate(currentDay,endDay) {
+		var currentDayInfo = currentDay.split("-");
+		var endDayInfo = endDay.split("-");
+
+		var currentDayDate = new Date(currentDayInfo[0], currentDayInfo[1]-1, currentDayInfo[2]);//시작일 Date
+		var endDayDate = new Date(endDayInfo[0], endDayInfo[1]-1, endDayInfo[2]);//종료일 Date
+		
+		var btMs = endDayDate.getTime() - currentDayDate.getTime();
+		var btDay = btMs / (1000*60*60*24);
+		
+		return btDay;
+	}
+	
 	
 	function ajaxCall(param){
 		console.log(param);
