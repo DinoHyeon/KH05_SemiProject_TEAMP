@@ -158,29 +158,27 @@ function ajaxCall(param){
 			<table>
 				<tr>
 					<td>일정번호</td>
-					<td><span id="memberInfoName"></span></td>
+					<td><span id="planIdx"></span></td>
 				</tr>
 				<tr>
 					<td>수행자</td>
-					<td><span id="memberInfoId"></span></td>
+					<td><span id="planMember"></span></td>
 				</tr>			
 				<tr>
 					<td>타이틀</td>
-					<td><span id="memberBitrh"></span></td>
+					<td><span id="planTitle"></span></td>
 				</tr>			
 				<tr>
 					<td>일정내용</td>
-					<td><input id="memberEamil" onkeyup="pushEmail()" type="email" value=${dto.member_email}></td>
+					<td><span id="planContent"></span></td>
 				</tr>			
 				<tr>
 					<td>시작날짜</td>
-					<td><input id="memberPhone" type="text" value=${dto.member_phone}></td>
+				<td><span id="planStart"></span></td>
 				</tr>							
 				<tr>
 					<td>종료예정날짜</td>
-					<td>
-						<input id="memberChangePass" type="password" onkeyup="passChk()"/>
-					</td>
+					<td><span id="planEnd"></span></td>
 				</tr>
 			</table>
         </div>

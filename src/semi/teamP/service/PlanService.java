@@ -46,8 +46,8 @@ public class PlanService {
 		response.getWriter().println(obj);
 	}
 
-<<<<<<< HEAD
-	public void planWrite() throws IOException {
+
+	/*public void planWrite() throws IOException,ServletException {
 		request.setCharacterEncoding("UTF-8");
 		//글쓰기 서비스
 		//1.파라메터 추출
@@ -79,8 +79,8 @@ public class PlanService {
 		response.getWriter().println(obj);
 		
 		
-	}
-=======
+	}*/
+
 	   public void planWrite() throws IOException, ServletException {
 		      request.setCharacterEncoding("UTF-8");
 		      PlanDTO plandto= new PlanDTO();
@@ -126,7 +126,7 @@ public class PlanService {
 		      //int success = dao.createGroup(infoDto);
 		      
 		   }
->>>>>>> 86a9267e8db670a00014dafa71507538b3217a0b
+
 
 
 

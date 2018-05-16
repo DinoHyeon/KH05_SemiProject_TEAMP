@@ -44,70 +44,6 @@ public class PlanDAO {
 	}
 
 
-
-<<<<<<< HEAD
-
-	public int write(PlanDTO dto,int groupIdx) {
-		int success = 0;
-		
-		String sql = "INSERT INTO plan (plan_idx,plan_startDay,plan_content,plan_endDay,member_id,plan_title,group_idx) "
-				+ "VALUES(plan_idx_seq.NEXTVAL,?,?,?,?,?,?)";
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, dto.getPlan_startDay());
-			ps.setString(2, dto.getPlan_content());
-			ps.setString(3, dto.getPlan_endDay());
-			ps.setString(4, dto.getMember_id());
-			ps.setString(5, dto.getPlan_title());
-			ps.setInt(6, groupIdx);
-			
-			success = ps.executeUpdate();
-=======
-	/*public Integer write(String userName, String sDate, String eDate, String memo) {
-		int success = 0;
-		plan_idx NUMBER(20) PRIMARY KEY,
-		   plan_endDay DATE NOT NULL,
-		   plan_content NVARCHAR2(100),
-		   plan_startDay DATE NOT NULL,
-		   plan_state NVARCHAR2(50) DEFAULT '준비중',
-		   group_idx NUMBER(20),
-		   member_id NVARCHAR2(50)
-		String sql = "INSERT INTO plan(plan_idx,member_id,plan_startDay,plan_endDay,plan_content)"
-				+"VALUES(plan_idx_seq,?,?,?,?)";
-		try {
-			ps= conn.prepareStatement(sql,new String[] {"plan_idx"} );
-			ps.setString(1, userName);
-			ps.setString(2, sDate);
-			ps.setString(3, eDate);
-			ps.setString(4, memo);
-			ps.executeUpdate();
-			rs = ps.getGeneratedKeys();
-			if(rs.next()) {
-				success = (int) rs.getLong(1);
-				
-			}
->>>>>>> 86a9267e8db670a00014dafa71507538b3217a0b
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			resClose();
-		}
-<<<<<<< HEAD
-		return success;
-	}
-
-
-
-	public ArrayList<PlanDTO> list() {
-=======
-		
-		return success;
-	}*/
-
-
-
-
-
 	 public int planWrite(PlanDTO plandto) {
 	      int success = 0;
 	      String sql = "INSERT INTO Plan(plan_idx, member_id,plan_startDay,plan_endDay,plan_content,plan_title,group_idx)"
@@ -138,7 +74,6 @@ public class PlanDAO {
 
 	public ArrayList<PlanDTO> list(int groupIdx) {
 		GroupDAO Gdao = new GroupDAO();
->>>>>>> 86a9267e8db670a00014dafa71507538b3217a0b
 		ArrayList<PlanDTO> list = new ArrayList<PlanDTO>();
 		String sql="SELECT * FROM plan WHERE group_idx=? ORDER BY plan_startDay DESC";
 		try {
