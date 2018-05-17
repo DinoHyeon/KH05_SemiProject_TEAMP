@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import semi.teamP.service.AdminService;
 import semi.teamP.service.BoardService;
 import semi.teamP.service.GroupService;
+import semi.teamP.service.HeaderMenuService;
 import semi.teamP.service.MemberService;
 import semi.teamP.service.PlanService;
 import semi.teamP.service.ReplyService;
@@ -27,7 +28,8 @@ import semi.teamP.service.TodoService;
 	,"/replyWrite", "/replyUpdate", "/replyDelete", "/replyCheck", "/replyUpdateForm"
 	,"/planWrite", "/planlist", "/planChange", "/planDelete", "/planDetail", "/planTableList","/planDayList"
 	,"/todoDetail", "/todoWrite", "/todoUpdate", "/todoDelete", "/todoChange"
-	,"/adMemberList", "/adMemberDel", "/adGroupList", "/adGroupDel", "/adGroupSession" })
+	,"/adMemberList", "/adMemberDel", "/adGroupList", "/adGroupDel", "/adGroupSession"
+	,"/headerMenuInfo"})
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -58,6 +60,7 @@ public class Controller extends HttpServlet {
 		PlanService plan = null;
 		TodoService todo = null;
 		AdminService admin = null;
+		HeaderMenuService header = null;
 		
 		switch (subAddr) {
 		case "/createMenuSession":
@@ -458,6 +461,11 @@ public class Controller extends HttpServlet {
 			System.out.println("관리자) 그룹 접근 권한 요청");
 			admin = new AdminService(request, response);
 			admin.adGroupSession();
+			break;
+		case "/headerMenuInfo":
+			System.out.println("상단메뉴 정보요청");
+			header = new HeaderMenuService(request,response);
+			header.getGroupInfo();
 			break;
 		}
 	}

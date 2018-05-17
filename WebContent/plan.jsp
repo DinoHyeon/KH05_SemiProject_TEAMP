@@ -347,14 +347,11 @@
 		var groupidx = '${sessionScope.groupNum}';
 		
 		$("#plusplan").click(function() {
-		   
 		   $("#popupContent").css("display","inline");
-		   InfoLoad();
-		   
+		   InfoLoad();		   
 		})
 		
 		$("#changeplan").click(function() {
-		   
 		   $("#Infopopup").css("display","inline");
 		})
 		
@@ -442,7 +439,6 @@
 		   }
 		
 		function ajaxCall(param){
-		   console.log(param);
 		   $.ajax(param);
 		}
 		   

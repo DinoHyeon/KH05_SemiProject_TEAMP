@@ -376,7 +376,7 @@
 			//그룹이 있을 경우 nongroup를 none으로
 			$("#Nongroup").css("display","none");
 			//상단 부분 출력
-			obj.url="./groupDetail";
+			obj.url="./headerMenuInfo";
 			obj.data={};
 			obj.success = function(data){
 				groupStartDay=data.groupInfo.group_StrartDay;//시작일
@@ -385,13 +385,8 @@
 				
 				$("#groupPeriod").html(groupDday+"일 남았습니다.");
 				$("#groupDday").html(groupStartDay+" ~ "+groupEndDay);
-			}
-			ajaxCall(obj);
-			
-			obj.url="./planlist";
-			obj.data={};
-			obj.success = function(data){
-				data.list.forEach(function(item,index){
+				
+				data.planList.forEach(function(item,index){
 					totalPlan+=1;
 					if(item.plan_state=='완료'){
 						finishPlan+=1;
@@ -603,8 +598,30 @@
 	
 	//그룹 정보 수정
 	$("#changeGroupInfo").click(function name() {
+		var planDateChkArr=[];
+		var planDateChkResult=true;
 		var startDay = new Date($("#groupInfoStartDate").val());
 		var endDay = new Date($("#groupInfoEndDate").val());
+		
+		obj.url="./planlist";
+		obj.data={};
+		obj.success = function(data){
+			console.log(data);
+			data.list.forEach(function(item,index){
+				planDateChkArr.push(compare_Date($("#groupInfoStartDate").val(), $("#groupInfoEndDate").val(), item.plan_startDay, item.plan_endDay));
+		    });
+		};
+		ajaxCall(obj);
+		
+		
+		
+		for(var i=0; i<planDateChkArr.length; i++){
+			console.log(planDateChkArr[i]);
+			if(planDateChkArr[i]==false){
+				planDateChkResult=false;
+				console.log("변경실패");
+			}
+		}
 
 		if($("#groupInfoName").val()==""){
 			alert("그룹명을 입력해주세요.")
@@ -618,6 +635,9 @@
 		}else if(startDay>endDay){
 			alert("프로젝트 시작일을 재입력해주세요.")
 			$("#groupInfoStartDate").focus();
+		}else if(!planDateChkResult){
+			alert("진행해야하는 일정이 있습니다.")
+			$("#groupInfoStartDate").focus();
 		}else{
 			obj.url="./groupInfoUpdate";
 			obj.data={};
@@ -630,7 +650,7 @@
 			obj.success = function(data){
 				if(data.success){
 					groupInfoLoad();
-					alert("그룹 정보수정을 완료했습니다.");
+					alert("그룹 정보을 완료했습니다.");
 				}else{
 					alert("그룹 정보수정을 완료하지 못 했습니다.");
 				}
@@ -729,18 +749,6 @@
 		ajaxCall(obj);
 	})
 	
-	
-
-	
-	//해당 그룹의 달성률
-	function groupProgress(){
-		obj.url="./groupDelete";
-		obj.data={};
-		obj.success = function(data){
-
-		}
-		ajaxCall(obj);
-	};
 
 	
 	function BetweenDate(currentDay,endDay) {
@@ -756,9 +764,29 @@
 		return btDay;
 	}
 	
+	function compare_Date(groupStartDate, groupEndDate, planStartDate, planEndDate){
+		var compareResult = false;	
+
+		var groupStartDateArr = groupStartDate.split('-'); 
+		var groupEndDateArr = groupEndDate.split('-');
+		var planStartDateArr = planStartDate.split('-');
+		var planEndDateArr =  planEndDate.split('-');
+		
+		var dateGroupStartDate = new Date(groupStartDateArr[0],groupStartDateArr[1],groupStartDateArr[2]);
+		var dateGroupEndDate = new Date(groupEndDateArr[0],groupEndDateArr[1],groupEndDateArr[2]);
+		var datePlanStartDate = new Date(planStartDateArr[0],planStartDateArr[1],planStartDateArr[2]);
+		var datePlanEndDate =  new Date(planEndDateArr[0],planEndDateArr[1],planEndDateArr[2]);
+		
+		if(dateGroupStartDate<=datePlanStartDate&datePlanStartDate<=datePlanEndDate&dateGroupEndDate>=datePlanStartDate&dateGroupEndDate>=datePlanEndDate){
+			compareResult = true;
+		}else{
+			compareResult = false;
+		}
+		
+		return compareResult;
+	}
 	
 	function ajaxCall(param){
-		console.log(param);
 		$.ajax(param);
 	}
 </script>
