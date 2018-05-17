@@ -36,6 +36,9 @@ public class BoardDAO {
 			}
 			ps.close();
 			conn.close();
+			System.out.println(ps);
+			System.out.println(conn);
+			System.out.println(rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -174,68 +177,96 @@ public class BoardDAO {
 
 	
 	//리스트 불러오기
-		public ArrayList<BoardDTO> list() {
+		public ArrayList<BoardDTO> list(String keyField, String keyWord, int start, int end) {
 			ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
-		      String sql = "SELECT * FROM Bbs WHERE bbs_name = 'freeBbs' ORDER BY bbs_idx DESC";
+		      String sql = "";
 		      try {
-		    	 ps = conn.prepareStatement(sql);
-		         rs = ps.executeQuery();
-		         while(rs.next()) {
-		            BoardDTO dto = new BoardDTO();
-		            dto.setBbs_idx(rs.getInt("bbs_idx"));
-		            dto.setBbs_name(rs.getString("bbs_name"));
-		            dto.setBbs_subject(rs.getString("bbs_subject"));
-		            dto.setBbs_date(rs.getDate("bbs_date"));
-		            dto.setBbs_bHit(rs.getInt("bbs_bHit"));
-		            dto.setMember_id(rs.getString("member_id"));
-		            list.add(dto);
-		         }
+		    	 // 검색값없이 그냥 들어갔을때	    	  
+		    	 if(keyWord.equals(null) || keyWord.equals("")) {
+		    		 sql = "SELECT bbs_idx, bbs_name, bbs_subject, bbs_date, bbs_bHit, member_id FROM"
+		    		 		+ " (SELECT ROW_NUMBER() OVER(ORDER BY bbs_idx DESC) AS rnum, bbs_idx, bbs_name, bbs_subject, bbs_date, bbs_bHit, member_id FROM Bbs WHERE bbs_name='freeBbs')"
+		    		 		+ " WHERE rnum BETWEEN ? AND ?";
+		    		 ps = conn.prepareStatement(sql);
+		    		 ps.setInt(1, start);
+		 			 ps.setInt(2, end);
+				 //검색값이 있을때
+		    	 }else{
+		    		 sql = "SELECT * FROM Bbs WHERE bbs_name = 'freeBbs' AND " + keyField + " like ? ORDER BY bbs_idx DESC";
+		    		 ps = conn.prepareStatement(sql);
+		    		 ps.setString(1, "%" + keyWord + "%");
+		    	 }		
+		    	rs = ps.executeQuery();
+	    	    while(rs.next()) {
+		             BoardDTO dto = new BoardDTO();
+		             dto.setBbs_idx(rs.getInt("bbs_idx"));
+		             dto.setBbs_name(rs.getString("bbs_name"));
+		             dto.setBbs_subject(rs.getString("bbs_subject"));
+		             dto.setBbs_date(rs.getDate("bbs_date"));
+		             dto.setBbs_bHit(rs.getInt("bbs_bHit"));
+		             dto.setMember_id(rs.getString("member_id"));
+		             list.add(dto);
+	    	    }
 		      } catch (SQLException e) {
 		         e.printStackTrace();
 		      }finally {
-		         resClose();
-		      }
+		    	  resClose();
+			}
 		      return list;
 		}
 	
 	//관리자게시판 리스트 불러오기
-	public ArrayList<BoardDTO> adminList() {
+	public ArrayList<BoardDTO> adminList(String keyField, String keyWord) {
 		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
-		//bbs_name 이 adminBbs 인 것만 select 해서 뿌림
-		String sql = "SELECT * FROM Bbs WHERE member_id = 'admin' ORDER BY bbs_idx DESC";
-		try {
-			ps = conn.prepareStatement(sql);
-			rs = ps.executeQuery();
-			while(rs.next()) {
-				BoardDTO dto = new BoardDTO();
-				dto.setBbs_idx(rs.getInt("bbs_idx"));
-				dto.setBbs_name(rs.getString("bbs_name"));
-				dto.setBbs_subject(rs.getString("bbs_subject"));
-				dto.setBbs_date(rs.getDate("bbs_date"));
-				dto.setBbs_bHit(rs.getInt("bbs_bHit"));
-				dto.setMember_id(rs.getString("member_id"));
-				list.add(dto);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			resClose();
+	      String sql = "";
+	      try {
+	    	 // 검색값없이 그냥 들어갔을때
+	    	 if(keyWord.equals(null) || keyWord.equals("")) {
+	    		 sql = "SELECT * FROM Bbs WHERE member_id = 'admin' ORDER BY bbs_idx DESC";
+	    		 ps = conn.prepareStatement(sql); 
+			 //검색값이 있을때
+	    	 }else{
+	    		 sql = "SELECT * FROM Bbs WHERE bbs_name = 'adminBbs' AND " + keyField + " like ? ORDER BY bbs_idx DESC";
+	    		 ps = conn.prepareStatement(sql);
+	    		 ps.setString(1, "%" + keyWord + "%");
+	    	 }		
+	    	rs = ps.executeQuery();
+  	    while(rs.next()) {
+	             BoardDTO dto = new BoardDTO();
+	             dto.setBbs_idx(rs.getInt("bbs_idx"));
+	             dto.setBbs_name(rs.getString("bbs_name"));
+	             dto.setBbs_subject(rs.getString("bbs_subject"));
+	             dto.setBbs_date(rs.getDate("bbs_date"));
+	             dto.setBbs_bHit(rs.getInt("bbs_bHit"));
+	             dto.setMember_id(rs.getString("member_id"));
+	             list.add(dto);
+  	    }
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }finally {
+	    	  resClose();
 		}
-		return list;
+	      return list;
 	}
 	
 	//그룹 리스트 불러오기(그룹장 및 그룹원)
-	public ArrayList<BoardDTO> groupList(int group_idx) {
+	public ArrayList<BoardDTO> groupList(int group_idx, String keyField, String keyWord) {
 		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 		//bbs_name 이 groupBbs 인 것만 select 해서 뿌리고 group_idx = ? 세팅
-		String sql = "SELECT * FROM Bbs WHERE bbs_name = 'groupBbs' AND group_idx = ? ORDER BY bbs_idx DESC";
+		String sql = "";
 		try {
-			ps = conn.prepareStatement(sql);
-			//가져온 그룹번호 세션값  group_idx 값 셋팅 -> 자신이 해당되어있는 그룹의 게시글만 볼수 있도록 하기위함
-			ps.setInt(1, group_idx);
-			ps.executeUpdate();
-			rs = ps.executeQuery();
-			while(rs.next()) {
+			 if(keyWord.equals(null) || keyWord.equals("")) {
+				 sql = "SELECT * FROM Bbs WHERE bbs_name = 'groupBbs' AND group_idx = ? ORDER BY bbs_idx DESC";
+				 ps = conn.prepareStatement(sql);
+				 //가져온 그룹번호 세션값  group_idx 값 셋팅 -> 자신이 해당되어있는 그룹의 게시글만 볼수 있도록 하기위함
+				 ps.setInt(1, group_idx);
+			 }else {
+				 sql = "SELECT * FROM Bbs WHERE bbs_name = 'groupBbs' AND group_idx = ? AND " + keyField + " like ? ORDER BY bbs_idx DESC";
+	    		 ps = conn.prepareStatement(sql);
+	    		 ps.setInt(1, group_idx);
+	    		 ps.setString(2, "%" + keyWord + "%");
+			 }
+			 	rs = ps.executeQuery();
+			 	while(rs.next()) {
 				BoardDTO dto = new BoardDTO();
 				dto.setBbs_idx(rs.getInt("bbs_idx"));
 				dto.setBbs_name(rs.getString("bbs_name"));
@@ -254,12 +285,19 @@ public class BoardDAO {
 	}
 	
 	//그룹 리스트 불러오기(관리자)
-	public ArrayList<BoardDTO> adminGroupBbsList() {
+	public ArrayList<BoardDTO> adminGroupBbsList(String keyField, String keyWord) {
 		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 		//bbs_name 이 groupBbs 인 게시글 전부 불러오기 (관리자모드를 위함)
-		String sql = "SELECT * FROM Bbs WHERE bbs_name = 'groupBbs' ORDER BY bbs_idx DESC";
+		String sql = "";
 		try {
-			ps = conn.prepareStatement(sql);
+			if(keyWord.equals(null) || keyWord.equals("")) {
+				sql = "SELECT * FROM Bbs WHERE bbs_name = 'groupBbs' ORDER BY bbs_idx DESC";
+				ps = conn.prepareStatement(sql);
+			}else {
+				sql = "SELECT * FROM Bbs WHERE bbs_name = 'groupBbs' AND " + keyField + " like ? ORDER BY bbs_idx DESC";
+	    		ps = conn.prepareStatement(sql);
+	    		ps.setString(1, "%" + keyWord + "%");
+			}
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				BoardDTO dto = new BoardDTO();
@@ -280,30 +318,38 @@ public class BoardDAO {
 	}
 
 	//파일 리스트 불러오기 
-	   public ArrayList<BoardDTO> filelist(int group_idx) {
+	   public ArrayList<BoardDTO> filelist(int group_idx, String keyField, String keyWord) {
 	      ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
-	      String sql = "SELECT * FROM Bbs WHERE bbs_name = 'fileBbs' AND group_idx = ? ORDER BY bbs_idx DESC";
-	      try {
-	         ps = conn.prepareStatement(sql);
-	         ps.setInt(1, group_idx);
-	         ps.executeUpdate();
-	         rs = ps.executeQuery();
-	         while(rs.next()) {
-	            BoardDTO dto = new BoardDTO();
-	            dto.setBbs_idx(rs.getInt("bbs_idx"));
-	            dto.setBbs_name(rs.getString("bbs_name"));
-	            dto.setBbs_subject(rs.getString("bbs_subject"));
-	            dto.setBbs_date(rs.getDate("bbs_date"));
-	            dto.setBbs_bHit(rs.getInt("bbs_bHit"));
-	            dto.setMember_id(rs.getString("member_id"));
-	            list.add(dto);
-	         }
-	      } catch (SQLException e) {
-	         e.printStackTrace();
-	      }finally {
-	         resClose();
-	      }
-	      return list;
+	      String sql = "";
+			try {
+				 if(keyWord.equals(null) || keyWord.equals("")) {
+					 sql = "SELECT * FROM Bbs WHERE bbs_name = 'fileBbs' AND group_idx = ? ORDER BY bbs_idx DESC";
+					 ps = conn.prepareStatement(sql);
+					 //가져온 그룹번호 세션값  group_idx 값 셋팅 -> 자신이 해당되어있는 그룹의 게시글만 볼수 있도록 하기위함
+					 ps.setInt(1, group_idx);
+				 }else {
+					 sql = "SELECT * FROM Bbs WHERE bbs_name = 'fileBbs' AND group_idx = ? AND " + keyField + " like ? ORDER BY bbs_idx DESC";
+		    		 ps = conn.prepareStatement(sql);
+		    		 ps.setInt(1, group_idx);
+		    		 ps.setString(2, "%" + keyWord + "%");
+				 }
+				 	rs = ps.executeQuery();
+				 	while(rs.next()) {
+					BoardDTO dto = new BoardDTO();
+					dto.setBbs_idx(rs.getInt("bbs_idx"));
+					dto.setBbs_name(rs.getString("bbs_name"));
+					dto.setBbs_subject(rs.getString("bbs_subject"));
+					dto.setBbs_date(rs.getDate("bbs_date"));
+					dto.setBbs_bHit(rs.getInt("bbs_bHit"));
+					dto.setMember_id(rs.getString("member_id"));
+					list.add(dto);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				resClose();
+			}
+			return list;
 	   }
 
 	   //파일 게시판 글쓰기
@@ -437,12 +483,19 @@ public class BoardDAO {
 	}
 	
 	//파일게시판 관리자모드
-	public ArrayList<BoardDTO> adminFileBbsList() {
+	public ArrayList<BoardDTO> adminFileBbsList(String keyField, String keyWord) {
 		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 		//bbs_name 이 groupBbs 인 게시글 전부 불러오기 (관리자모드를 위함)
-		String sql = "SELECT * FROM Bbs WHERE bbs_name = 'fileBbs' ORDER BY bbs_idx DESC";
+		String sql = "";
 		try {
-			ps = conn.prepareStatement(sql);
+			if(keyWord.equals(null) || keyWord.equals("")) {
+				sql = "SELECT * FROM Bbs WHERE bbs_name = 'fileBbs' ORDER BY bbs_idx DESC";
+				ps = conn.prepareStatement(sql);
+			}else {
+				sql = "SELECT * FROM Bbs WHERE bbs_name = 'fileBbs' AND " + keyField + " like ? ORDER BY bbs_idx DESC";
+	    		ps = conn.prepareStatement(sql);
+	    		ps.setString(1, "%" + keyWord + "%");
+			}
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				BoardDTO dto = new BoardDTO();
@@ -461,5 +514,4 @@ public class BoardDAO {
 		}
 		return list;
 	}
-	
 }

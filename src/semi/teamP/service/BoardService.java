@@ -139,18 +139,42 @@ public class BoardService {
 	}
 	//의견나눔게시판 리스트 불러오기
 	public void list() throws IOException, ServletException {
+		String keyField = "";
+		String keyWord ="";
+	
+		//검색값이 있다면 해당 파라미터 가져오기
+		if(request.getParameter("keyWord") != null) {
+			 keyField = request.getParameter("keyField");
+			 keyWord = request.getParameter("keyWord");
+			 System.out.println(keyField);
+			 System.out.println(keyWord);
+		}
+		
 		BoardDAO dao = new BoardDAO();
 		//데이터가 담긴 어레이 리스트
-		ArrayList<BoardDTO> list = dao.list();
+		//검색값이 있을때 해당 키필드, 키워드를 넘겨준다
+		ArrayList<BoardDTO> list = dao.list(keyField, keyWord,1,5);
 		System.out.println(list.size());
 		request.setAttribute("list",list);
 		RequestDispatcher dis = request.getRequestDispatcher("TeamPBbs/comunityBbs.jsp");
 		dis.forward(request, response);
 	}
+	
 	//공지사항 리스트 불러오기
 	public void adminList() throws ServletException, IOException {
+		String keyField = "";
+		String keyWord ="";
+	
+		//검색값이 있다면 해당 파라미터 가져오기
+		if(request.getParameter("keyWord") != null) {
+			 keyField = request.getParameter("keyField");
+			 keyWord = request.getParameter("keyWord");
+			 System.out.println(keyField);
+			 System.out.println(keyWord);
+		}
+		
 		BoardDAO dao = new BoardDAO();
-		ArrayList<BoardDTO> list = dao.adminList();
+		ArrayList<BoardDTO> list = dao.adminList(keyField, keyWord);
 		request.setAttribute("list", list);
 		RequestDispatcher dis = request.getRequestDispatcher("TeamPBbs/adminBbs.jsp");
 		dis.forward(request, response);
@@ -158,9 +182,20 @@ public class BoardService {
 	}
 	//그룹 리스트 불러오기(그룹장 및 그룹원)
 	public void groupList() throws ServletException, IOException {
+		String keyField = "";
+		String keyWord ="";
+	
+		//검색값이 있다면 해당 파라미터 가져오기
+		if(request.getParameter("keyWord") != null) {
+			 keyField = request.getParameter("keyField");
+			 keyWord = request.getParameter("keyWord");
+			 System.out.println(keyField);
+			 System.out.println(keyWord);
+		}
+		
 		int group_idx = (int)request.getSession().getAttribute("groupNum");
 		BoardDAO dao = new BoardDAO();
-		ArrayList<BoardDTO> list = dao.groupList(group_idx);
+		ArrayList<BoardDTO> list = dao.groupList(group_idx, keyField, keyWord);
 		request.setAttribute("list", list);
 		RequestDispatcher dis = request.getRequestDispatcher("TeamPBbs/groupBbs.jsp");
 		dis.forward(request, response);
@@ -168,8 +203,19 @@ public class BoardService {
 	
 	//그룹 리스트 불러오기(관리자)
 	public void adminGroupBbsList() throws ServletException, IOException {
+		String keyField = "";
+		String keyWord ="";
+	
+		//검색값이 있다면 해당 파라미터 가져오기
+		if(request.getParameter("keyWord") != null) {
+			 keyField = request.getParameter("keyField");
+			 keyWord = request.getParameter("keyWord");
+			 System.out.println(keyField);
+			 System.out.println(keyWord);
+		}
+		
 		BoardDAO dao = new BoardDAO();
-		ArrayList<BoardDTO> list = dao.adminGroupBbsList();
+		ArrayList<BoardDTO> list = dao.adminGroupBbsList(keyField,keyWord);
 		request.setAttribute("list", list);
 		RequestDispatcher dis = request.getRequestDispatcher("TeamPBbs/adminGroupBbsList.jsp");
 		dis.forward(request, response);
@@ -177,10 +223,21 @@ public class BoardService {
 
 	//파일 게시판 불러오기
    public void fileList() throws ServletException, IOException {
+	   String keyField = "";
+	   String keyWord ="";
+
+	   //검색값이 있다면 해당 파라미터 가져오기
+	   if(request.getParameter("keyWord") != null) {
+		   keyField = request.getParameter("keyField");
+		   keyWord = request.getParameter("keyWord");
+		   System.out.println(keyField);
+		   System.out.println(keyWord);
+	   }	  
+	   
       int group_idx = (int)request.getSession().getAttribute("groupNum");
       //DB 이용해서 데이터 가져오기
       BoardDAO dao = new BoardDAO();
-      ArrayList<BoardDTO> list = dao.filelist(group_idx);
+      ArrayList<BoardDTO> list = dao.filelist(group_idx, keyField, keyWord);
       //가져온 데이터를 request 에 담기
       request.setAttribute("list", list);
       //특정한 페이지로 이동 
@@ -280,8 +337,18 @@ public class BoardService {
 	
 	//파일게시판 (관리자모드)
 	public void adminFileBbsList() throws ServletException, IOException {
+		String keyField = "";
+		String keyWord ="";
+	
+		//검색값이 있다면 해당 파라미터 가져오기
+		if(request.getParameter("keyWord") != null) {
+			 keyField = request.getParameter("keyField");
+			 keyWord = request.getParameter("keyWord");
+			 System.out.println(keyField);
+			 System.out.println(keyWord);
+		}
 		BoardDAO dao = new BoardDAO();
-		ArrayList<BoardDTO> list = dao.adminFileBbsList();
+		ArrayList<BoardDTO> list = dao.adminFileBbsList(keyField, keyWord);
 		request.setAttribute("list", list);
 		RequestDispatcher dis = request.getRequestDispatcher("TeamPBbs/adminFileBbsList.jsp");
 		dis.forward(request, response);
@@ -300,5 +367,6 @@ public class BoardService {
 		}
 		
 	}
+
 
 }

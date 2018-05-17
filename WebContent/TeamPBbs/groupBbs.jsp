@@ -54,6 +54,23 @@
 			</c:forEach>
 		</table>
 		
+		<form action="./groupList" method="get">
+			<table>
+				<tr>
+					<td>
+						<select name ="keyField">
+							<!-- DB컬럼값과 동일한 value를 주어 keyField를 구분 -->
+							<option value="member_id">이 름</option>
+							<option value="bbs_subject">제 목</option>
+							<option value="bbs_content">내 용</option>
+						</select>
+						<input type="text" name="keyWord"/>
+						<input type="submit" value="찾기"/>  
+					</td>
+				</tr>
+			</table>
+		</form>
+		
 		<!--
 		 그룹을 생성하는순간 그룹장이 되고 memberLv 세션값이 master가 됨
 		그룹장만 글을 작성할수 있으므로 마스터 일때만 버튼을 보여주면 됨 

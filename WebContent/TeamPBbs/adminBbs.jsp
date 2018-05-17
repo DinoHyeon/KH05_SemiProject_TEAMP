@@ -56,6 +56,24 @@
 			</c:forEach>
 		</table>
 		
+		<!-- 게시판 검색 폼 -->
+		<form action="./adminList" method="get">
+			<table>
+				<tr>
+					<td>
+						<select name ="keyField">
+							<!-- DB컬럼값과 동일한 value를 주어 keyField를 구분 -->
+							<option value="member_id">이 름</option>
+							<option value="bbs_subject">제 목</option>
+							<option value="bbs_content">내 용</option>
+						</select>
+						<input type="text" name="keyWord"/>
+						<input type="submit" value="찾기"/>  
+					</td>
+				</tr>
+			</table>
+		</form>
+		
 		<!-- 아이디가 (세션에 저장된 아이디) 'admin'인 사람만 글쓰기 버튼을 보여준다-->
 		<c:if test="${sessionScope.loginId == 'admin'}">
 			<button onclick="location.href = 'TeamPBbs/writeForm.jsp'">글쓰기</button>

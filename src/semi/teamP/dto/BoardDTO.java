@@ -12,7 +12,20 @@ public class BoardDTO {
    private int group_idx;
    private String member_id;
    private String newFileName;
-   public int getBbs_idx() {
+   
+   //페이징
+   private int totalRecord;
+   
+   public int getTotalRecord() {
+	return totalRecord;
+}
+   
+   public void setTotalRecord(int totalRecord) {
+	this.totalRecord = totalRecord;
+}
+
+
+public int getBbs_idx() {
       return bbs_idx;
    }
    public void setBbs_idx(int bbs_idx) {

@@ -57,10 +57,35 @@
 			</c:forEach>
 		</table>
 		
+		<!-- 게시판 검색 폼 -->
+		<form action="./comunityList" method="get">
+			<table>
+				<tr>
+					<td>
+						<select name ="keyField">
+							<!-- DB컬럼값과 동일한 value를 주어 keyField를 구분 -->
+							<option value="member_id">이 름</option>
+							<option value="bbs_subject">제 목</option>
+							<option value="bbs_content">내 용</option>
+						</select>
+						<input type="text" name="keyWord"/>
+						<input type="submit" value="찾기"/>  
+					</td>
+				</tr>
+			</table>
+		</form>
+			
 		<!-- 관리자는 의견나눔게시판에 글을 쓸 이유가 없어서 아이디가 'admin' 일시 버튼을 막아놓음 -->
 		<c:if test="${sessionScope.loginId != 'admin'}">
 			<button onclick="location.href = 'TeamPBbs/writeForm.jsp'">글쓰기</button>
 		</c:if>
+		
+	<a href="#">이전</a>
+	<a href="">[1]</a>
+	<a href="#">2</a>
+	<a href="#">3</a>
+	<a href="#">4</a>
+	<a href="#">다음</a>
 		
     </div>
 </body>
