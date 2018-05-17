@@ -16,10 +16,12 @@ import com.google.gson.Gson;
 
 import oracle.net.aso.s;
 import semi.teamP.dao.GroupDAO;
+import semi.teamP.dao.MemberDAO;
 import semi.teamP.dao.PlanDAO;
 import semi.teamP.dao.TodoDAO;
 import semi.teamP.dto.BoardDTO;
 import semi.teamP.dto.GroupInfoDTO;
+import semi.teamP.dto.MemberDTO;
 import semi.teamP.dto.PlanDTO;
 import semi.teamP.dto.TodoDTO;
 
@@ -127,20 +129,47 @@ public class PlanService {
 		      
 		   }
 
-
-
-
-	public void planDetail() {
-		// TODO Auto-generated method stub
+	public void planDetail() throws IOException {
+		String detail = request.getParameter("detail");
+		PlanDAO dao = new PlanDAO();
+		//아이디 이름 생일 이메일 휴대폰번호
+		PlanDTO dto = dao.plandetail(detail);
 		
+		Gson json = new Gson();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("plandetail", dto);
+		String obj = json.toJson(map);
+		response.setContentType("text/html; charset=UTF-8");
+		response.getWriter().println(obj);
 	}
+		
 
 	public void planDelete() {
 		// TODO Auto-generated method stub
 		
 	}
+	//일정상세보기 수정버튼 눌렀을때 !
 	public void planChange() {
-		// TODO Auto-generated method stub
+		/*int groupIdx=(int) request.getSession().getAttribute("groupNum");
+		PlanDTO dto = new PlanDTO();
+		dto.setGroup_idx(Integer.parseInt(request.getParameter("groupInfoIdx")));
+		dto.setGroup_name(request.getParameter("groupInfoName"));
+		dto.setGroup_StrartDay(request.getParameter("groupInfoStartDate"));
+		dto.setGroup_EndDay(request.getParameter("groupInfoEndDate"));
+		
+		planMember : $("#planMember").val()
+		planTitle : $("#planTitle").val()
+		planContent : $("#planContent").val()
+		plan : $("#select option:selected").val()
+		
+		PlanDAO dao = new PlanDAO();
+		boolean success = dao.groupInfoUpdate(dto);
+		
+		Gson json = new Gson();
+		HashMap<String, Boolean> map = new HashMap<>();
+		map.put("success", success);
+		String obj = json.toJson(map);
+		response.getWriter().println(obj);*/
 		
 	}
 	

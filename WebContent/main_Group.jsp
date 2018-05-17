@@ -1,3 +1,5 @@
+main_Group.jsp
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -64,6 +66,30 @@
     .fc-sun {color:#e31b23}
     .fc-sat {color:#007dc3}
     
+    #todayPlan{
+    	height: 450px;
+		width: 265px;
+    	overflow : auto;
+    }
+   #todayPlanDetail{
+		display:none;
+	}
+	#select{
+		display:none;
+	}
+	#changesuc{
+		display:none;
+	}
+	#changeplan{
+	left:45%;
+		width:70px;
+		height:30px;
+	}
+	input[type='text']{
+		width:100%;
+		border-width : 0;
+	}
+    
 </style>
 <link href="http://fullcalendar.io/js/fullcalendar-3.9.0/fullcalendar.css" rel="stylesheet"/>
 <link href="http://fullcalendar.io/js/fullcalendar-3.9.0/fullcalendar.print.css" rel="stylesheet" media="print"/>
@@ -119,16 +145,43 @@ $(document).ready(function(){
 		var content ="";
 		//idx, user_name, subject, reg_date, bHit
 		list.forEach(function(item, idx){
-			content += "<tr>";					
+			content += "<tr>";	
 			content +="<td>"+item.member_id+"</td>";
 			content +="<td>"+item.plan_title+"</td>";
 			content +="<td>"+item.plan_state+"</td>";
+			content +="<td><input onclick='detail()' class='plandetail' value='상세보기' type='button' id="+item.plan_idx+"></td>";
 			content += "</tr>"; 
 		});		
 		$("#PlanTable").empty();
 		$("#PlanTable").append(content);
 	}
 });
+
+function detail(){
+	console.log("일정 상세보기 호출");
+	$("#todayPlanDetail").css("display","inline");
+
+	$.ajax({
+		type:"post",
+		url:"./planDetail",
+		data:{
+			detail:$(".plandetail").attr('id')
+		},
+		dataType:"json",
+		success:function(data){//인자 값은 서버에서 주는 메세지
+			console.log("받아온값"+data.plandetail);
+		console.log("스타트데이"+data.plandetail.plan_startDay);
+			$("#planMember").val(data.plandetail.member_id);
+			$("#planTitle").val(data.plandetail.plan_title);
+			$("#planContent").val(data.plandetail.plan_content);
+			$("#planStart").val(data.plandetail.plan_startDay);
+			$("#planEnd").val(data.plandetail.plan_endDay);
+			$("#planState").val(data.plandetail.plan_state);
+			
+		}
+	});
+	ajaxCall(obj);
+}; 
 
 function ajaxCall(param){
 	console.log(param);
@@ -150,38 +203,47 @@ function ajaxCall(param){
             	<th>타이틀</th>
             	<th>상태</th>
             </tr> 
-            	
             </table>
         </div>
         <div id="sectionDivisionLine"></div>
         <div id="todayPlanDetail">
         	<h3>세부일정</h3>
 			<table>
-				<tr>
-					<td>일정번호</td>
-					<td><span id="planIdx"></span></td>
-				</tr>
+
 				<tr>
 					<td>수행자</td>
-					<td><span id="planMember"></span></td>
+					<td><input type="text" class="edit" id="planMember" readonly value=${dto.member_id}/></td>
 				</tr>			
 				<tr>
 					<td>타이틀</td>
-					<td><span id="planTitle"></span></td>
+					<td><input type="text" class="edit" id="planTitle" readonly value=${dto.plan_title}/></td>
 				</tr>			
 				<tr>
 					<td>일정내용</td>
-					<td><span id="planContent"></span></td>
+					<td><input type="text" class="edit" id="planContent" readonly value=${dto.plan_content}/></td>
 				</tr>			
 				<tr>
 					<td>시작날짜</td>
-				<td><span id="planStart"></span></td>
+				    <td><input type="date" class="edit" id="planStart" readonly value=${dto.plan_startDay}/></td>
+
 				</tr>							
 				<tr>
 					<td>종료예정날짜</td>
-					<td><span id="planEnd"></span></td>
+					<td><input type="date" class="edit" id="planEnd" readonly value=${dto.plan_endDay}/></span></td>
+				</tr>
+				<tr>
+					<td>상태</td>
+					<td><input type="text" id="planState" readonly value=${dto.plan_state}/></td> 
+					
+					<td><select id="select" name="job">
+				    <option value="준비중" selected="selected">준비중</option>
+				    <option value="완료">완료</option>
+					</select>
+					</td>
 				</tr>
 			</table>
+				<div id="changeplan">일정 수정</div>
+				<div id="changesuc">수정 완료</div>
         </div>
     </div>
 </body>
@@ -192,7 +254,58 @@ function ajaxCall(param){
 			location.href="index.jsp";
 		}
 	});
+	$("#changeplan").click(function(){
+		$("#select").css("display","inline");
+		$("#changesuc").css("display","inline");
+		$(".edit").css("border-width","1px");
+		$(".edit").attr("readonly",false);
+		$("#changeplan").css("display","none");
+	});
 	
+	 $("#changeplan").mouseenter(function(){
+	        $("#changeplan").css("background","#00455A");
+	        $("#changeplan").css("color","#FFD724")
+	        $("#changeplan").mouseleave(function(){
+	            $("#changeplan").css("background","white");
+	            $("#changeplan").css("color","black")
+	        })
+	    })    
+	    $("#changesuc").mouseenter(function(){
+	        $("#changesuc").css("background","#00455A");
+	        $("#changesuc").css("color","#FFD724")
+	        $("#changesuc").mouseleave(function(){
+	            $("#changesuc").css("background","white");
+	            $("#changesuc").css("color","black")
+	        })
+	    })    
+	    //일정 수정
+	    $("#changesuc").click(function() {
+		if($("#planMember").val()==""){
+			alert("수행자를 입력하세요.");
+			$("#planMember").focus();
+		}else{
+			$.ajax({
+				type : "post",
+				url : "./planChange",
+				data : {
+		/* 			planMember : $("#planMember").val()
+					planTitle : $("#planTitle").val()
+					planContent : $("#planContent").val()
+					plan : $("#select option:selected").val() */
+				},
+				dataType : "json",
+				success : function(data) {//인자 값은 서버에서 주는 메세지
+					if (data.success) {
+						$("#content").val("");
+					} else {
+						alert("할일 등록실패")
+					}
+				}
+			});
+			ajaxCall(obj);
+		}
+	});
+	    
 	//그룹 삭제 *그룹관리가 있는 페이지에는 모두 입력해야합니다.
 	$("#groupDel").click(function() {
 		//그룹 삭제 함수 호출
