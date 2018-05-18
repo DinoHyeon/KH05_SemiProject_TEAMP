@@ -270,6 +270,28 @@
 			   				}
 						}
 					} 
+					
+					if(item.plan_state=='진행중'||item.plan_state=='준비중'){
+						var nowDate = new Date();
+				        var yyyy=nowDate.getFullYear();
+				        var mm=nowDate.getMonth()+1;
+						if(mm<10){mm = "0" + mm};
+				        var dd=nowDate.getDate();
+						if(dd<10){dd = "0" + dd};	
+				        var date = yyyy+"-"+mm+"-"+dd;
+				        
+						if(compareDate(item.plan_endDay,date)=='over'){
+							var overDate = []
+							overDate = betweenDate(item.plan_endDay,date);
+							for(var i=0; i<day.length; i++){
+									for(var n=0; n<overDate.length; n++){
+										if($("td[class="+item.plan_idx+"]")[i].id==overDate[n]){
+											$("td[class="+item.plan_idx+"]")[i+1].style.backgroundColor = 'green';
+										}
+									}
+							}
+		   				}
+					}
 	
 			    });   
 				
@@ -340,7 +362,20 @@
 			return betweenDate;
 		}
 		
-		
+		//날짜비교함수
+		function compareDate(EndDay, today){
+			var result = "";
+			var EndDayArr = EndDay.split('-');
+			var todayArr = today.split('-');
+			
+			var EnddayDate = new Date(EndDayArr[0],EndDayArr[1],EndDayArr[2]);
+			var todayDate = new Date(todayArr[0],todayArr[1],todayArr[2]);
+			
+			if(EnddayDate<todayDate){
+				result = "over"
+			}
+			return result
+		}
 		
 		/*  */
 		
