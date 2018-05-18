@@ -14,12 +14,37 @@
         height: 84.1%;
       background-color: white;
    }
-   
-  table,th,td{
+   	table{
 		border: 1px solid black;
 		border-collapse: collapse;
 		padding: 5px 10px;
+		width: 500px;
+		
 	}
+	th{
+		border: 1px solid black;
+		border-collapse: collapse;
+		padding: 5px 10px;
+		width: 100px;
+	}
+	td{
+		border: 1px solid black;
+		border-collapse: collapse;
+		padding: 5px 10px;
+		width: 450px;		
+	}
+  
+	#tab{
+   		margin-left: 450px;
+   		margin-top: 30px;
+   	}
+   	#hie{
+   		height: 350px;
+   	}
+   	h2{
+   		margin-left: 600px;
+   	}
+   	
 </style>
 </head>
 <body>
@@ -34,18 +59,17 @@
 <div id=page>
    
    <div id="list">
-   <table>
+    <h2>${info.bbs_subject }</h2>
+   <table id="tab">     
+   
    <tr>
       <th>작성자</th>
       <td>${info.member_id }</td>
    </tr>
-   <tr>
-      <th>제목</th>
-      <td>${info.bbs_subject }</td>
-   </tr>
+   
    <tr>
       <th>내용</th>
-      <td>${info.bbs_content }</td>
+      <td id="hie">${info.bbs_content }</td>
    </tr>
    
 

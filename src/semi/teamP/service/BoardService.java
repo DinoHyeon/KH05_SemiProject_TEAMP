@@ -153,7 +153,7 @@ public class BoardService {
 		BoardDAO dao = new BoardDAO();
 		//데이터가 담긴 어레이 리스트
 		//검색값이 있을때 해당 키필드, 키워드를 넘겨준다
-		ArrayList<BoardDTO> list = dao.list(keyField, keyWord,1,5);
+		ArrayList<BoardDTO> list = dao.list(keyField, keyWord,1,10);
 		System.out.println(list.size());
 		request.setAttribute("list",list);
 		RequestDispatcher dis = request.getRequestDispatcher("TeamPBbs/comunityBbs.jsp");

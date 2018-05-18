@@ -14,11 +14,33 @@
 	    height: 84.1%;
 		background-color: white;
    	}
-   	table,td,th{
-   		border: 1px solid black;
+   	#tel{
+   	border: 1px solid black;
    		border-collapse: collapse;
    		padding: 10 5;
    		text-align: center;
+   		margin-top: 60px;
+   		margin-left: 500px;
+   		width: 30%;
+   	}
+   	#tab{
+   		margin-left: 550px;
+   		margin-top: 20px;
+   	}
+   	#btn{
+   		margin-left: 825px;
+   		margin-top: -20px;
+   	}
+   	
+   	h2{
+   		margin-left: 600px;
+   	}
+   	#aa{
+  	 	margin-left: 10px;  	 	
+   	}
+   	#btnno{
+   		margin-left: 580px;
+   		margin-top: 20px;
    	}
 </style>
 </head>
@@ -26,29 +48,35 @@
 	<%@include file="../headerMenu.jsp"%>
 	<%@include file="../sideMenu.jsp"%>
     <div id="page">
-		<table>
+    <h2>관리자 파일 게시판</h2>
+		<table id="tel">
 			<tr>
-				<th>번호</th>
-				<th>게시판구분</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>날짜</th>
-				<th>조회수</th>
+				<th id="tel">제목</th>
+				<th id="tel">작성자</th>
+				<th id="tel">날짜</th>
+				<th id="tel">조회수</th>
 			</tr>
 			<c:forEach items="${list}" var="bbs">
-				<tr>
-					<td>${bbs.bbs_idx}</td>
-					<td>${bbs.bbs_name}</td>
-					<td><a href="fileDetail?idx=${bbs.bbs_idx}">${bbs.bbs_subject }</a></td>
-					<td>${bbs.member_id }</td>
-					<td>${bbs.bbs_date }</td>
-					<td>${bbs.bbs_bHit }</td>
+				<tr>				
+					<td id="tel"><a href="fileDetail?idx=${bbs.bbs_idx}">${bbs.bbs_subject }</a></td>
+					<td id="tel">${bbs.member_id }</td>
+					<td id="tel">${bbs.bbs_date }</td>
+					<td id="tel">${bbs.bbs_bHit }</td>
 				</tr>
 			</c:forEach>
 		</table>
 		
+		<div id="btnno">
+		<a id="aa" href="#">이전</a>
+		<a id="aa" href="#">[1]</a>
+		<a id="aa" href="#">2</a>
+		<a id="aa" href="#">3</a>
+		<a id="aa" href="#">4</a>
+		<a id="aa" href="#">다음</a>
+		</div>
+		
 		<form action="./adminFileBbsList" method="get">
-			<table>
+			<table id="tab">
 				<tr>
 					<td>
 						<select name ="keyField">

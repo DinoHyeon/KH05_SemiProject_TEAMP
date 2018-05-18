@@ -33,7 +33,13 @@
 	td{
 		text-align: center;
 	}
-	
+	#tab{
+   		margin-left: 450px;
+   		margin-top: 30px;
+   	}
+   	h2{
+   		margin-left: 650px;
+   	}
 </style>
 </head>
 <body>
@@ -47,7 +53,7 @@
 	
     <div id="page">
 		<form action="update" method="get">
-		<table>
+		<table id="tab">
 			<tr>
 				<th>작성자</th>
 			<td>

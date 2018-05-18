@@ -15,11 +15,33 @@
 	    height: 84.1%;
 		background-color: white;
    	}
-   	table,td,th{
-   		border: 1px solid black;
+   	#tel{
+   	border: 1px solid black;
    		border-collapse: collapse;
    		padding: 10 5;
    		text-align: center;
+   		margin-top: 60px;
+   		margin-left: 500px;
+   		width: 30%;
+   	}
+   	#tab{
+   		margin-left: 550px;
+   		margin-top: 20px;
+   	}
+   	#btn{
+   		margin-left: 825px;
+   		margin-top: -20px;
+   	}
+   	
+   	h2{
+   		margin-left: 650px;
+   	}
+   	#aa{
+  	 	margin-left: 10px;  	 	
+   	}
+   	#btnno{
+   		margin-left: 580px;
+   		margin-top: 20px;
    	}
 </style>
 </head>
@@ -33,32 +55,44 @@
 	-->
 
     <div id="page">
-		<table>
-			<tr>
-				<th>번호</th>
-				<th>게시판구분</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>날짜</th>
-				<th>조회수</th>
+    <h2>공지사항</h2>
+		<table id="tel">
+			<tr>				
+				<th id="tel">제목</th>
+				<th id="tel">작성자</th>
+				<th id="tel">날짜</th>
+				<th id="tel">조회수</th>
 			</tr>
 			
 			<!-- 셋팅된 dto값을 테이블에 뿌려준다 -->
 			<c:forEach items="${list}" var="bbs">
-				<tr>
-					<td>${bbs.bbs_idx}</td>
-					<td>${bbs.bbs_name}</td>
-					<td><a href="detail?idx=${bbs.bbs_idx}">${bbs.bbs_subject }</a></td>
-					<td>${bbs.member_id }</td>
-					<td>${bbs.bbs_date }</td>
-					<td>${bbs.bbs_bHit }</td>
+				<tr>					
+					<td id="tel"><a href="detail?idx=${bbs.bbs_idx}">${bbs.bbs_subject }</a></td>
+					<td id="tel">${bbs.member_id }</td>
+					<td id="tel">${bbs.bbs_date }</td>
+					<td id="tel">${bbs.bbs_bHit }</td>
 				</tr>
 			</c:forEach>
 		</table>
 		
+		<div id="btnno">
+		<a id="aa" href="#">이전</a>
+		<a id="aa" href="#">[1]</a>
+		<a id="aa" href="#">2</a>
+		<a id="aa" href="#">3</a>
+		<a id="aa" href="#">4</a>
+		<a id="aa" href="#">다음</a>
+		</div>
+		
+		<!-- 아이디가 (세션에 저장된 아이디) 'admin'인 사람만 글쓰기 버튼을 보여준다-->
+		<c:if test="${sessionScope.loginId == 'admin'}">
+			<button id="btn" onclick="location.href = 'TeamPBbs/writeForm.jsp'">글쓰기</button>
+		</c:if>
+		
+		
 		<!-- 게시판 검색 폼 -->
 		<form action="./adminList" method="get">
-			<table>
+			<table id="tab">
 				<tr>
 					<td>
 						<select name ="keyField">
@@ -74,10 +108,7 @@
 			</table>
 		</form>
 		
-		<!-- 아이디가 (세션에 저장된 아이디) 'admin'인 사람만 글쓰기 버튼을 보여준다-->
-		<c:if test="${sessionScope.loginId == 'admin'}">
-			<button onclick="location.href = 'TeamPBbs/writeForm.jsp'">글쓰기</button>
-		</c:if>
+		
 		
     </div>
 </body>

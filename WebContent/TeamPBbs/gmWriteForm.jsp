@@ -36,6 +36,14 @@
 	#sessionId{
 		border: none;
 	}
+	
+	#tab{
+   		margin-left: 450px;
+   		margin-top: 30px;
+   	}
+   	h2{
+   		margin-left: 650px;
+   	}
 </style>
 </head>
 <body>
@@ -49,12 +57,13 @@
 	-->
 	
     <div id="page">
+    <h2>글쓰기</h2>
     	<!-- /groupWrite 컨트롤러에서 처리 -->
 		<form action="../groupWrite" method="get">
 		<!-- Bbs 테이블에 bbs_name 값을 groupBbs 로 추가  -->
 		<input type="hidden" name="bbs_name" value="groupBbs"/>
 		
-		<table>
+		<table id="tab">
 			<tr>
 				<th>작성자</th>
 				<td><input id="sessionId" type ="text" value="${sessionScope.loginId}" readonly="readonly" /></td>

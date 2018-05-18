@@ -15,38 +15,64 @@
 	    height: 84.1%;
 		background-color: white;
    	}
-   	
-   	table,th,td{
+   	table{
 		border: 1px solid black;
 		border-collapse: collapse;
 		padding: 5px 10px;
+		width: 500px;
+		
 	}
+	th{
+		border: 1px solid black;
+		border-collapse: collapse;
+		padding: 5px 10px;
+		width: 100px;
+	}
+	td{
+		border: 1px solid black;
+		border-collapse: collapse;
+		padding: 5px 10px;
+		width: 400px;		
+	}
+  
+	#tab{
+   		margin-left: 450px;
+   		margin-top: 30px;
+   	}
+   	#hie{
+   		height: 300px;
+   	}
+   	h2{
+   		margin-left: 600px;
+   	}
 	
 </style>
 </head>
 <body>
 	<%@include file="../headerMenu.jsp"%>
 	<%@include file="../sideMenu.jsp"%>
-    <div id="page">
-		<table>
+    <div id="page">  
+			
+			<h2>${info.bbs_subject}</h2>
+	
+		<table id="tab">
 		<tr>
 			<th>작성자</th>
 			<td>${info.member_id}</td>
-		</tr>
-		<tr>
-			<th>제목</th>
-			<td>${info.bbs_subject}</td>
-		</tr>
-		<tr>
-			<th>내용</th>
-			<td>${info.bbs_content}</td>
-		</tr>
+		</tr>	
+		
 		<c:if test="${info.newFileName != null}">
 		<tr>
 			<th>첨부파일 </th>
 			<td><img src="./upload/${info.newFileName}" width="500"/><a href = "./fileDownLoad?idx=${info.bbs_idx}">다운로드</a></td>
 		</tr>
 		</c:if>
+			
+		<tr>
+			<th>내용</th>
+			<td id="hie">${info.bbs_content}</td>
+		</tr>		
+		
 		<tr>
 			<td colspan="2">
 				<a href="./fileList">리스트가기</a>

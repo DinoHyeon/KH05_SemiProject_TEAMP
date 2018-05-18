@@ -10,9 +10,8 @@ import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.sql.DataSource;import org.apache.coyote.RequestGroupInfo;
+import javax.sql.DataSource;
 
-import oracle.net.aso.i;
 import semi.teamP.dto.GroupInfoDTO;
 import semi.teamP.dto.GroupInviteDTO;
 import semi.teamP.dto.GroupMemberDTO;

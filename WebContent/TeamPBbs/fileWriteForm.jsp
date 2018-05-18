@@ -37,16 +37,23 @@
 	#sessionId{
 		border: none;
 	}
-	
+	#tab{
+   		margin-left: 450px;
+   		margin-top: 30px;
+   	}
+   	h2{
+   		margin-left: 650px;
+   	}
 </style>
 </head>
 <body>
 	<%@include file="../headerMenu.jsp"%>
 	<%@include file="../sideMenu.jsp"%>
     <div id="page">
+    <h2>글쓰기</h2>
 		<form action="../fileWrite" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="bbs_name" value="fileBbs">
-   			<table>
+   			<table id="tab">
 			   <tr>
 			      <th>작성자</th>
 			      <td><input id="sessionId" type="text" name="member_id"  value="${sessionScope.loginId}" readonly="readonly"/></td>

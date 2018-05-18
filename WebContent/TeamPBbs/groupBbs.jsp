@@ -11,16 +11,45 @@
     #page{
        position: absolute;
 		top: 15.9%;
-	   width: 82.5%;
+	  	width: 82.5%;
 	    height: 84.1%;
 		background-color: white;
    	}
-   	table,td,th{
+   	/* table,td,th{
    		border: 1px solid black;
    		border-collapse: collapse;
    		padding: 10 5;
+   		text-align: center;   		
+   	} */
+   	#tel{
+   	border: 1px solid black;
+   		border-collapse: collapse;
+   		padding: 10 5;
    		text-align: center;
+   		margin-top: 60px;
+   		margin-left: 500px;
+   		width: 30%;
    	}
+   	#tab{
+   		margin-left: 550px;
+   		margin-top: 20px;
+   	}
+   	#btn{
+   		margin-left: 825px;
+   		margin-top: -20px;
+   	}
+   	
+   	h2{
+   		margin-left: 630px;
+   	}
+   	#aa{
+  	 	margin-left: 10px;  	 	
+   	}
+   	#btnno{
+   		margin-left: 580px;
+   		margin-top: 20px;
+   	}
+   	
 </style>
 </head>
 <body>
@@ -33,29 +62,43 @@
 	-->
 	
     <div id="page">
-		<table>
-			<tr>
-				<th>번호</th>
-				<th>게시판구분</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>날짜</th>
-				<th>조회수</th>
+    <h2>그룹 게시판</h2>
+		<table id="tel">
+			<tr>				
+				<th id="tel">제목</th>
+				<th id="tel">작성자</th>
+				<th id="tel">날짜</th>
+				<th id="tel">조회수</th>
 			</tr>
 			<c:forEach items="${list}" var="bbs">
-				<tr>
-					<td>${bbs.bbs_idx}</td>
-					<td>${bbs.bbs_name}</td>
-					<td><a href="detail?idx=${bbs.bbs_idx}">${bbs.bbs_subject }</a></td>
-					<td>${bbs.member_id }</td>
-					<td>${bbs.bbs_date }</td>
-					<td>${bbs.bbs_bHit }</td>
+				<tr>					
+					<td id="tel"><a href="detail?idx=${bbs.bbs_idx}">${bbs.bbs_subject }</a></td>
+					<td id="tel">${bbs.member_id }</td>
+					<td id="tel">${bbs.bbs_date }</td>
+					<td id="tel">${bbs.bbs_bHit }</td>
 				</tr>
 			</c:forEach>
 		</table>
 		
+		<div id="btnno">
+		<a id="aa" href="#">이전</a>
+		<a id="aa" href="#">[1]</a>
+		<a id="aa" href="#">2</a>
+		<a id="aa" href="#">3</a>
+		<a id="aa" href="#">4</a>
+		<a id="aa" href="#">다음</a>
+		</div>
+		
+		<!--
+		 그룹을 생성하는순간 그룹장이 되고 memberLv 세션값이 master가 됨
+		그룹장만 글을 작성할수 있으므로 마스터 일때만 버튼을 보여주면 됨 
+		-->
+		<c:if test="${sessionScope.memberLv == 'master'}">
+			<button id="btn" onclick="location.href = 'TeamPBbs/gmWriteForm.jsp'">글쓰기</button>
+		</c:if>
+		
 		<form action="./groupList" method="get">
-			<table>
+			<table id="tab">
 				<tr>
 					<td>
 						<select name ="keyField">
@@ -71,13 +114,7 @@
 			</table>
 		</form>
 		
-		<!--
-		 그룹을 생성하는순간 그룹장이 되고 memberLv 세션값이 master가 됨
-		그룹장만 글을 작성할수 있으므로 마스터 일때만 버튼을 보여주면 됨 
-		-->
-		<c:if test="${sessionScope.memberLv == 'master'}">
-			<button onclick="location.href = 'TeamPBbs/gmWriteForm.jsp'">글쓰기</button>
-		</c:if>
+		
 		
     </div>
 </body>

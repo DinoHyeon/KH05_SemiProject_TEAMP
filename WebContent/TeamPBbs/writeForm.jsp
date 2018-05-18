@@ -36,6 +36,13 @@
 	#sessionId{
 		border: none;
 	}
+	#tab{
+   		margin-left: 450px;
+   		margin-top: 30px;
+   	}
+   	h2{
+   		margin-left: 650px;
+   	}
 </style>
 </head>
 <body>
@@ -52,7 +59,7 @@
 	--> 
 	
     <div id="page">
-    
+    <h2>글 쓰기</h2>
     	<!-- 그룹번호 세션값이 groupNum (로그인시 디폴트값:0) 이 0 일때  == 그룹에 가입되어있지 않으면 -->
     	<c:if test="${groupNum == 0}">
     		<!-- /write 컨트롤러 에서 처리 -->
@@ -68,7 +75,7 @@
 				<input type="hidden" name="bbs_name" value = "adminBbs"/>
 			</c:if>
 			
-			<table>
+			<table id="tab">
 				<tr>
 					<th>작성자</th>
 					<td><input id="sessionId" type ="text" value="${sessionScope.loginId}" readonly="readonly" /></td>
@@ -112,7 +119,7 @@
 				<input type="hidden" name="bbs_name" value = "adminBbs"/>
 			</c:if>
 			
-			<table>
+			<table id="tab">
 				<tr>
 					<th>작성자</th>
 					<td><input id="sessionId" type ="text" value="${sessionScope.loginId}" readonly="readonly" /></td>
