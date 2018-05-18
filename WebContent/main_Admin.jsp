@@ -138,6 +138,11 @@
                 font-weight: 900;                
                 color: #FFD724;
             }
+            
+            #contentPopup #adminPageList{
+            	width: 90%;
+            	border: 1px solid black;
+            }
         </style>
     </head>
     

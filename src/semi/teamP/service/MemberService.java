@@ -153,6 +153,7 @@ public class MemberService {
 		Gson json = new Gson();
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("login", success);
+		map.put("memberLv", memberLv);
 		map.put("projectIdx",groupNum);
 		String obj = json.toJson(map);
 		response.getWriter().println(obj);

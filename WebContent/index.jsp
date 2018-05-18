@@ -143,7 +143,7 @@
 			success:function(data){//인자 값은 서버에서 주는 메세지
 				if(data.login){
 					alert("로그인에 성공 했습니다.");
-					if('${sessionScople.memberLv}'=='member'||'${sessionScople.memberLv}'=='master'){
+					if(data.memberLv=='member'||data.memberLv=='master'){
 						if(data.projectIdx==0){
 							location.href="main_nonGroup.jsp";
 						}else{
