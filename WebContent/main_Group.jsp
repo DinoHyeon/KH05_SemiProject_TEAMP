@@ -1,5 +1,3 @@
-main_Group.jsp
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -129,6 +127,8 @@ $(document).ready(function(){
            var dd=date.format("DD");
            var date = yy+"/"+mm+"/"+dd;
            
+           $("#planFinishDate").val(date);
+           
            $(this).css('background-color', '#FFD724');
            $("td.fc-day.fc-widget-content").not($(this)).css('background-color', 'white')
 	   		obj.url="./planDayList";
@@ -158,6 +158,7 @@ $(document).ready(function(){
 });
 
 function detail(){
+	var content = "";
 	console.log("일정 상세보기 호출");
 	$("#todayPlanDetail").css("display","inline");
 
@@ -169,15 +170,14 @@ function detail(){
 		},
 		dataType:"json",
 		success:function(data){//인자 값은 서버에서 주는 메세지
-			console.log("받아온값"+data.plandetail);
-		console.log("스타트데이"+data.plandetail.plan_startDay);
+			$("#planIdx").val(data.plandetail.plan_idx);
 			$("#planMember").val(data.plandetail.member_id);
 			$("#planTitle").val(data.plandetail.plan_title);
 			$("#planContent").val(data.plandetail.plan_content);
 			$("#planStart").val(data.plandetail.plan_startDay);
 			$("#planEnd").val(data.plandetail.plan_endDay);
+			$("#select").val(data.plandetail.plan_state);	
 			$("#planState").val(data.plandetail.plan_state);
-			
 		}
 	});
 	ajaxCall(obj);
@@ -209,37 +209,39 @@ function ajaxCall(param){
         <div id="todayPlanDetail">
         	<h3>세부일정</h3>
 			<table>
-
+				<input type="hidden" id="planIdx">
+				<input type="hidden" id="planFinishDate">
 				<tr>
 					<td>수행자</td>
-					<td><input type="text" class="edit" id="planMember" readonly value=${dto.member_id}/></td>
+					<td><input type="text" class="edit" id="planMember" readonly value=${dto.member_id}></td>
 				</tr>			
 				<tr>
 					<td>타이틀</td>
-					<td><input type="text" class="edit" id="planTitle" readonly value=${dto.plan_title}/></td>
+					<td><input type="text" class="edit" id="planTitle" readonly value=${dto.plan_title}></td>
 				</tr>			
 				<tr>
 					<td>일정내용</td>
-					<td><input type="text" class="edit" id="planContent" readonly value=${dto.plan_content}/></td>
+					<td><input type="text" class="edit" id="planContent" readonly value=${dto.plan_content}></td>
 				</tr>			
 				<tr>
 					<td>시작날짜</td>
-				    <td><input type="date" class="edit" id="planStart" readonly value=${dto.plan_startDay}/></td>
+				    <td><input type="date" class="edit" id="planStart" readonly value=${dto.plan_startDay}></td>
 
 				</tr>							
 				<tr>
 					<td>종료예정날짜</td>
-					<td><input type="date" class="edit" id="planEnd" readonly value=${dto.plan_endDay}/></span></td>
+					<td><input type="date" class="edit" id="planEnd" readonly value=${dto.plan_endDay}></span></td>
 				</tr>
 				<tr>
 					<td>상태</td>
-					<td><input type="text" id="planState" readonly value=${dto.plan_state}/></td> 
-					
-					<td><select id="select" name="job">
-				    <option value="준비중" selected="selected">준비중</option>
-				    <option value="완료">완료</option>
-					</select>
-					</td>
+					<td>
+						<input type="text" id="planState" readonly value=${dto.plan_state}> 
+						<select id="select" name="job">
+							    <option value="준비중">준비중</option>
+							    <option value="진행중">진행중</option>
+							    <option value="완료">완료</option>
+						</select>
+					</td> 
 				</tr>
 			</table>
 				<div id="changeplan">일정 수정</div>
@@ -255,6 +257,7 @@ function ajaxCall(param){
 		}
 	});
 	$("#changeplan").click(function(){
+		$("#planState").css("display", "none");
 		$("#select").css("display","inline");
 		$("#changesuc").css("display","inline");
 		$(".edit").css("border-width","1px");
@@ -288,17 +291,21 @@ function ajaxCall(param){
 				type : "post",
 				url : "./planChange",
 				data : {
-		/* 			planMember : $("#planMember").val()
-					planTitle : $("#planTitle").val()
-					planContent : $("#planContent").val()
-					plan : $("#select option:selected").val() */
+					planIdx : $("#planIdx").val(),
+		 			planMember : $("#planMember").val(),
+					planTitle : $("#planTitle").val(),
+					planContent : $("#planContent").val(),
+					planStartDay : $("#planStart").val(),
+					planEndDay : $("#planEnd").val(),
+					planState : $("#select option:selected").val(),
+					planFinishDate : $("#planFinishDate").val()
 				},
 				dataType : "json",
 				success : function(data) {//인자 값은 서버에서 주는 메세지
 					if (data.success) {
-						$("#content").val("");
+						alert("일정이 변경되었습니다.")
 					} else {
-						alert("할일 등록실패")
+						alert("일정 변경을 실패했습니다.")
 					}
 				}
 			});
