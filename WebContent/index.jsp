@@ -132,36 +132,45 @@
 	})
 	
 	$("#login").click(function() {
-		$.ajax({
-			type:"post",
-			url:"./login",
-			data:{
-				id:$("#userId").val(),
-				pw:$("#userPw").val().toLowerCase()
-			},
-			dataType:"json",
-			success:function(data){//인자 값은 서버에서 주는 메세지
-				if(data.login){
-					alert("로그인에 성공 했습니다.");
-					if(data.memberLv=='member'||data.memberLv=='master'){
-						if(data.projectIdx==0){
-							location.href="main_nonGroup.jsp";
+		if($("#userId").val()==""){
+			alert("아이디를 입력해주세요.");
+			$("#userId").focus();
+		}else if($("#userPw").val()==""){
+			alert("비밀번호를 입력해주세요.");
+			$("#userPw").focus();
+		}else{
+			$.ajax({
+				type:"post",
+				url:"./login",
+				data:{
+					id:$("#userId").val(),
+					pw:$("#userPw").val().toLowerCase()
+				},
+				dataType:"json",
+				success:function(data){//인자 값은 서버에서 주는 메세지
+					if(data.login){
+						alert($("#userId").val()+"님 TeamP에 오신걸 환영합니다.");
+						if(data.memberLv=='member'||data.memberLv=='master'){
+							if(data.projectIdx==0){
+								location.href="main_nonGroup.jsp";
+							}else{
+								location.href="main_Group.jsp";
+							}
 						}else{
-							location.href="main_Group.jsp";
+							location.href="main_Admin.jsp";
 						}
 					}else{
-						location.href="main_Admin.jsp";
+						alert("없는 아이디 또는 잘못된 비밀번호입니다.");
+						("#userId").val();
+						("#userPw").val();
 					}
-					
-				}else{
-					alert("로그인에 실패 했습니다.");
+	
+				},
+				error:function(err){//인자 값은 서버에서 주는 메세지
+					console.log(err)
 				}
-
-			},
-			error:function(err){//인자 값은 서버에서 주는 메세지
-				console.log(err)
-			}
-		});
+			});
+		}
 	});
 	
 	var msg = "${msg}"

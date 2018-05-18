@@ -101,10 +101,14 @@ public class MemberService {
 		}
 	}
 
-	public void logout() {
+	public void logout() throws IOException {
 		request.getSession().removeAttribute("loginId");
 		request.getSession().removeAttribute("memberLv");
-		request.getSession().removeAttribute("groupNum");
+		Gson json = new Gson();
+		HashMap<String, Boolean> map = new HashMap<>();
+		map.put("success", true);
+		String obj = json.toJson(map);
+		response.getWriter().println(obj);
 	}
 
 	public void withdrawal() throws IOException {

@@ -118,15 +118,8 @@ $(document).ready(function(){
             left: 'title',
             right: 'today prev,next'
         }
-        , events: [
-               {
-                  title : "data.title"
-                , start : "2018-05-01"
-                , end : "2018-05-13"
-            },
-        ]
         , dayClick: function(date, allDay, jsEvent, view) {
-        	
+        	$("#todayPlanDetail").css("display","none");
            var yy=date.format("YYYY");
            var mm=date.format("MM");
            var dd=date.format("DD");

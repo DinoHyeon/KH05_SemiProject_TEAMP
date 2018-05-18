@@ -66,6 +66,8 @@ public class MemberDAO {
 				groupNum = getGroupNum(id);
 				if(groupNum != 0){
 					dto.setMember_groupNum(groupNum);
+				}else {
+					dto.setMember_groupNum(0);
 				}
 			}
 		} catch (SQLException e) {
