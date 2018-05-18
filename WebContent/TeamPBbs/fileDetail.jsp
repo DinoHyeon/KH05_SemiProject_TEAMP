@@ -35,13 +35,17 @@
 		width: 400px;		
 	}
   
-	#tab{
-   		margin-left: 450px;
-   		margin-top: 30px;
+	#tel{
+  	 	border: 1px solid black;
+   		border-collapse: collapse;
+   		padding: 10 5;
+   		text-align: center;
+   		margin-top: 60px;
+   		margin-left: 50px;
+   		width: 95%;
+   		height: 50%;
    	}
-   	#hie{
-   		height: 300px;
-   	}
+     	
    	h2{
    		margin-left: 600px;
    	}
@@ -55,10 +59,10 @@
 			
 			<h2>${info.bbs_subject}</h2>
 	
-		<table id="tab">
+		<table id="tel">
 		<tr>
 			<th>작성자</th>
-			<td>${info.member_id}</td>
+			<td align="left">${info.member_id}</td>
 		</tr>	
 		
 		<c:if test="${info.newFileName != null}">
@@ -70,12 +74,19 @@
 			
 		<tr>
 			<th>내용</th>
-			<td id="hie">${info.bbs_content}</td>
+			<td height="400px" align="left">${info.bbs_content}</td>
 		</tr>		
 		
 		<tr>
 			<td colspan="2">
+			<c:if test="${sessionScope.loginId == 'admin'}">
+				<a href="./adminFileBbsList">리스트가기</a>
+			</c:if>
+			
+			<c:if test="${sessionScope.loginId != 'admin'}">
 				<a href="./fileList">리스트가기</a>
+			</c:if>		
+								
 				&nbsp;&nbsp;&nbsp;&nbsp;
 				<c:if test="${sessionScope.loginId == info.member_id}">
 					<a href="./fileUpdateForm?idx=${info.bbs_idx}">수정</a>

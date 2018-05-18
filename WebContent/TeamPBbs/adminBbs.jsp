@@ -15,14 +15,15 @@
 	    height: 84.1%;
 		background-color: white;
    	}
-   	#tel{
-   	border: 1px solid black;
+  	#tel{
+  	 	border: 1px solid black;
    		border-collapse: collapse;
    		padding: 10 5;
    		text-align: center;
    		margin-top: 60px;
-   		margin-left: 500px;
-   		width: 30%;
+   		margin-left: 50px;
+   		width: 95%;
+   		height: 50%;
    	}
    	#tab{
    		margin-left: 550px;
@@ -33,8 +34,19 @@
    		margin-top: -20px;
    	}
    	
+   /* 	table,td,th{
+   		border: 1px solid black;
+   		border-collapse: collapse;
+   		padding: 10 5;
+   		text-align: center;
+   		margin-top: 100px;
+   		margin-left: 500px;
+   		width: 35%; 
+   		 		
+   	} */
+   	
    	h2{
-   		margin-left: 650px;
+   		margin-left: 600px;
    	}
    	#aa{
   	 	margin-left: 10px;  	 	
@@ -58,19 +70,19 @@
     <h2>공지사항</h2>
 		<table id="tel">
 			<tr>				
-				<th id="tel">제목</th>
-				<th id="tel">작성자</th>
-				<th id="tel">날짜</th>
-				<th id="tel">조회수</th>
+				<th>제목</th>
+				<th width="10%">작성자</th>
+				<th width="10%">날짜</th>
+				<th width="10%">조회수</th>
 			</tr>
 			
 			<!-- 셋팅된 dto값을 테이블에 뿌려준다 -->
 			<c:forEach items="${list}" var="bbs">
 				<tr>					
-					<td id="tel"><a href="detail?idx=${bbs.bbs_idx}">${bbs.bbs_subject }</a></td>
-					<td id="tel">${bbs.member_id }</td>
-					<td id="tel">${bbs.bbs_date }</td>
-					<td id="tel">${bbs.bbs_bHit }</td>
+					<td align="left"><a href="detail?idx=${bbs.bbs_idx}">${bbs.bbs_subject }</a></td>
+					<td>${bbs.member_id }</td>
+					<td>${bbs.bbs_date }</td>
+					<td>${bbs.bbs_bHit }</td>
 				</tr>
 			</c:forEach>
 		</table>

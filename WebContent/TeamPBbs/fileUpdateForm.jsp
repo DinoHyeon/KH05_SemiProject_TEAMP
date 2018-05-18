@@ -37,12 +37,19 @@
 	#sessionId{
 		border: none;
 	}
-	#tab{
-   		margin-left: 450px;
-   		margin-top: 30px;
+	#tel{
+  	 	border: 1px solid black;
+   		border-collapse: collapse;
+   		padding: 10 5;
+   		text-align: center;
+   		margin-top: 60px;
+   		margin-left: 50px;
+   		width: 95%;
+   		height: 40%;
    	}
+     	
    	h2{
-   		margin-left: 650px;
+   		margin-left: 600px;
    	}
 </style>
 </head>
@@ -51,7 +58,7 @@
 	<%@include file="../sideMenu.jsp"%>
     <div id="page">
 		<form action="./fileUpdate" method="post" enctype="multipart/form-data">
-		<table id="tab">
+		<table id="tel">
 			<tr>
 				<th>작성자</th>
 			<td>

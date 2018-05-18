@@ -15,14 +15,26 @@
 	    height: 84.1%;
 		background-color: white;
    	}
-   		table,th,td{
+   	table{
 		border: 1px solid black;
 		border-collapse: collapse;
 		padding: 5px 10px;
-	}
-	table{
 		width: 500px;
+		
 	}
+	th{
+		border: 1px solid black;
+		border-collapse: collapse;
+		padding: 5px 10px;
+		width: 100px;
+	}
+	td{
+		border: 1px solid black;
+		border-collapse: collapse;
+		padding: 5px 10px;
+		width: 450px;		
+	}
+	
 	input[type='text']{
 		width: 100%;
 	}
@@ -36,12 +48,19 @@
 	#sessionId{
 		border: none;
 	}
-	#tab{
-   		margin-left: 450px;
-   		margin-top: 30px;
+	#tel{
+  	 	border: 1px solid black;
+   		border-collapse: collapse;
+   		padding: 10 5;
+   		text-align: center;
+   		margin-top: 60px;
+   		margin-left: 50px;
+   		width: 95%;
+   		height: 50%;
    	}
+     	
    	h2{
-   		margin-left: 650px;
+   		margin-left: 600px;
    	}
 </style>
 </head>
@@ -75,7 +94,7 @@
 				<input type="hidden" name="bbs_name" value = "adminBbs"/>
 			</c:if>
 			
-			<table id="tab">
+			<table id="tel">
 				<tr>
 					<th>작성자</th>
 					<td><input id="sessionId" type ="text" value="${sessionScope.loginId}" readonly="readonly" /></td>
@@ -86,7 +105,7 @@
 				</tr>
 				<tr>
 					<th>내용</th>
-					<td><textarea rows="20" name="bbs_content" ></textarea></td>
+					<td height="400px"><textarea rows="20" name="bbs_content" ></textarea></td>
 				</tr>
 				<tr>
 					<td colspan="2">
@@ -119,7 +138,7 @@
 				<input type="hidden" name="bbs_name" value = "adminBbs"/>
 			</c:if>
 			
-			<table id="tab">
+			<table id="tel">
 				<tr>
 					<th>작성자</th>
 					<td><input id="sessionId" type ="text" value="${sessionScope.loginId}" readonly="readonly" /></td>
@@ -130,7 +149,7 @@
 				</tr>
 				<tr>
 					<th>내용</th>
-					<td><textarea rows="20" name="bbs_content" ></textarea></td>
+					<td height="400px"><textarea rows="20" name="bbs_content" ></textarea></td>
 				</tr>
 				<tr>
 					<td colspan="2">

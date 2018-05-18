@@ -37,13 +37,21 @@
 		border: none;
 	}
 	
-	#tab{
-   		margin-left: 450px;
-   		margin-top: 30px;
+	#tel{
+  	 	border: 1px solid black;
+   		border-collapse: collapse;
+   		padding: 10 5;
+   		text-align: center;
+   		margin-top: 60px;
+   		margin-left: 50px;
+   		width: 95%;
+   		height: 50%;
    	}
+     	
    	h2{
-   		margin-left: 650px;
+   		margin-left: 600px;
    	}
+   	
 </style>
 </head>
 <body>
@@ -63,7 +71,7 @@
 		<!-- Bbs 테이블에 bbs_name 값을 groupBbs 로 추가  -->
 		<input type="hidden" name="bbs_name" value="groupBbs"/>
 		
-		<table id="tab">
+		<table id="tel">
 			<tr>
 				<th>작성자</th>
 				<td><input id="sessionId" type ="text" value="${sessionScope.loginId}" readonly="readonly" /></td>
@@ -74,7 +82,7 @@
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td><textarea rows="20" name="bbs_content" ></textarea></td>
+				<td height="400px"><textarea rows="20" name="bbs_content" ></textarea></td>
 			</tr>
 			<tr>
 				<td colspan="2">

@@ -34,17 +34,22 @@
 		width: 450px;		
 	}
   
-	#tab{
-   		margin-left: 450px;
-   		margin-top: 30px;
+	#tel{
+  	 	border: 1px solid black;
+   		border-collapse: collapse;
+   		padding: 10 5;
+   		text-align: center;
+   		margin-top: 60px;
+   		margin-left: 50px;
+   		width: 95%;
+   		height: 50%;
    	}
-   	#hie{
-   		height: 350px;
-   	}
+     	
    	h2{
    		margin-left: 600px;
    	}
    	
+  
 </style>
 </head>
 <body>
@@ -60,16 +65,16 @@
    
    <div id="list">
     <h2>${info.bbs_subject }</h2>
-   <table id="tab">     
+   <table id="tel">     
    
    <tr>
       <th>작성자</th>
-      <td>${info.member_id }</td>
+      <td align="left">${info.member_id }</td>
    </tr>
    
    <tr>
       <th>내용</th>
-      <td id="hie">${info.bbs_content }</td>
+      <td height="400px" align="left">${info.bbs_content }</td>
    </tr>
    
 
