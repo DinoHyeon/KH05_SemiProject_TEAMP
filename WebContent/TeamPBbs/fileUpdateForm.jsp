@@ -37,6 +37,13 @@
 	#sessionId{
 		border: none;
 	}
+	#tab{
+   		margin-left: 450px;
+   		margin-top: 30px;
+   	}
+   	h2{
+   		margin-left: 650px;
+   	}
 </style>
 </head>
 <body>
@@ -44,7 +51,7 @@
 	<%@include file="../sideMenu.jsp"%>
     <div id="page">
 		<form action="./fileUpdate" method="post" enctype="multipart/form-data">
-		<table>
+		<table id="tab">
 			<tr>
 				<th>작성자</th>
 			<td>
@@ -57,10 +64,6 @@
 				<td><input type ="text" name="bbs_subject" value="${dto.bbs_subject}"/></td>
 			</tr>
 			<tr>
-				<th>내용</th>
-				<td><textarea rows="20" name="bbs_content" >${dto.bbs_content}</textarea></td>
-			</tr>
-			<tr>
 				<th>사진</th>
 				<td>
 				<c:if test="${dto.newFileName != null}">
@@ -69,6 +72,11 @@
 					<input type="file" name="photo"/>
 				</td>
 			</tr>
+			<tr>
+				<th>내용</th>
+				<td><textarea rows="20" name="bbs_content" >${dto.bbs_content}</textarea></td>
+			</tr>
+			
 			<tr>
 				<td colspan="2">
 					<a href="./fileDetail?idx=${dto.bbs_idx}">취소</a>
