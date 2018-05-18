@@ -215,21 +215,21 @@
                 <button class="menu" onclick="location.href='plan.jsp'" id="plan">일정</button>
                 
                  <c:if test = "${sessionScope.loginId == 'admin' }">
-                	<button onclick="location.href ='/SemiProject_TeamP/adminFileBbsList'" id="fileBbs">파일게시판</button>
+                	<button class="menu" onclick="location.href ='/SemiProject_TeamP/adminFileBbsList'" id="fileBbs">파일게시판</button>
                 </c:if>
                 
                 <c:if test = "${sessionScope.loginId != 'admin'}">
-                	<button onclick="location.href ='/SemiProject_TeamP/fileList'" id="fileBbs">파일게시판</button>
+                	<button class="menu" onclick="location.href ='/SemiProject_TeamP/fileList'" id="fileBbs">파일게시판</button>
                 </c:if>
                 
                  <!-- 관리자 로그인시 adminGroupList로 분기시켜 모든 그룹의 글 보기 및 삭제 가능 하게 하기-->
                 <c:if test="${sessionScope.loginId == 'admin'}">
-                	 <button onclick="location.href ='/SemiProject_TeamP/adminGroupBbsList'" id="groupBbs">그룹게시판</button>
+                	 <button class="menu" onclick="location.href ='/SemiProject_TeamP/adminGroupBbsList'" id="groupBbs">그룹게시판</button>
                 </c:if>
                 
                 <!-- 관리자가 아니면(그룹장 및 그룹원) 자신이 속한 그룹의 글들만 조회 가능 -->
                 <c:if test="${sessionScope.loginId != 'admin'}">
-                	 <button onclick="location.href ='/SemiProject_TeamP/groupList'" id="groupBbs">그룹게시판</button>
+                	 <button class="menu" onclick="location.href ='/SemiProject_TeamP/groupList'" id="groupBbs">그룹게시판</button>
                 </c:if>
                 
                  <button class="menu" onclick="location.href ='/SemiProject_TeamP/comunityList'" id="comunityBbs">의견나눔게시판</button>
@@ -392,8 +392,10 @@
 						finishPlan+=1;
 					}
 				 })
+				 
+				 console.log("전체 일정 : "+totalPlan);
 				if(finishPlan!=0){
-					groupProgress=totalPlan/finishPlan;
+					groupProgress=finishPlan/totalPlan*100;
 				}
 				console.log(groupProgress);
 				$("#groupProgress").html(groupProgress+" %");
@@ -610,53 +612,49 @@
 			data.list.forEach(function(item,index){
 				planDateChkArr.push(compare_Date($("#groupInfoStartDate").val(), $("#groupInfoEndDate").val(), item.plan_startDay, item.plan_endDay));
 		    });
+			for(var i=0; i<planDateChkArr.length; i++){
+				console.log(planDateChkArr[i]);
+				if(planDateChkArr[i]==false){
+					planDateChkResult=false;
+				}
+			}
+
+			if($("#groupInfoName").val()==""){
+				alert("그룹명을 입력해주세요.")
+				$("#groupInfoName").focus();
+			}else if($("#groupInfoStartDate").val()==""){
+				alert("프로젝트 시작일을 입력해주세요.")
+				$("#groupInfoStartDate").focus();			
+			}else if($("#groupInfoEndDate").val()==""){
+				alert("프로젝트 종료일을 입력해주세요.")
+				$("#groupInfoEndDate").focus();			
+			}else if(startDay>endDay){
+				alert("프로젝트 시작일을 재입력해주세요.")
+				$("#groupInfoStartDate").focus();
+			}else if(!planDateChkResult){
+				alert("진행해야하는 일정이 있습니다.")
+				$("#groupInfoStartDate").focus();
+			}else{
+				obj.url="./groupInfoUpdate";
+				obj.data={};
+				obj.data={
+						groupInfoIdx:$('#groupInfoIdx').val(),
+						groupInfoName:$('#groupInfoName').val(),
+						groupInfoStartDate:$('#groupInfoStartDate').val(),
+						groupInfoEndDate:$('#groupInfoEndDate').val()
+						};
+				obj.success = function(data){
+					if(data.success){
+						groupInfoLoad();
+						alert("그룹 정보을 완료했습니다.");
+					}else{
+						alert("그룹 정보수정을 완료하지 못 했습니다.");
+					}
+				};
+			}
+			ajaxCall(obj);
 		};
 		ajaxCall(obj);
-		
-		
-		
-		for(var i=0; i<planDateChkArr.length; i++){
-			console.log(planDateChkArr[i]);
-			if(planDateChkArr[i]==false){
-				planDateChkResult=false;
-				console.log("변경실패");
-			}
-		}
-
-		if($("#groupInfoName").val()==""){
-			alert("그룹명을 입력해주세요.")
-			$("#groupInfoName").focus();
-		}else if($("#groupInfoStartDate").val()==""){
-			alert("프로젝트 시작일을 입력해주세요.")
-			$("#groupInfoStartDate").focus();			
-		}else if($("#groupInfoEndDate").val()==""){
-			alert("프로젝트 종료일을 입력해주세요.")
-			$("#groupInfoEndDate").focus();			
-		}else if(startDay>endDay){
-			alert("프로젝트 시작일을 재입력해주세요.")
-			$("#groupInfoStartDate").focus();
-		}else if(!planDateChkResult){
-			alert("진행해야하는 일정이 있습니다.")
-			$("#groupInfoStartDate").focus();
-		}else{
-			obj.url="./groupInfoUpdate";
-			obj.data={};
-			obj.data={
-					groupInfoIdx:$('#groupInfoIdx').val(),
-					groupInfoName:$('#groupInfoName').val(),
-					groupInfoStartDate:$('#groupInfoStartDate').val(),
-					groupInfoEndDate:$('#groupInfoEndDate').val()
-					};
-			obj.success = function(data){
-				if(data.success){
-					groupInfoLoad();
-					alert("그룹 정보을 완료했습니다.");
-				}else{
-					alert("그룹 정보수정을 완료하지 못 했습니다.");
-				}
-			};
-			ajaxCall(obj);
-		}
 	})
 	
 	
@@ -777,7 +775,7 @@
 		var datePlanStartDate = new Date(planStartDateArr[0],planStartDateArr[1],planStartDateArr[2]);
 		var datePlanEndDate =  new Date(planEndDateArr[0],planEndDateArr[1],planEndDateArr[2]);
 		
-		if(dateGroupStartDate<=datePlanStartDate&datePlanStartDate<=datePlanEndDate&dateGroupEndDate>=datePlanStartDate&dateGroupEndDate>=datePlanEndDate){
+		if(dateGroupStartDate<=datePlanStartDate & datePlanStartDate<=datePlanEndDate & dateGroupEndDate>=datePlanStartDate & dateGroupEndDate>=datePlanEndDate){
 			compareResult = true;
 		}else{
 			compareResult = false;

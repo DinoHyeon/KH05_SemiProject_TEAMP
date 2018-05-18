@@ -111,17 +111,32 @@
 	</body>
 	<script>
 		var pwChkResult = false;
-	
  		$("#passChkPopupClose").click(function() {
 			$("#passChkBg").css("display","none");
 			$("#passChkPopup").css("display","none");
 			$("#memberInfoFormBg").css("display","none");
-			if('${sessionScope.menuName}'=="myInfo"){
-				if(${sessionScope.groupNum}!=0){
-					location.href="main_Group.jsp";
-				}else{
+			if('${sessionScope.menuName}'=='main'){
+				if('${sessionScope.groupNum}'=='0'){
 					location.href="main_nonGroup.jsp";
+				}else{
+					location.href="main_Group.jsp";
 				}
+			}else if('${sessionScope.menuName}'=='myInfo'){
+				if('${sessionScope.groupNum}'=='0'){
+					location.href="main_nonGroup.jsp";
+				}else{
+					location.href="main_Group.jsp";
+				}
+			}else if('${sessionScope.menuName}'=='notice'){
+				location.href='/SemiProject_TeamP/adminList';
+			}else if('${sessionScope.menuName}'=='plan'){
+				location.href='plan.jsp';
+			}else if('${sessionScope.menuName}'=='fileBbs'){
+				location.href ='/SemiProject_TeamP/fileList';
+			}else if('${sessionScope.menuName}'=='groupBbs'){
+				location.href ='/SemiProject_TeamP/groupList';
+			}else if('${sessionScope.menuName}'=='comunityBbs'){
+				location.href ='/SemiProject_TeamP/comunityList';
 			}
 		}) 
 		

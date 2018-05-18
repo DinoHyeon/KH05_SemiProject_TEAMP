@@ -198,8 +198,16 @@
 		function planListCall(){
 			obj.url="./planTableList";
 			obj.data={};
-			obj.success=function(data){
+			obj.success=function(data){	
 				console.log(data);
+				var nowDate = new Date();
+		        var yyyy=nowDate.getFullYear();
+		        var mm=nowDate.getMonth()+1;
+				if(mm<10){mm = "0" + mm};
+		        var dd=nowDate.getDate();
+				if(dd<10){dd = "0" + dd};	
+		        var today = yyyy+"-"+mm+"-"+dd;
+				
 				var dayNum = 0;
 				var DupleMonthNum_key=[];
 				var DupleMonthNum_value=[];
@@ -232,7 +240,7 @@
 				content += "</tr>";
 				content += "<tr>";
 				for(var i=0; i<day.length; i++){
-					content += "<td>"+day[i]+"</td>";
+					content += "<td class='planDate' id="+date[i]+">"+day[i]+"</td>";
 				}
 				content += "</tr>"; 
 				
@@ -253,6 +261,15 @@
 				$("#1115").empty();
 				$("#1115").append(content);
 				
+				/* 오늘날짜 체크 */
+ 				for(var i=0; i<day.length; i++){
+					if($("td[class='planDate']")[i].id == today){
+						$("td[class='planDate']")[i].style.backgroundColor = 'red';
+						console.log("현정");
+					}
+				}
+
+				
 				
 				data.planList.forEach(function(item,index){
 					var betweenDateArr = betweenDate(item.plan_startDay, item.plan_endDay);
@@ -272,17 +289,9 @@
 					} 
 					
 					if(item.plan_state=='진행중'||item.plan_state=='준비중'){
-						var nowDate = new Date();
-				        var yyyy=nowDate.getFullYear();
-				        var mm=nowDate.getMonth()+1;
-						if(mm<10){mm = "0" + mm};
-				        var dd=nowDate.getDate();
-						if(dd<10){dd = "0" + dd};	
-				        var date = yyyy+"-"+mm+"-"+dd;
-				        
 						if(compareDate(item.plan_endDay,date)=='over'){
 							var overDate = []
-							overDate = betweenDate(item.plan_endDay,date);
+							overDate = betweenDate(item.plan_endDay,today);
 							for(var i=0; i<day.length; i++){
 									for(var n=0; n<overDate.length; n++){
 										if($("td[class="+item.plan_idx+"]")[i].id==overDate[n]){
