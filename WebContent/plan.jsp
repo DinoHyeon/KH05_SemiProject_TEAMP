@@ -265,7 +265,7 @@
 						if(item.plan_state=='완료'){
 							for(var i=0; i<day.length; i++){
 								if($("td[class="+item.plan_idx+"]")[i].id==item.plan_plan_finishDate){
-									$("td[class="+item.plan_idx+"]")[i].style.backgroundColor = 'red';
+									$("td[class="+item.plan_idx+"]")[i+1].style.backgroundColor = 'red';
 								}
 			   				}
 						}

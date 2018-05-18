@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import semi.teamP.dao.AdminDAO;
+import semi.teamP.dto.AdminDTO;
 import semi.teamP.dto.MemberDTO;
 
 public class AdminService {
@@ -23,7 +24,7 @@ public class AdminService {
 
 	public void adMemberList() throws IOException {
 		AdminDAO dao = new AdminDAO();
-		ArrayList<MemberDTO>memberlist = dao.MemberList();
+		ArrayList<AdminDTO>memberlist = dao.MemberList();
 		
 		Gson json = new Gson();
 		HashMap<String, Object> map = new HashMap<>();
@@ -33,23 +34,57 @@ public class AdminService {
 		response.getWriter().println(obj);
 	}
 
-	public void adGroupList() {
-		// TODO Auto-generated method stub
+	public void adGroupList() throws IOException {
+		AdminDAO dao = new AdminDAO();
+		ArrayList<AdminDTO>groupList = dao.groupList();
 		
+		Gson json = new Gson();
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("groupList", groupList);
+		String obj = json.toJson(map);
+		response.setContentType("text/html; charset=UTF-8");
+		response.getWriter().println(obj);	
 	}
 
-	public void adMemberDel() {
-		// TODO Auto-generated method stub
+	public void adMemberDel() throws IOException {
+		String memberId = request.getParameter("member_Id");
+		AdminDAO dao = new AdminDAO();
 		
+		Boolean success = dao.MemberDel(memberId);
+		
+		Gson json = new Gson();
+		HashMap<String, Boolean> map = new HashMap<>();
+		map.put("success", success);
+		String obj = json.toJson(map);
+		response.getWriter().println(obj);
 	}
 
-	public void adGroupDel() {
-		// TODO Auto-generated method stub
+	public void adGroupDel() throws IOException {
+		int groupIdx = Integer.parseInt(request.getParameter("groupIdx"));
+		AdminDAO dao = new AdminDAO();
 		
+		Boolean success = dao.groupDel(groupIdx);
+		
+		Gson json = new Gson();
+		HashMap<String, Boolean> map = new HashMap<>();
+		map.put("success", success);
+		String obj = json.toJson(map);
+		response.getWriter().println(obj);
 	}
 
-	public void adGroupSession() {
-		// TODO Auto-generated method stub
+	public void adGroupSession() throws IOException {
+		int groupIdx = Integer.parseInt(request.getParameter("groupIdx"));
+		boolean success = false;
+		if(groupIdx>0) {
+			success=true;
+		}
 		
+		request.getSession().setAttribute("groupNum", groupIdx);
+	
+		Gson json = new Gson();
+		HashMap<String, Boolean> map = new HashMap<>();
+		map.put("success", success);
+		String obj = json.toJson(map);
+		response.getWriter().println(obj);
 	}
 }

@@ -105,8 +105,6 @@
                 height: 65%;
                 left: 20%;
                 top: 17%;
-                font-size: 29px;
-                font-weight: 900;
                 background-color: #004C63;
                 z-index: 2;
                 display: none;
@@ -128,6 +126,7 @@
                 left: 2.5%;
                 top: 21%;
                 background: white;
+                overflow: auto;
             }
             
             #contentPopup #popupTitle{
@@ -140,8 +139,12 @@
             }
             
             #contentPopup #adminPageList{
-            	width: 90%;
-            	border: 1px solid black;
+                position: absolute;
+                left: 3%;
+                top: 1%;
+            	width: 94%;
+            	font-size: 15px;
+            	text-align: center;
             }
         </style>
     </head>
@@ -187,33 +190,87 @@
             $(this).css("background-color","#FFD724");
         })
         
+        $("#close").click(function() {
+            $("#bg").css("display","none");
+            $("#contentPopup").css("display","none");
+		})
         
         $("#memberList").click(function(){
             $("#bg").css("display","inline");
             $("#contentPopup").css("display","inline");
             $("#popupTitle").html("회원 관리")
-            obj.url="./adMemberList";
+            memberList();
+        })
+        
+        $(document).on('click','.memberDrop_out', function() {
+				var member_Id = $(this).attr("id");
+				var con = confirm(member_Id+"님을 정말 탈퇴 시키겠습니까?");
+				if(con){
+					obj.url="./adMemberDel";
+					obj.data = {member_Id:member_Id};
+					obj.success = function(data){
+						if(data.success){
+							alert("'"+member_Id+"' 님을 TeamP에서 탈퇴 시켰습니다.")
+							memberList();
+						}else{
+							alert("'"+member_Id+"' 님을 TeamP에서 탈퇴 시키는 것을 실패했습니다.")
+						}
+					};
+					ajaxCall(obj);
+				}
+		});
+        
+        $("#groupList").click(function(){
+            $("#bg").css("display","inline");
+            $("#contentPopup").css("display","inline");
+            $("#popupTitle").html("그룹 관리")
+            groupList();
+       	})
+   
+        $(document).on('click','.groupDel', function() {
+        		var str = ""
+                var tdArr = new Array();
+                var checkBtn = $(this);
+                
+                var tr = checkBtn.parent().parent();
+                var td = tr.children();
+                
+                var groupName = td.eq(0).text();
+				var groupIdx = $(this).attr("id");
+				
+				var con = confirm("'"+groupName+"' 그룹을 정말 삭제 시키겠습니까?");
+				if(con){
+					obj.url="./adGroupDel";
+					obj.data = {groupIdx:groupIdx};
+					obj.success = function(data){
+						if(data.success){
+							alert("'"+groupName+"' 그룹을 TeamP에서 삭제 시켰습니다.")
+							groupList()
+						}else{
+							alert("'"+groupName+"' 그룹을 TeamP에서 삭제하는 것을 실패했습니다.")
+						}
+					};
+					ajaxCall(obj);
+				}
+		});
+       	
+        $("#TeampBbs").click(function(){
+            $("#bg").css("display","inline");
+            $("#contentPopup").css("display","inline");
+            $("#popupTitle").html("페이지 관리")
+            
+            obj.url="./adGroupList";
             obj.data={};
 			obj.success=function(data){
 				$("#adminPageList").empty();
-				
-				 content +="<tr>";
-				 content +="<td>아이디</td>";
-				 content +="<td>이름</td>";
-				 content +="<td>그룹</td>";
-				 content +="<td>회원등급</td>";
-				 content +="</tr>";
-				 $("#adminPageList").append(content);
-				 
-				 content="";
-				 
-				data.memberList.forEach(function(item,index){
+				data.groupList.forEach(function(item,index){
 					 content += "<tr>";
-					 content +=	"<td>"+item.member_Id+"</td>";
-					 content += "<td>"+item.member_name+"</td>";
-					 content += "<td>"+item.member_groupNum+"</td>";
-					 content += "<td>"+item.member_lv+"</td>";
-					 content += "<td>"+"<input class='accept' type='button' id="+item.group_idx+" value='수락'></td>";//수락 거절
+					 content +=	"<td>"+item.group_name+"</td>";
+					 content += "<td>"+item.group_masterId+"</td>";
+					 content += "<td>"+item.group_name+"</td>";
+					 content += "<td>"+item.group_StrartDay+"</td>";
+					 content += "<td>"+item.group_EndDay+"</td>";
+					 content += "<td>"+"<input class='getGroupSession' type='button' id="+item.group_idx+" value='권한'></td>";//수락 거절
 					 content += "</tr>";
 					 $("#adminPageList").append(content);
 					 content="";
@@ -221,32 +278,85 @@
 			}
 			
 			ajaxCall(obj);
+			
         })
         
-        $("#groupList").click(function(){
-            $("#bg").css("display","inline");
-            $("#contentPopup").css("display","inline");
-            $("#popupTitle").html("그룹 관리")
-            obj.url="./emailOverlay";
-			obj.data={email:$("#email").val()};
-			obj.success=function(d){
+        $(document).on('click','.getGroupSession', function() {
+    			var str = ""
+                var tdArr = new Array();
+                var checkBtn = $(this);
+                
+                var tr = checkBtn.parent().parent();
+                var td = tr.children();
+                
+                var groupName = td.eq(0).text();
+				var groupIdx = $(this).attr("id");
 				
-			}
-
-       	})
+				var con = confirm("'"+groupName+"' 그룹의 권한을 갖고 홈페이지를 관리하시겠습니까?");
+				if(con){
+					obj.url="./adGroupSession";
+					obj.data = {groupIdx:groupIdx};
+					obj.success = function(data){
+						if(data.success){
+							alert("'"+groupName+"' 그룹의 session이 생성되었습니다. 해당 그룹의 게시글과 관리자 영역 페이지의 관리가 가능합니다.");
+							location.href="main_Group.jsp";
+						}else{
+							alert("'"+groupName+"' 그룹의 session 생성을 실패했습니다.")
+						}
+					};
+					ajaxCall(obj);
+				}
+		});
         
-        $("#TeampBbs").click(function(){
-
-        })
-        
-        $("#close").click(function(){
-            $("#bg").css("display","none");
-            $("#contentPopup").css("display","none");
-        })
+		
         
         /* 서버요청 함수 */
 		function ajaxCall(obj){
 			$.ajax(obj);
 		}
+        
+        function memberList() {
+        	obj.url="./adMemberList";
+            obj.data={};
+			obj.success=function(data){
+				$("#adminPageList").empty();
+				data.memberList.forEach(function(item,index){
+					 content += "<tr>";
+					 content +=	"<td>"+item.member_Id+"</td>";
+					 content += "<td>"+item.member_name+"</td>";
+					 content += "<td>"+item.group_name+"</td>";
+					 content += "<td>"+item.member_lv+"</td>";
+					 content += "<td>"+"<input class='memberDrop_out' type='button' id="+item.member_Id+" value='탈퇴'></td>";//수락 거절
+					 content += "</tr>";
+					 $("#adminPageList").append(content);
+					 content="";
+			      });   
+			}
+			
+			ajaxCall(obj);
+		}
+        
+        function groupList() {
+        	obj.url="./adGroupList";
+            obj.data={};
+			obj.success=function(data){
+				$("#adminPageList").empty();
+				data.groupList.forEach(function(item,index){
+					 content += "<tr>";
+					 content +=	"<td>"+item.group_name+"</td>";
+					 content += "<td>"+item.group_masterId+"</td>";
+					 content += "<td>"+item.group_name+"</td>";
+					 content += "<td>"+item.group_StrartDay+"</td>";
+					 content += "<td>"+item.group_EndDay+"</td>";
+					 content += "<td>"+"<input class='groupDel' type='button' id="+item.group_idx+" value='삭제'></td>";//수락 거절
+					 content += "</tr>";
+					 $("#adminPageList").append(content);
+					 content="";
+			      });   
+			}
+			
+			ajaxCall(obj);
+		}
+        
     </script>
 </html>

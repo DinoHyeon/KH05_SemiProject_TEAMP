@@ -152,6 +152,7 @@
 					}else{
 						location.href="main_Admin.jsp";
 					}
+					
 				}else{
 					alert("로그인에 실패 했습니다.");
 				}
