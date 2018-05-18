@@ -211,7 +211,25 @@ public class PlanService {
 		response.getWriter().println(obj);
 		
 	}
+	public void planToday() throws IOException {
+		PlanDAO dao=new PlanDAO();
+		int groupIdx =(int) request.getSession().getAttribute("groupNum");
+		String memberId = (String) request.getSession().getAttribute("loginId");
+		//데이터가 담긴 어레이리스트 
+		ArrayList<PlanDTO> list= dao.list(groupIdx,memberId);
+		//response 반환
+		Gson json = new Gson();
+		HashMap<String, Object>map=new HashMap<>();
+		request.setAttribute("list", list); 
+		map.put("list",list);//리스트 넣고
+		String obj = json.toJson(map);
+		response.setContentType("text/html; charset=UTF-8");//한글있으니까 깨짐방지
+		response.getWriter().println(obj);
+		
+	}
+		
+	}
 		
 		
 	
-}
+

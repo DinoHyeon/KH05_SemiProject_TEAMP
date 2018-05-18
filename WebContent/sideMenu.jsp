@@ -68,11 +68,12 @@
                 position: absolute;
             	color: white;
                 width: 83%;
-            	top: 25%;
+            	top: 20%;
             	font-weight: 500;
             	font-size: 16px;
                 text-align: center;
                 backgour-color: "black";
+                left: 2%;
             }
             #content{
                 background-color: #004D65;
@@ -99,22 +100,32 @@
                 color: white;   
             }
       
-            #TodoList{
-            width:80%;
-            height:40%;
-            
-            }
-            #TodoList
-			{
-				float: left;
-				height: 450px;
+           
+            #planList{
+          		float: left;
+				height: 200px;
 				width: 265px;
-				font-weight: 900;
+				font-weight: 500;
                 font-size: 14px;
                 text-align: left;
 				background-color: #004C63;
 				overflow : auto;
 				margin-bottom: 25px;
+				border: 1px solid #FFD724;
+			}
+            
+            #TodoList
+			{
+				float: left;
+				height: 220px;
+				width: 265px;
+				font-weight: 500;
+                font-size: 14px;
+                text-align: left;
+				background-color: #004C63;
+				overflow : auto;
+				margin-bottom: 25px;
+				border: 1px solid #FFD724;
 			}
 			#TodoList::-webkit-scrollbar-track
 			{
@@ -135,7 +146,28 @@
 				-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 				background-color: #555;
 			}
-      
+			#planList::-webkit-scrollbar-track
+			{
+				-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+				border-radius: 10px;
+				background-color: #F5F5F5;
+			}
+			
+			#planList::-webkit-scrollbar
+			{
+				width: 12px;
+				background-color: #F5F5F5;
+			}
+			
+			#planList::-webkit-scrollbar-thumb
+			{
+				border-radius: 10px;
+				-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+				background-color: #555;
+			}
+     	 .divnamecolor{
+     	  color: #FFD724;
+     	 }
 </style>
 </head>
 <body>
@@ -144,11 +176,17 @@
 			<div id="userName"></div>
 			<div id="groupState">현재 그룹이 없어요:(</div>
 			<span id="groupName"></span>
-			<div id="Todo">할일 입력란
+			<div class="divnamecolor" id="Todo"><h3><b>할일 입력란</b></h3>
 				<input id="content" type="text" maxlength="15"/><button id="insert">+</button> 
-				<div>할일 리스트<button id="slide">▲</button></div>
+				<div class="divnamecolor">할일 리스트 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="slide">▲</button></div>
 				<div class="scrollbar" id="TodoList">
 				<table id="TodoTable">	
+				</table>
+				</div>
+				
+				<div class="divnamecolor">나의 일정  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="planslide">▲</button></div>
+				<div class="scrollbar" id="planList">
+				<table id="planTable">	
 				</table>
 				</div>
 			</div>
@@ -163,25 +201,24 @@
 		console.log(e)
 	};
 
+        
 	//페이지가 로드되었을 때 session에 그룹번호가 없는 경우 화면을 다르게 보여줘야한다.
 	$(document).ready(function() {
-				$("#content").keyup(function() {
-							if ($(this).val().length > $(this).attr('maxlength')) {
-								alert('제한길이 초과');
-								$(this).val($(this).val().substr(0,$(this).attr('maxlength')));
-							}
-						});
-
-				$("#TodoList").scroll(function() {
-							var scrollHeight = $("#scrolltest").scrollTop()
-									+ $(window).height();
-							var documentHeight = $("#scrolltest").height;
-							if (scrollHeight == documentHeight) {
-								$("#TodoTable").appendTo('content');
-							}
-						});
-
-				//로그인상태인지 확인
+		obj.url = "./planToday"
+			obj.success = function(data) {
+					data.list.forEach(function(item, idx) {
+								content += "<tr>";
+								content += "<td> -  " + item.plan_title + "</td>";
+								content += "<td>"+item.plan_endDay+"</td>";
+								content += "</tr>";
+					});
+					$("#planTable").empty();
+					$("#planTable").append(content);
+				 	content = "";
+		};
+		ajaxCall(obj);
+});
+			
 				if ('${sessionScope.loginId}' == "") {
 					alert("로그인이 필요한 서비스입니다.");
 					location.href = "index.jsp";
@@ -199,7 +236,6 @@
 					$("#groupState").html('');
 					$("#groupName").html('${sessionScope.groupname}');
 				}
-	})
 	
 	
 	$("button").click(function() {
@@ -230,7 +266,7 @@
 			ajaxCall(obj);
 		}
 	});
-	
+			
 	function listPrint() {
 		obj.url = "./todoDetail"
 			obj.success = function(data) {
@@ -266,6 +302,10 @@
 
 	$("#slide").click(function() {
 		$("#TodoList").slideToggle("slow");
+
+	})
+	$("#planslide").click(function() {
+		$("#planList").slideToggle("slow");
 
 	})
 

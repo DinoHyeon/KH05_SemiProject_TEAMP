@@ -152,7 +152,6 @@ public class PlanDAO {
 	}
 
 	public PlanDTO plandetail(String detail) {
-		GroupDAO Gdao = new GroupDAO();
 		PlanDTO dto = new PlanDTO();
 		String sql = "SELECT * FROM Plan WHERE plan_idx=?";
 		try {
@@ -163,8 +162,8 @@ public class PlanDAO {
 			if (rs.next()) {
 				dto.setPlan_idx(rs.getInt("plan_idx"));
 				dto.setPlan_content(rs.getString("plan_content"));
-				dto.setPlan_startDay(Gdao.castingString(rs.getDate("plan_startDay")));
-				dto.setPlan_endDay(Gdao.castingString(rs.getDate("plan_endDay")));
+				dto.setPlan_startDay(castingString(rs.getDate("plan_startDay")));
+				dto.setPlan_endDay(castingString(rs.getDate("plan_endDay")));
 				dto.setPlan_title(rs.getString("plan_title"));
 				dto.setPlan_state(rs.getString("plan_state"));
 				dto.setGroup_idx(rs.getInt("group_idx"));
@@ -198,6 +197,28 @@ public class PlanDAO {
 		java.sql.Date date = new java.sql.Date(year, month, day);
 
 		return date;
+	}
+
+	public ArrayList<PlanDTO> list(int groupIdx, String memberId) {
+		ArrayList<PlanDTO> list = new ArrayList<PlanDTO>(); // list변수만들어주고
+		String sql = "SELECT * FROM Plan WHERE group_idx=? AND member_id=? ORDER BY plan_idx DESC";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1,groupIdx);
+			ps.setString(2, memberId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				PlanDTO dto = new PlanDTO();
+				dto.setPlan_title(rs.getString("plan_title"));
+				dto.setPlan_endDay(castingString(rs.getDate("plan_endDay")));
+				list.add(dto);// dto 를 list 에 담기
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		return list;
 	}
 
 }

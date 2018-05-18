@@ -83,6 +83,11 @@
 		width:70px;
 		height:30px;
 	}
+	#detailTable{
+	width:300px;
+	height:250px;
+	}
+	
 	input[type='text']{
 		width:100%;
 		border-width : 0;
@@ -159,7 +164,14 @@ $(document).ready(function(){
 
 function detail(){
 	var content = "";
+	//ex)1일 일정 상세보기 수정상태에서 3일 일정 상세보기 클릭시 수정상태로 데이터 보여주는 것을 방지
 	console.log("일정 상세보기 호출");
+	$("#planState").css("display", "inline");
+	$("#select").css("display","none");
+	$("#changeplan").css("display","inline");
+	$("#changesuc").css("display","none");
+	$(".edit").css("border-width","0px");
+	$(".edit").attr("readonly",true);
 	$("#todayPlanDetail").css("display","inline");
 
 	$.ajax({
@@ -208,32 +220,32 @@ function ajaxCall(param){
         <div id="sectionDivisionLine"></div>
         <div id="todayPlanDetail">
         	<h3>세부일정</h3>
-			<table>
+			<table id="detailTable">
 				<input type="hidden" id="planIdx">
 				<input type="hidden" id="planFinishDate">
 				<tr>
-					<td>수행자</td>
-					<td><input type="text" class="edit" id="planMember" readonly value=${dto.member_id}></td>
+					<td><b>수행자</b></td>
+					<td><input type="text" maxlength="15" class="edit" id="planMember" readonly value=${dto.member_id}></td>
 				</tr>			
 				<tr>
-					<td>타이틀</td>
-					<td><input type="text" class="edit" id="planTitle" readonly value=${dto.plan_title}></td>
+					<td><b>타이틀</b></td>
+					<td><input type="text" maxlength="15" class="edit" id="planTitle" readonly value=${dto.plan_title}></td>
 				</tr>			
 				<tr>
-					<td>일정내용</td>
-					<td><input type="text" class="edit" id="planContent" readonly value=${dto.plan_content}></td>
+					<td><b>일정내용</b></td>
+					<td><input type="text" maxlength="20" class="edit" id="planContent" readonly value=${dto.plan_content}></td>
 				</tr>			
 				<tr>
-					<td>시작날짜</td>
+					<td><b>시작날짜</b></td>
 				    <td><input type="date" class="edit" id="planStart" readonly value=${dto.plan_startDay}></td>
 
 				</tr>							
 				<tr>
-					<td>종료예정날짜</td>
-					<td><input type="date" class="edit" id="planEnd" readonly value=${dto.plan_endDay}></span></td>
+					<td><b>종료예정날짜</b></td>
+					<td><input type="date" class="edit" id="planEnd" readonly value=${dto.plan_endDay}></td>
 				</tr>
 				<tr>
-					<td>상태</td>
+					<td><b>상태</b></td>
 					<td>
 						<input type="text" id="planState" readonly value=${dto.plan_state}> 
 						<select id="select" name="job">
@@ -265,6 +277,17 @@ function ajaxCall(param){
 		$("#changeplan").css("display","none");
 	});
 	
+	$("#changesuc").click(function(){
+		$("#planState").css("display", "inline");
+		$("#select").css("display","none");
+		$("#changeplan").css("display","inline");
+		$("#changesuc").css("display","none");
+		$(".edit").css("border-width","0px");
+		$(".edit").attr("readonly",true);
+	});
+	
+	
+	
 	 $("#changeplan").mouseenter(function(){
 	        $("#changeplan").css("background","#00455A");
 	        $("#changeplan").css("color","#FFD724")
@@ -281,6 +304,7 @@ function ajaxCall(param){
 	            $("#changesuc").css("color","black")
 	        })
 	    })    
+	    
 	    //일정 수정
 	    $("#changesuc").click(function() {
 		if($("#planMember").val()==""){
@@ -303,6 +327,7 @@ function ajaxCall(param){
 				dataType : "json",
 				success : function(data) {//인자 값은 서버에서 주는 메세지
 					if (data.success) {
+						$("#planState").val()=="";
 						alert("일정이 변경되었습니다.")
 					} else {
 						alert("일정 변경을 실패했습니다.")
