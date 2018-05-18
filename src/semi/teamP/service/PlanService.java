@@ -47,41 +47,7 @@ public class PlanService {
 		response.setContentType("text/html; charset=UTF-8");
 		response.getWriter().println(obj);
 	}
-
-
-	/*public void planWrite() throws IOException,ServletException {
-		request.setCharacterEncoding("UTF-8");
-		//글쓰기 서비스
-		//1.파라메터 추출
-		request.setCharacterEncoding("UTF-8");
-		int groupIdx =(int) request.getSession().getAttribute("groupNum");
-		String userName =request.getParameter("userName");
-		String title =request.getParameter("title");
-		String sDate=request.getParameter("syear")+request.getParameter("smonth")
-		+request.getParameter("sday");
-		String eDate =request.getParameter("eyear")+request.getParameter("emonth")
-		+request.getParameter("eday");
-		String memo = request.getParameter("memo");
-		PlanDTO dto = new PlanDTO();
-		dto.setMember_id(userName);
-		dto.setPlan_title(title);
-		dto.setPlan_startDay(sDate);
-		dto.setPlan_endDay(eDate);
-		dto.setPlan_content(memo);
-		System.out.println(groupIdx+"지금 가지고 있는 그룹idx값");
-		
-		//2.DAO 요청
-		PlanDAO dao = new PlanDAO();
-		int success = dao.write(dto,groupIdx);
-		//3.결과값 json변환
-		Gson json = new Gson();
-		HashMap<String, Integer> map = new HashMap<>();
-		map.put("success", success);
-		String obj = json.toJson(map);
-		response.getWriter().println(obj);
-		
-		
-	}*/
+	
 
 	   public void planWrite() throws IOException, ServletException {
 		      request.setCharacterEncoding("UTF-8");
@@ -149,19 +115,18 @@ public class PlanService {
 		
 	}
 	//일정상세보기 수정버튼 눌렀을때 !
-	public void planChange() {
-		/*int groupIdx=(int) request.getSession().getAttribute("groupNum");
+	public void planChange() throws IOException {		
 		PlanDTO dto = new PlanDTO();
-		dto.setGroup_idx(Integer.parseInt(request.getParameter("groupInfoIdx")));
-		dto.setGroup_name(request.getParameter("groupInfoName"));
-		dto.setGroup_StrartDay(request.getParameter("groupInfoStartDate"));
-		dto.setGroup_EndDay(request.getParameter("groupInfoEndDate"));
-		
-		planMember : $("#planMember").val()
-		planTitle : $("#planTitle").val()
-		planContent : $("#planContent").val()
-		plan : $("#select option:selected").val()
-		
+		dto.setGroup_idx((int) request.getSession().getAttribute("groupNum"));
+		dto.setPlan_idx(Integer.parseInt(request.getParameter("planIdx")));
+		dto.setMember_id(request.getParameter("planMember"));
+		dto.setPlan_title(request.getParameter("planTitle"));
+		dto.setPlan_content(request.getParameter("planContent"));
+		dto.setPlan_startDay(request.getParameter("planStartDay"));
+		dto.setPlan_endDay(request.getParameter("planEndDay"));
+		dto.setPlan_state(request.getParameter("planState"));
+		dto.setPlan_plan_finishDate(request.getParameter("planFinishDate"));
+
 		PlanDAO dao = new PlanDAO();
 		boolean success = dao.groupInfoUpdate(dto);
 		
@@ -169,7 +134,7 @@ public class PlanService {
 		HashMap<String, Boolean> map = new HashMap<>();
 		map.put("success", success);
 		String obj = json.toJson(map);
-		response.getWriter().println(obj);*/
+		response.getWriter().println(obj);
 		
 	}
 	

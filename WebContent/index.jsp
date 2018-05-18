@@ -143,14 +143,19 @@
 			success:function(data){//인자 값은 서버에서 주는 메세지
 				if(data.login){
 					alert("로그인에 성공 했습니다.");
-					if(data.projectIdx==0){
-						location.href="main_nonGroup.jsp";
+					if('${sessionScople.memberLv}'=='member'||'${sessionScople.memberLv}'=='master'){
+						if(data.projectIdx==0){
+							location.href="main_nonGroup.jsp";
+						}else{
+							location.href="main_Group.jsp";
+						}
 					}else{
-						location.href="main_Group.jsp";
+						location.href="main_Admin.jsp";
 					}
 				}else{
-					alert("로그인에 실패 했습니다.")
+					alert("로그인에 실패 했습니다.");
 				}
+
 			},
 			error:function(err){//인자 값은 서버에서 주는 메세지
 				console.log(err)
