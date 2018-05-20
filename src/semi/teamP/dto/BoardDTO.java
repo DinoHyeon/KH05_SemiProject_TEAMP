@@ -9,10 +9,17 @@ public class BoardDTO {
    private String bbs_content;
    private Date bbs_date;
    private int bbs_bHit;
-   private int group_idx;
+   public int getReply_cnt() {
+	return reply_cnt;
+}
+
+public void setReply_cnt(int reply_cnt) {
+	this.reply_cnt = reply_cnt;
+}
+private int group_idx;
    private String member_id;
    private String newFileName;
-   
+   private int reply_cnt;
    //페이징
    private int totalRecord;
    

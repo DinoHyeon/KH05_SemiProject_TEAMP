@@ -6,7 +6,7 @@ public class ReplyDTO {
    private int comment_idx;
    private String comment_content;
    private String member_id;
-   private Date comment_date;
+   private String comment_date;
    private int bbs_idx;
    public int getComment_idx() {
       return comment_idx;
@@ -26,11 +26,11 @@ public class ReplyDTO {
    public void setMember_id(String member_id) {
       this.member_id = member_id;
    }
-   public Date getComment_date() {
+   public String getComment_date() {
       return comment_date;
    }
-   public void setComment_date(Date comment_date) {
-      this.comment_date = comment_date;
+   public void setComment_date(String string) {
+      this.comment_date = string;
    }
    public int getBbs_idx() {
       return bbs_idx;

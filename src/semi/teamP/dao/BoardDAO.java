@@ -183,8 +183,8 @@ public class BoardDAO {
 		      try {
 		    	 // 검색값없이 그냥 들어갔을때	    	  
 		    	 if(keyWord.equals(null) || keyWord.equals("")) {
-		    		 sql = "SELECT bbs_idx, bbs_name, bbs_subject, bbs_date, bbs_bHit, member_id FROM"
-		    		 		+ " (SELECT ROW_NUMBER() OVER(ORDER BY bbs_idx DESC) AS rnum, bbs_idx, bbs_name, bbs_subject, bbs_date, bbs_bHit, member_id FROM Bbs WHERE bbs_name='freeBbs')"
+		    		 sql = "SELECT bbs_idx, bbs_name, bbs_subject, bbs_date, bbs_bHit, member_id, reply_cnt FROM"
+		    		 		+ " (SELECT ROW_NUMBER() OVER(ORDER BY bbs_idx DESC) AS rnum, bbs_idx, bbs_name, bbs_subject, bbs_date, bbs_bHit, member_id,reply_cnt FROM Bbs WHERE bbs_name='freeBbs')"
 		    		 		+ " WHERE rnum BETWEEN ? AND ?";
 		    		 ps = conn.prepareStatement(sql);
 		    		 ps.setInt(1, start);
@@ -204,6 +204,7 @@ public class BoardDAO {
 		             dto.setBbs_date(rs.getDate("bbs_date"));
 		             dto.setBbs_bHit(rs.getInt("bbs_bHit"));
 		             dto.setMember_id(rs.getString("member_id"));
+		             dto.setReply_cnt(rs.getInt("reply_cnt"));
 		             list.add(dto);
 	    	    }
 		      } catch (SQLException e) {
@@ -274,6 +275,7 @@ public class BoardDAO {
 				dto.setBbs_date(rs.getDate("bbs_date"));
 				dto.setBbs_bHit(rs.getInt("bbs_bHit"));
 				dto.setMember_id(rs.getString("member_id"));
+				dto.setReply_cnt(rs.getInt("reply_cnt"));
 				list.add(dto);
 			}
 		} catch (SQLException e) {
@@ -342,6 +344,7 @@ public class BoardDAO {
 					dto.setBbs_date(rs.getDate("bbs_date"));
 					dto.setBbs_bHit(rs.getInt("bbs_bHit"));
 					dto.setMember_id(rs.getString("member_id"));
+					dto.setReply_cnt(rs.getInt("reply_cnt"));
 					list.add(dto);
 				}
 			} catch (SQLException e) {

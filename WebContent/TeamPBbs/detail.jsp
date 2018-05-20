@@ -17,39 +17,71 @@
    	table{
 		border: 1px solid black;
 		border-collapse: collapse;
-		padding: 5px 10px;
-		width: 500px;
-		
 	}
 	th{
 		border: 1px solid black;
 		border-collapse: collapse;
-		padding: 5px 10px;
-		width: 100px;
+		
+	
 	}
 	td{
 		border: 1px solid black;
 		border-collapse: collapse;
-		padding: 5px 10px;
-		width: 450px;		
+	
 	}
   
 	#tel{
   	 	border: 1px solid black;
    		border-collapse: collapse;
-   		padding: 10 5;
+   		
    		text-align: center;
-   		margin-top: 60px;
-   		margin-left: 50px;
+   		margin-top: 0%;
+   		margin-left:  2%;
    		width: 95%;
    		height: 50%;
    	}
      	
    	h2{
-   		margin-left: 600px;
+   		margin-left: 50%;
    	}
    	
-  
+  .textname {
+	border: none;
+	text-align: center;
+}
+
+.input_text {
+	width: 29%;
+	border: none;
+	background-color: red;
+}
+
+#register {
+	border: none;
+   font-weight: 900;
+   color: #004C63;
+	background-color: #FFD724;
+	z-index: 2;
+	line-height: 23px;
+	text-align: center;
+	border-radius: 8px;
+}
+#ccontent{
+resize:none;
+height: 70%;
+width: 90%;
+}
+#listtable{
+		
+		margin-top: 4%;
+   		margin-left: 15%;
+	
+	width: 80%;
+}
+#listTable2{
+	
+
+}
 </style>
 </head>
 <body>
@@ -66,7 +98,10 @@
    <div id="list">
     <h2>${info.bbs_subject }</h2>
    <table id="tel">     
-   
+    <tr id="hidden" style="display:none;">
+			<th>게시글 번호</th>
+				<td id="bbsno">${info.bbs_idx}</td>
+			</tr>
    <tr>
       <th>작성자</th>
       <td align="left">${info.member_id }</td>
@@ -117,10 +152,184 @@
 	  		 </c:if>
       </td>
    </tr>
-   
+   <tr>
+   				<td colspan="2">
+						<!--댓글 등록 창  --> <textarea id="ccontent" cols="50" placeholder="댓글을 입력하세요.."></textarea> <input
+						type="button" id="register" value="등록" />
+					</td>
+
+				</tr>
    </table>
+   <div id="listtable">
+		<table id="listTable2">	</table>
+		</div>
       </div>
    </div>
 </body>
+<script>
+var commentdate = '${sessionScope.comment_date}';
+
+var obj = {};
+var idx;
+obj.type = "POST";
+obj.dataType = "JSON";
+
+obj.error = function(e) {
+	console.log(e)
+};
+
+$(document).ready(function() {
+	listPrint2();
+
+	
+});
+
+$("#register").click(function() {
+	if($("#ccontent").val()==""){
+		alert("댓글 내용을 입력해주세요");
+	}
+	else{
+		obj.url = "./replyWrite";
+	
+					obj.data = {};
+				
+					obj.data.cid = $("#bbsno").text();
+					obj.data.ccontent = $("#ccontent").val();
+					obj.success = function(data) {
+						if (data.success > 0) {
+							alert("댓글쓰기에 성공 했습니다.");
+							listPrint2();
+							} else {
+							alert("댓글쓰기에 실패 했습니다.");
+						}
+					}
+	}
+					ajaxCall(obj);
+				});
+
+function listPrint2() {
+	obj.url = "./replyCheck";
+	obj.data = {};
+	obj.data.cid = $("#bbsno").text();
+	obj.success = function(data) {
+		var content = "";
+			data.list.forEach(function(item, index) {
+					content += "<tr id =" +item.member_id+">";
+					content += "<td><input class='textname' type='text' value="+item.member_id+" readonly></td>";
+				    content += "<td width='50%'><input class="+item.comment_idx+" value='"+item.comment_content+"' type='text'  style='border:0px; width:100%' readonly/></td>";
+			        //content +="<td><input class="+item.comment_idx+" id="+item.comment_date+"</td>";
+				   	content += "<td>"
+							+ "<input class='commentup' value='수정' type='button' id="+item.comment_idx+">"
+							+ "<input class='commentdel' type='button' value='삭제' id="+item.comment_idx+">"
+							+ "</td>";
+			        content += "<td>" + item.comment_date + "</td>";
+				
+					content += "</tr>";
+				});
+
+		$("#listTable2").empty();
+		$("#listTable2").append(content);
+		
+		var person= {};
+		if(person1 =$("input[type='text']")&&$("input[class='textname']")){
+			person=person1;
+		}
+		
+		if(button=$("input[type='button']")&&$("input[class='commentdel']")) {
+			 button1=button;
+		 }
+		
+		if(button=$("input[type='button']")&&$("input[class='commentup']")) {
+			 button2=button;
+		 }
+		
+		for(var i=0; i<person.length; i++){
+			
+		
+			if('${sessionScope.loginId}' != person.get(i).value){
+		
+			$(button1[i]).css("display","none");
+			$(button2[i]).css("display","none");
+
+					
+			}
+			}
+
+	
+	}
+			ajaxCall(obj);
+}
+
+$(document).on('click', '.commentdel', function() {
+	console.log("삭제");
+
+	var delcomment = $(this).attr("id");
+	obj.url = "./replyDelete";
+	obj.data = {
+		delcomment : delcomment
+	};
+	obj.success = function(data) {
+		console.log(data);
+		if (data.success) {
+			alert("삭제에 성공하였습니다.")
+			listPrint2();
+		} else {
+			alert("삭제 실패")
+		}
+
+	}
+
+	ajaxCall(obj);
+});
+
+var i = 0;
+
+$(document).on('click', '.commentup', function() {
+	console.log("수정");
+	if (i == 0) {
+		var upcomment = $(this).attr("id");
+		console.log(upcomment);
+		$("input[class=" + upcomment + "]").css("border", "1px solid");
+
+		$("input[class=" + upcomment + "]").css("border-color", "green");
+		$("input[class=" + upcomment + "]").attr("readonly", false);
+	
+		console.log("i값" + i)
+		i = i + 1;
+
+	} else {
+		var upcomment = $(this).attr("id");
+		var content = $("input[class=" + upcomment + "]").val();
+		//var time=$("inpput[class=" +upcomment+"]").id;
+		//var content= $(".edit").val();	
+
+		obj.url = "./replyUpdate";
+		obj.data = {};
+		obj.data.upcomment = upcomment;
+		obj.data.content = content;
+		obj.success = function(data) {
+			console.log(data);
+			if (data.success) {
+				alert("수정에 성공하였습니다.")
+				i=0;
+				listPrint2();
+			} else {
+				alert("수정 실패")
+			}
+
+		};
+
+		ajaxCall(obj);
+	}
+
+});
+
+
+function ajaxCall(param) {
+	console.log(param);
+	$.ajax(param);
+}
+
+</script>
 
 </html>

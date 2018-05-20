@@ -91,7 +91,7 @@
 			<c:forEach items="${list}" var="bbs">
 				<tr>				
 				
-					<td align="left"><a href="detail?idx=${bbs.bbs_idx}">${bbs.bbs_subject }</a></td>
+					<td align="left"><a href="detail?idx=${bbs.bbs_idx}">${bbs.bbs_subject } (${bbs.reply_cnt})</a></td>
 					<td>${bbs.member_id }</td>
 					<td>${bbs.bbs_date }</td>
 					<td>${bbs.bbs_bHit }</td>
