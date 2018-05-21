@@ -150,6 +150,7 @@ public class MemberService {
 			request.getSession().setAttribute("memberLv", memberLv);
 			request.getSession().setAttribute("memberName", memberName);
 			request.getSession().setAttribute("groupNum", groupNum);
+			request.getSession().setAttribute("menuName", "main");
 		}
 		
 		String page = "";

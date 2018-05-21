@@ -122,11 +122,16 @@
 					location.href="main_Group.jsp";
 				}
 			}else if('${sessionScope.menuName}'=='myInfo'){
-				if('${sessionScope.groupNum}'=='0'){
-					location.href="main_nonGroup.jsp";
-				}else{
-					location.href="main_Group.jsp";
-				}
+				obj.url="./createMenuSession";
+				obj.data={menuName:"main"};
+				obj.success = function(data){
+					if('${sessionScope.groupNum}'=='0'){
+						location.href="main_nonGroup.jsp";
+					}else{
+						location.href="main_Group.jsp";
+					}
+					 };
+				ajaxCall(obj);
 			}else if('${sessionScope.menuName}'=='notice'){
 				location.href='/SemiProject_TeamP/adminList';
 			}else if('${sessionScope.menuName}'=='plan'){

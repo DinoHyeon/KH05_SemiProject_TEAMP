@@ -102,96 +102,96 @@
 <script src='http://fullcalendar.io/js/fullcalendar-3.9.0/locale/ko.js'></script>
 <script type="text/javascript">
 
-var obj = {};		
-obj.type="post";
-obj.dataType="json";
-obj.error=function(e){console.log(e)};
+	var obj = {};		
+	obj.type="post";
+	obj.dataType="json";
+	obj.error=function(e){console.log(e)};
 
-$(document).ready(function(){
-    $("#calender").fullCalendar({
-          defaultDate : new Date()
-        , lang : "ko"
-        , height : 393
-        , editable : true
-        , eventLimit : true
-        , header : {
-            left: 'title',
-            right: 'today prev,next'
-        }
-        , dayClick: function(date, allDay, jsEvent, view) {
-        	$("#todayPlanDetail").css("display","none");
-           var yy=date.format("YYYY");
-           var mm=date.format("MM");
-           var dd=date.format("DD");
-           var date = yy+"/"+mm+"/"+dd;
-           
-           $("#planFinishDate").val(date);
-           
-           $(this).css('background-color', '#FFD724');
-           $("td.fc-day.fc-widget-content").not($(this)).css('background-color', 'white')
-	   		obj.url="./planDayList";
-	   		obj.data={date:date};
-	   		obj.success = function(data) {console.log(data);
-	   			listPrint(data.list);
-	   		}
-	   		ajaxCall(obj); 
-         }
-    });
-    var content ="";
-	function listPrint(list){
-		console.log(list);
-		var content ="";
-		//idx, user_name, subject, reg_date, bHit
-		list.forEach(function(item, idx){
-			content += "<tr>";	
-			content +="<td>"+item.member_id+"</td>";
-			content +="<td>"+item.plan_title+"</td>";
-			content +="<td>"+item.plan_state+"</td>";
-			content +="<td><input onclick='detail()' class='plandetail' value='상세보기' type='button' id="+item.plan_idx+"></td>";
-			content += "</tr>"; 
-		});		
-		$("#PlanTable").empty();
-		$("#PlanTable").append(content);
-	}
-});
-
-function detail(){
-	var content = "";
-	//ex)1일 일정 상세보기 수정상태에서 3일 일정 상세보기 클릭시 수정상태로 데이터 보여주는 것을 방지
-	console.log("일정 상세보기 호출");
-	$("#planState").css("display", "inline");
-	$("#select").css("display","none");
-	$("#changeplan").css("display","inline");
-	$("#changesuc").css("display","none");
-	$(".edit").css("border-width","0px");
-	$(".edit").attr("readonly",true);
-	$("#todayPlanDetail").css("display","inline");
-
-	$.ajax({
-		type:"post",
-		url:"./planDetail",
-		data:{
-			detail:$(".plandetail").attr('id')
-		},
-		dataType:"json",
-		success:function(data){//인자 값은 서버에서 주는 메세지
-			$("#planIdx").val(data.plandetail.plan_idx);
-			$("#planMember").val(data.plandetail.member_id);
-			$("#planTitle").val(data.plandetail.plan_title);
-			$("#planContent").val(data.plandetail.plan_content);
-			$("#planStart").val(data.plandetail.plan_startDay);
-			$("#planEnd").val(data.plandetail.plan_endDay);
-			$("#select").val(data.plandetail.plan_state);	
-			$("#planState").val(data.plandetail.plan_state);
+	$(document).ready(function(){
+	    $("#calender").fullCalendar({
+	          defaultDate : new Date()
+	        , lang : "ko"
+	        , height : 393
+	        , editable : true
+	        , eventLimit : true
+	        , header : {
+	            left: 'title',
+	            right: 'today prev,next'
+	        }
+	        , dayClick: function(date, allDay, jsEvent, view) {
+	        	$("#todayPlanDetail").css("display","none");
+	           var yy=date.format("YYYY");
+	           var mm=date.format("MM");
+	           var dd=date.format("DD");
+	           var date = yy+"/"+mm+"/"+dd;
+	           
+	           $("#planFinishDate").val(date);
+	           
+	           $(this).css('background-color', '#FFD724');
+	           $("td.fc-day.fc-widget-content").not($(this)).css('background-color', 'white')
+		   		obj.url="./planDayList";
+		   		obj.data={date:date};
+		   		obj.success = function(data) {console.log(data);
+		   			listPrint(data.list);
+		   		}
+		   		ajaxCall(obj); 
+	         }
+	    });
+	    var content ="";
+		function listPrint(list){
+			console.log(list);
+			var content ="";
+			//idx, user_name, subject, reg_date, bHit
+			list.forEach(function(item, idx){
+				content += "<tr>";	
+				content +="<td>"+item.member_id+"</td>";
+				content +="<td>"+item.plan_title+"</td>";
+				content +="<td>"+item.plan_state+"</td>";
+				content +="<td><input class='plandetail' value='상세보기' type='button' id="+item.plan_idx+"></td>";
+				content += "</tr>"; 
+			});		
+			$("#PlanTable").empty();
+			$("#PlanTable").append(content);
 		}
 	});
-	ajaxCall(obj);
-}; 
 
-function ajaxCall(param){
-	console.log(param);
-	$.ajax(param);
-}
+	$(document).on('click','.plandetail', function() {
+		var content = "";
+		//ex)1일 일정 상세보기 수정상태에서 3일 일정 상세보기 클릭시 수정상태로 데이터 보여주는 것을 방지
+		console.log("일정 상세보기 호출");
+		$("#planState").css("display", "inline");
+		$("#select").css("display","none");
+		$("#changeplan").css("display","inline");
+		$("#changesuc").css("display","none");
+		$(".edit").css("border-width","0px");
+		$(".edit").attr("readonly",true);
+		$("#todayPlanDetail").css("display","inline");
+	
+		$.ajax({
+			type:"post",
+			url:"./planDetail",
+			data:{
+				detail:$(this).attr('id')
+			},
+			dataType:"json",
+			success:function(data){//인자 값은 서버에서 주는 메세지
+				$("#planIdx").val(data.plandetail.plan_idx);
+				$("#planMember").val(data.plandetail.member_id);
+				$("#planTitle").val(data.plandetail.plan_title);
+				$("#planContent").val(data.plandetail.plan_content);
+				$("#planStart").val(data.plandetail.plan_startDay);
+				$("#planEnd").val(data.plandetail.plan_endDay);
+				$("#select").val(data.plandetail.plan_state);	
+				$("#planState").val(data.plandetail.plan_state);
+			}
+		});
+		ajaxCall(obj);
+	});
+	
+	function ajaxCall(param){
+		console.log(param);
+		$.ajax(param);
+	}
 </script>
 </head>
 <body>
@@ -256,10 +256,18 @@ function ajaxCall(param){
 </body>
 <script>
 	$(document).ready(function() {
-		if('${sessionScope.loginId}'==""||'${sessionScope.groupNum}'==0){
+		if('${sessionScope.loginId}'==""){
 			alert("로그인이 필요한 서비스입니다.");
 			location.href="index.jsp";
+		}else if(${sessionScope.groupNum}==0){
+			location.href="main_nonGroup.jsp";
 		}
+		
+		var msg = "${msg}";
+			if(msg!=""){
+				alert(msg);
+		}
+		
 	});
 	$("#changeplan").click(function(){
 		$("#planState").css("display", "none");

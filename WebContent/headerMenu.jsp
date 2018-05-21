@@ -56,6 +56,33 @@
                 z-index: 1;
             }
             
+            #group #groupPeriod{
+            	position: absolute;
+                left : 1.5%;
+                top : 26.5%;   
+                color: white;      
+                font-size: 25px;
+                font-weight: 700;    	
+            }
+            
+            #group #groupDday{
+			    position: absolute;
+			    left: 18.5%;
+			    top: 45.5%;
+			    color: white;
+			    font-size: 16px;
+			    font-weight: 600;                      	
+            }
+            
+            #group #groupProgress{
+            	position: absolute;
+                left : 80%;
+                top : 22.5%;    
+				color: white;  	     
+                font-size: 25px;
+                font-weight: 700;                     	
+            }                        
+            
             /* 가입한 그룹이 없을 경우 나오는 header */
             #Nongroup{
 			    position: absolute;
@@ -66,6 +93,21 @@
 			    z-index: 2;
 			    text-align: center;
 			}
+            
+            #group #groupfinish{
+            	position: absolute;
+                background-color: #FFD724;
+                color: #004C63;
+                width: 10%;
+                height: 60%;
+                top: 18.5%;
+                left: 79.5%;
+                text-align: center;
+                line-height: 33px;
+                font-weight: 900;
+                border-radius: 8px;
+               	display: none;
+            }
             
             /* 그룹정보 버튼 */
             #groupInfo{
@@ -245,6 +287,7 @@
         <div id="group">
             <div id="groupInfo">그룹 정보</div><!-- 현재 로그인한 회원의 레벨이 member인 경우 -->
             <div id="groupManage">그룹 관리</div><!-- 현재 로그인한 회원의 레벨이 master인 경우 -->
+            <div id="groupfinish">프로젝트 완료</div>
             <div id="groupPeriod"></div><!-- 프로젝트 기간 -->
             <div id="groupDday"></div><!-- 프로젝트 남은 기간 -->
             <div id="groupProgress"></div><!-- 프로젝트 달성률 -->
@@ -383,7 +426,12 @@
 				groupEndDay=data.groupInfo.group_EndDay;//종료일
 				groupDday=BetweenDate(currentDay,groupEndDay);//남은 기간
 				
-				$("#groupPeriod").html(groupDday+"일 남았습니다.");
+				if(groupDday>0){
+					$("#groupPeriod").html(groupDday+"일 남았습니다.");
+				}else if(groupDday<0){
+					$("#groupPeriod").html(Math.abs(groupDday)+"일 지났습니다.");
+				}
+				
 				$("#groupDday").html(groupStartDay+" ~ "+groupEndDay);
 				
 				data.planList.forEach(function(item,index){
@@ -398,7 +446,12 @@
 					groupProgress=finishPlan/totalPlan*100;
 				}
 				console.log(groupProgress);
-				$("#groupProgress").html(groupProgress+" %");
+				$("#groupProgress").html(groupProgress+" %  진행");
+				
+				if(groupProgress == 100 && groupDday<=0){
+					$("#groupfinish").css("display","block");
+					$("#groupProgress").css("left",68+"%");
+				}
 			}
 			ajaxCall(obj);
 		}else{
@@ -608,12 +661,10 @@
 		obj.url="./planlist";
 		obj.data={};
 		obj.success = function(data){
-			console.log(data);
 			data.list.forEach(function(item,index){
 				planDateChkArr.push(compare_Date($("#groupInfoStartDate").val(), $("#groupInfoEndDate").val(), item.plan_startDay, item.plan_endDay));
 		    });
 			for(var i=0; i<planDateChkArr.length; i++){
-				console.log(planDateChkArr[i]);
 				if(planDateChkArr[i]==false){
 					planDateChkResult=false;
 				}
@@ -632,7 +683,7 @@
 				alert("프로젝트 시작일을 재입력해주세요.")
 				$("#groupInfoStartDate").focus();
 			}else if(!planDateChkResult){
-				alert("진행해야하는 일정이 있습니다.")
+				alert("진행해야하는 일정이 존재합니다.")
 				$("#groupInfoStartDate").focus();
 			}else{
 				obj.url="./groupInfoUpdate";
@@ -645,14 +696,38 @@
 						};
 				obj.success = function(data){
 					if(data.success){
-						groupInfoLoad();
-						alert("그룹 정보을 완료했습니다.");
+						alert("그룹 정보을 완료했습니다. :)");
+						if('${sessionScope.menuName}'!=""){
+							switch ('${sessionScope.menuName}') {
+							case "main":
+								location.href="main_Group.jsp";
+								break;
+							case "myInfo":
+								location.href="memberInfoForm.jsp";
+								break;
+							case "notice":
+								location.href="/SemiProject_TeamP/adminList.jsp";
+								break;
+							case "plan":
+								location.href="/plan.jsp";
+								break;
+							case "fileBbs":
+								location.href="/SemiProject_TeamP/fileList.jsp";
+								break;
+							case "groupBbs":
+								location.href="/SemiProject_TeamP/groupBbs.jsp";
+								break;	
+							case "comunityBbs":
+								location.href="/SemiProject_TeamP/comunityBbs.jsp";
+								break;					
+							}
+						}
 					}else{
-						alert("그룹 정보수정을 완료하지 못 했습니다.");
+						alert("그룹 정보수정을 완료하지 못 했습니다. 다시 시도해주세요 :(");
 					}
 				};
+				ajaxCall(obj);
 			}
-			ajaxCall(obj);
 		};
 		ajaxCall(obj);
 	})
@@ -660,35 +735,41 @@
 	
 	//회원추방
 	$(document).on('click','#out', function() {
-		var groupMemberId = $(this).attr("value");
-		passCheckCss();
-		obj.url="./memberOut";
-		obj.data = {groupMemberId:groupMemberId};
-		obj.success = function(data){
-			if(data.success){
-				alert(groupMemberId+"님을 추방했습니다.");
-				groupMemberListCall();
-			}else{
-				alert("멤버 추방에 실패했습니다 TT..");
-			}
-		};
-		ajaxCall(obj);
+		var con = confirm("회원님을 정말 그룹에서 추방 하시겠습니까?");
+		if(con){
+			var groupMemberId = $(this).attr("value");
+			passCheckCss();
+			obj.url="./memberOut";
+			obj.data = {groupMemberId:groupMemberId};
+			obj.success = function(data){
+				if(data.success){
+					alert(groupMemberId+"님을 추방했습니다.");
+					groupMemberListCall();
+				}else{
+					alert("멤버 추방에 실패했습니다. 다시 시도해주세요 :(");
+				}
+			};
+			ajaxCall(obj);
+		}
 	});
 	
 	
 	//그룹탈퇴
 	$("#withdrawal").click(function() {
-		obj.url="./groupWithdrawal";
-		obj.data = {groupIdx:groupIdx};
-		obj.success = function(data){
-			if(data.success){
-				alert("그룹에서 탈퇴하셨습니다.");
-				location.href="main_nonGroup.jsp";
-			}else{
-				alert("그룹탈퇴를 실패했습니다 ㅠㅠ");
-			}
-		};
-		ajaxCall(obj);
+		var con = confirm("회원님 정말 그룹에서 탈퇴 하시겠습니까?");
+		if(con){
+			obj.url="./groupWithdrawal";
+			obj.data = {groupIdx:groupIdx};
+			obj.success = function(data){
+				if(data.success){
+					alert("그룹에서 탈퇴하셨습니다. 새로운 그룹을 생성하거나 멋진 그룹에 참여해주세요 :)");
+					location.href="main_nonGroup.jsp";
+				}else{
+					alert("그룹탈퇴를 실패했습니다 다시 시도해주세요 :(");
+				}
+			};
+			ajaxCall(obj);
+		}
 	})
 	
 	//그룹 멤버조회
@@ -728,25 +809,46 @@
 	}
 	
 	$("#groupDel").click(function() {
-		//오늘
-		obj.url="./groupDelete";
-		obj.data={};
-		obj.data={groupInfoIdx:$('#groupInfoIdx').val()};
-		obj.success = function(data){
-			if(data.success){
-				if(data.groupIdx!=0){
-					location.href="main_Group.jsp"
-				}else{
+		var con = confirm("정말 그룹을 삭제 하시겠습니까?");
+		if(con){
+			//오늘
+			obj.url="./groupDelete";
+			obj.data={};
+			obj.data={groupInfoIdx:$('#groupInfoIdx').val()};
+			obj.success = function(data){
+				if(data.success){
 					location.href="main_nonGroup.jsp"
+					alert("새로운 그룹을 생성하거나 멋진 그룹에 참여해주세요 :)");
+				}else{
+					alert("그룹 삭제를 실패 했습니다. 다시 시도해주세요 :(");
 				}
-				alert("그룹을 삭제했습니다.");
-			}else{
-				alert("그룹 삭제를 못 했습니다.");
-			}
-		};
-		ajaxCall(obj);
+			};
+			ajaxCall(obj);
+		}
 	})
 	
+	$("#groupfinish").click(function() {
+		var con = confirm("프로젝트를 완료하시겠습니까?");
+		if(con){
+			obj.url="./groupDelete";
+			obj.data={};
+			obj.data={groupInfoIdx:$('#groupInfoIdx').val()};
+			obj.success = function(data){
+				if(data.success){
+					if(data.groupIdx!=0){
+						location.href="main_Group.jsp"
+					}else{
+						location.href="main_nonGroup.jsp"
+					}
+					alert("프로젝트를 성공적으로 끝낸 것을 TeamP에서 축하드립니다 :)");
+				}else{
+					alert("프로젝트 완료를 실패했습니다. 다시 시도해주세요 :(");
+				}
+			};
+			ajaxCall(obj);
+		}
+		
+	})
 
 	
 	function BetweenDate(currentDay,endDay) {

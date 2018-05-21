@@ -24,6 +24,8 @@ public class ReplyService {
 public void replyWrite() throws IOException {
 	String loginId = (String) request.getSession().getAttribute("loginId"); //로그인 아이디
 	String ccontent = request.getParameter("ccontent"); //내용
+	
+	System.out.println(loginId +":"+ ccontent);
 
 	int bbsidx = Integer.parseInt(request.getParameter("cid")); // 게시글 번호 
 	ReplyDAO dao= new ReplyDAO();
@@ -45,6 +47,7 @@ public void replyWrite() throws IOException {
 
 		
 	public void replyCheck() throws IOException {
+		System.out.println("댓글 불러오기");
 		int bbsidx = Integer.parseInt(request.getParameter("cid")); // 게시글 번호 
 		ReplyDAO dao= new ReplyDAO();
 		ArrayList<ReplyDTO> list =dao.replylist(bbsidx);

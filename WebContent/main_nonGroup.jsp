@@ -279,10 +279,10 @@
 
 	var msg = '${msg}';
 	
-	if(msg == "그룹 생성에 실패했습니다."){
+	if(msg == "그룹 생성에 실패했습니다. 다시 시도해주세요 :("){
 		alert(msg);
 		location.reload();
-	}else if(msg == "그룹 생성에 성공했습니다."){
+	}else if(msg == "그룹 생성에 성공했습니다. 팀원들을 초대해 프로젝트를 진행해보세요 :)"){
 		alert(msg);
 		location.href="main_Group.jsp";
 	}
@@ -297,6 +297,8 @@
 		if('${sessionScope.loginId}'==""){
 			alert("로그인이 필요한 서비스입니다.");
 			location.href="index.jsp";
+		}else if('${sessionScope.groupNum}'!=0){
+			location.href="main_Group.jsp";
 		}
 	});
     
@@ -305,9 +307,9 @@
         $("#create").css("color","#FFD724")
         $("#create").mouseleave(function(){
             $("#create").css("background","#FFD724");
-            $("#create").css("color","#004D65")
-        })
-    })
+            $("#create").css("color","#004D65");
+        });
+    });
     
     $("#inviteListBtn").mouseenter(function(){
         $("#inviteListBtn").css("background","#00455A");
@@ -315,8 +317,8 @@
         $("#inviteListBtn").mouseleave(function(){
             $("#inviteListBtn").css("background","#FFD724");
             $("#inviteListBtn").css("color","#004D65")
-        })
-    })
+        });
+    });
     
     $("#createBnt").mouseenter(function(){
         $("#createBnt").css("background","#00455A");
@@ -324,20 +326,20 @@
         $("#createBnt").mouseleave(function(){
             $("#createBnt").css("background","#FFD724");
             $("#createBnt").css("color","#004D65")
-        })
-    })
+        });
+    });
     
 	$("#create").click(function() {
 		$("#bg").css("display","inline");
 		$("#popupContent").css("display","inline");
-	})
+	});
 	
 	$(".mainPopupClose").click(function() {
 		$("#bg").css("display","none");
 		$("#inviteListBody").empty();
 		$("#inviteListPopup").css("display","none");
 		$("#popupContent").css("display","none");
-	})
+	});
 	
 	$("#createBnt").click(function() {
 		var startDay = new Date($("input[name='startDate']").val());
@@ -364,7 +366,7 @@
 		}else{
 			$("#createBnt").attr("type","submit");
 		}
-	})
+	});
 	
 	//그룹 초대 확인
 	$("#inviteListBtn").click(function() {
@@ -373,7 +375,7 @@
 		$("#inviteListPopup").css("display","inline");
 		
 		inviteListCall();
-	})
+	});
 	
 	//거절 버튼을 클릭했을 때) 초대번호만 있으면 된다.
 	$(document).on('click','.refuse', function() {
@@ -385,10 +387,10 @@
 			obj.success = function(data){
 				console.log(data);
 				if(data.result){
-					alert("초대 거절을 성공했습니다");
+					alert("초대 거절을 성공했습니다. 더 멋진 그룹을 찾아보세요 :)");
 					inviteListCall();
 				}else{
-					alert("초대 거절에 실패했습니다");
+					alert("초대 거절에 실패했습니다 다시 시도해주세요 :(");
 				}
 			};
 			ajaxCall(obj);
@@ -404,10 +406,10 @@
 			obj.data = {groupIdx:groupIdx};
 			obj.success = function(data){
 				if(data.result){
-					alert("축하드립니다. 그룹가입이 되셨습니다 !");
+					alert("축하드립니다. 그룹가입이 되셨습니다 ! :)");
 					location.href="main_Group.jsp"
 				}else{
-					alert("그룹가입에 실패했습니다 TT..");
+					alert("그룹가입에 실패했습니다. 다시 시도해주세요 :(");
 				}
 			};
 			ajaxCall(obj);
@@ -438,7 +440,7 @@
 		      });   
 		}
 		ajaxCall(obj);
-	}
+	};
 	
 	function ajaxCall(param){
 		console.log(param);

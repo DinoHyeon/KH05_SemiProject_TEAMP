@@ -68,16 +68,18 @@ public class GroupService {
 		infoDto.setGroup_EndDay(request.getParameter("endDate"));
 		
 		GroupDAO dao = new GroupDAO();
-		int success = dao.createGroup(infoDto);
+		int groupIdx = dao.createGroup(infoDto);
 		
 		String page = "main_nonGroup.jsp";
 		String msg = "그룹 생성에 실패했습니다.";
 		
-		if(success != 0) {
-			request.getSession().setAttribute("groupNum", success);
+		if(groupIdx>0) {
+			request.getSession().setAttribute("groupNum", groupIdx);
 			request.getSession().setAttribute("memberLv", "master");
-			msg = "그룹 생성에 성공했습니다.";
+			page = "main_Group.jsp";
+			msg = "그룹 생성에 성공했습니다. 팀원들을 초대해 프로젝트를 진행해보세요 :)";
 		}
+		
 		request.setAttribute("msg", msg);
 		RequestDispatcher dis = request.getRequestDispatcher(page);
 		dis.forward(request, response);
@@ -94,12 +96,10 @@ public class GroupService {
 		if(success) {
 			request.getSession().setAttribute("groupNum",0);
 			request.getSession().setAttribute("memberLv","member");
-			groupIdx = (int) request.getSession().getAttribute("groupNum");
 		}		
 		Gson json = new Gson();
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("success", success);
-		map.put("groupIdx", groupIdx);
 		String obj = json.toJson(map);
 		response.getWriter().println(obj);
 	

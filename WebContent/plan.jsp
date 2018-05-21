@@ -212,7 +212,8 @@
 				var DupleMonthNum_key=[];
 				var DupleMonthNum_value=[];
 				var DupleMonthNum;
-				date = data.date;
+				
+				date = data.date;//프로젝트 기간사이에 있는 날짜 출력 'yyyy-MM-dd'
 				day = data.day;
 				dayNum = data.day.length;
 				DupleMonthNum=DuplicatesChk(data.month);
@@ -258,13 +259,18 @@
 					}
 			      });   
 				
+				
+				
 				$("#1115").empty();
 				$("#1115").append(content);
 				
+				content = "";
+				
 				/* 오늘날짜 체크 */
+				console.log($("td[class='planDate']"));
  				for(var i=0; i<day.length; i++){
 					if($("td[class='planDate']")[i].id == today){
-						$("td[class='planDate']")[i].style.backgroundColor = 'red';
+						$("td[class='planDate']")[i].style.fontWeight = '900';
 						console.log("현정");
 					}
 				}
@@ -276,26 +282,27 @@
 					for(var j=0; j<betweenDateArr.length; j++){
 						for(var i=0; i<day.length; i++){
 							if($("td[class="+item.plan_idx+"]")[i].id==betweenDateArr[j]){
-								$("td[class="+item.plan_idx+"]")[i].style.backgroundColor = 'yellow';
+								$("td[class="+item.plan_idx+"]")[i].style.backgroundColor = '#FFFF48';
 							}
 		   				}
 						if(item.plan_state=='완료'){
 							for(var i=0; i<day.length; i++){
 								if($("td[class="+item.plan_idx+"]")[i].id==item.plan_plan_finishDate){
-									$("td[class="+item.plan_idx+"]")[i+1].style.backgroundColor = 'red';
+									$("td[class="+item.plan_idx+"]")[i+1].style.backgroundColor = '#004D65';
+									$("td[class="+item.plan_idx+"]")[i+1].html("X");
 								}
 			   				}
 						}
 					} 
 					
 					if(item.plan_state=='진행중'||item.plan_state=='준비중'){
-						if(compareDate(item.plan_endDay,date)=='over'){
+						if(compareDate(item.plan_endDay,today)=='over'){
 							var overDate = []
 							overDate = betweenDate(item.plan_endDay,today);
 							for(var i=0; i<day.length; i++){
-									for(var n=0; n<overDate.length; n++){
+									for(var n=1; n<overDate.length; n++){
 										if($("td[class="+item.plan_idx+"]")[i].id==overDate[n]){
-											$("td[class="+item.plan_idx+"]")[i+1].style.backgroundColor = 'green';
+											$("td[class="+item.plan_idx+"]")[i].style.backgroundColor = '#FF4848';
 										}
 									}
 							}
@@ -309,9 +316,6 @@
 					console.log($(this)[0].id)
 				});
 				 */
-				
-				
-				content="";
 			} 
 			ajaxCall(obj);
 		}
