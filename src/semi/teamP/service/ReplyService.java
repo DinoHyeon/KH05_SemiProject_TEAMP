@@ -69,16 +69,16 @@ public void replyWrite() throws IOException {
 
 		String  delcomment = request.getParameter("delcomment");
 		String loginId = (String) request.getSession().getAttribute("loginId"); //로그인 아이디
+		
 		ReplyDAO dao = new ReplyDAO();
-
-
 		success = dao.replyDelete(delcomment,loginId);
-		 HashMap<String, Object> map= new HashMap<String, Object>();
-	     map.put("success", success);
+		
+		HashMap<String, Object> map= new HashMap<String, Object>();
+	    map.put("success", success);
 	             
-	        Gson json = new Gson();
-	        String obj = json.toJson(map);
-	        response.getWriter().println(obj);
+        Gson json = new Gson();
+        String obj = json.toJson(map);
+        response.getWriter().println(obj);
 		
 	}
 

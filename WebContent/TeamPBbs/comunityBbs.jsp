@@ -38,16 +38,7 @@
    		margin-top: -20px;
    	}
    	
-   /* 	table,td,th{
-   		border: 1px solid black;
-   		border-collapse: collapse;
-   		padding: 10 5;
-   		text-align: center;
-   		margin-top: 100px;
-   		margin-left: 500px;
-   		width: 35%; 
-   		 		
-   	} */
+  
    	
    	h2{
    		margin-left: 600px;
@@ -59,7 +50,39 @@
    		margin-left: 580px;
    		margin-top: 20px;
    	}
-   	
+   	#b{
+   		color: #FFD724;
+   	}
+   	#c:hover{   	
+		background-color: #F6F6F6;
+		/* #566A70 */
+	}
+	#d{
+		color: black;
+	}
+	/*링크가 걸린 상황*/
+    #d:link{
+        text-decoration: none;
+        color: black;
+    }
+    /*마우스 오버 상태*/
+    #d:hover{
+        text-decoration: underline;
+        color: blue;
+    }
+    /*링크 눌렀을 때*/
+    #d:active{
+        text-decoration: overline;
+        color:  green;
+    }
+    /*방문 후 */
+    #d:visited{
+        text-decoration: none;
+        color: gray;
+    }
+	#f{
+		border: 1px solid #E7E7E7;
+	}
 </style>
 </head>
 <body>
@@ -79,22 +102,22 @@
    		 <h2>관리자 의견 나눔 게시판</h2>
    	 </c:if>
 		<table id="tel">		
-			<tr>		
+			<tr bgcolor="#004D65">		
 				
-				<th valign="top">제목</th>
-				<th valign="top" width="10%">작성자</th>
-				<th valign="top" width="10%">날짜</th>
-				<th valign="top" width="10%">조회수</th>
+				<th valign="top"><a id="b">제목</a></th>
+				<th valign="top" width="10%"><a id="b">작성자</a></th>
+				<th valign="top" width="10%"><a id="b">날짜</a></th>
+				<th valign="top" width="10%"><a id="b">조회수</a></th>
 			</tr>
 			
 			<!-- 셋팅된 dto값을 테이블에 뿌려준다 -->
 			<c:forEach items="${list}" var="bbs">
-				<tr>				
+				<tr id="c">				
 				
-					<td valign="top" align="left"><a href="detail?idx=${bbs.bbs_idx}">${bbs.bbs_subject } (${bbs.reply_cnt})</a></td>
-					<td valign="top">${bbs.member_id }</td>
-					<td valign="top">${bbs.bbs_date }</td>
-					<td valign="top">${bbs.bbs_bHit }</td>
+					<td id="f" valign="top" align="left"><a id="d" href="detail?idx=${bbs.bbs_idx}">${bbs.bbs_subject } (${bbs.reply_cnt})</a></td>
+					<td id="f" valign="top">${bbs.member_id }</td>
+					<td id="f" valign="top">${bbs.bbs_date }</td>
+					<td id="f" valign="top">${bbs.bbs_bHit }</td>
 				</tr>
 			</c:forEach>
 		</table>

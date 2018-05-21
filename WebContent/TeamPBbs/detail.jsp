@@ -269,7 +269,7 @@ $(document).on('click', '.commentdel', function() {
 	};
 	obj.success = function(data) {
 		console.log(data);
-		if (data.success) {
+		if (data.success>0) {
 			alert("삭제에 성공하였습니다.")
 			listPrint2();
 		} else {

@@ -46,6 +46,42 @@
    		margin-left: 580px;
    		margin-top: 20px;
    	}
+   	#b{
+   		color: #FFD724;
+   	}
+   	#c:hover{   	
+		background-color: #F6F6F6;
+		
+	}
+	#d{
+		color: black;
+	}
+	#d{
+		color: black;
+	}
+	/*링크가 걸린 상황*/
+    #d:link{
+        text-decoration: none;
+        color: black;
+    }
+    /*마우스 오버 상태*/
+    #d:hover{
+        text-decoration: underline;
+        color: blue;
+    }
+    /*링크 눌렀을 때*/
+    #d:active{
+        text-decoration: overline;
+        color:  green;
+    }
+    /*방문 후 */
+    #d:visited{
+        text-decoration: none;
+        color: gray;
+    }
+	#f{
+		border: 1px solid #E7E7E7;
+	}
 </style>
 </head>
 <body>
@@ -60,18 +96,18 @@
     <div id="page">
     <h2>관리자 그룹 게시판</h2>
 		<table id="tel">
-			<tr>				
-				<th valign="top">제목</th>
-				<th valign="top" width="10%">작성자</th>
-				<th valign="top" width="10%">날짜</th>
-				<th valign="top" width="10%">조회수</th>
+			<tr bgcolor="#004D65">				
+				<th valign="top"><a id="b">제목</a></th>
+				<th valign="top" width="10%"><a id="b">작성자</a></th>
+				<th valign="top" width="10%"><a id="b">날짜</a></th>
+				<th valign="top" width="10%"><a id="b">조회수</a></th>
 			</tr>
 			<c:forEach items="${list}" var="bbs">
-				<tr>					
-					<td valign="top" align="left"><a href="detail?idx=${bbs.bbs_idx}">${bbs.bbs_subject }</a></td>
-					<td valign="top">${bbs.member_id }</td>
-					<td valign="top">${bbs.bbs_date }</td>
-					<td valign="top">${bbs.bbs_bHit }</td>
+				<tr id="c">					
+					<td id="f" valign="top" align="left"><a id="d"  href="detail?idx=${bbs.bbs_idx}">${bbs.bbs_subject }</a></td>
+					<td id="f" valign="top">${bbs.member_id }</td>
+					<td id="f" valign="top">${bbs.bbs_date }</td>
+					<td id="f" valign="top">${bbs.bbs_bHit }</td>
 				</tr>
 			</c:forEach>
 		</table>
