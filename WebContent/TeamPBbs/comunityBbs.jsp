@@ -98,14 +98,17 @@
 				</tr>
 			</c:forEach>
 		</table>
-		<div id="btnno">
-		<a id="aa" href="#">이전</a>
-		<a id="aa" href="">[1]</a>
-		<a id="aa" href="#">2</a>
-		<a id="aa" href="#">3</a>
-		<a id="aa" href="#">4</a>
-		<a id="aa" href="#">다음</a>
-		</div>
+		
+		<jsp:include page="paging.jsp" flush="true">
+		    <jsp:param name="firstPageNo" value="${paging.firstPageNo}" />
+		    <jsp:param name="prevPageNo" value="${paging.prevPageNo}" />
+		    <jsp:param name="startPageNo" value="${paging.startPageNo}" />
+		    <jsp:param name="pageNo" value="${paging.pageNo}" />
+		    <jsp:param name="endPageNo" value="${paging.endPageNo}" />
+		    <jsp:param name="nextPageNo" value="${paging.nextPageNo}" />
+		    <jsp:param name="finalPageNo" value="${paging.finalPageNo}" />
+		</jsp:include>
+
 		
 		<!-- 관리자는 의견나눔게시판에 글을 쓸 이유가 없어서 아이디가 'admin' 일시 버튼을 막아놓음 -->
 		<c:if test="${sessionScope.loginId != 'admin'}">

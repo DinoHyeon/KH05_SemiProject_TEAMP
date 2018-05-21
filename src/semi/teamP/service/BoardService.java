@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import semi.teamP.dao.BoardDAO;
 import semi.teamP.dto.BoardDTO;
+import semi.teamP.dto.PageDTO;
 
 public class BoardService {
 	HttpServletRequest request = null;
@@ -137,6 +138,7 @@ public class BoardService {
 			response.sendRedirect("detail?idx=" + dto.getBbs_idx());
 		}
 	}
+	
 	//의견나눔게시판 리스트 불러오기
 	public void list() throws IOException, ServletException {
 		String keyField = "";
@@ -148,14 +150,27 @@ public class BoardService {
 			 keyWord = request.getParameter("keyWord");
 			 System.out.println(keyField);
 			 System.out.println(keyWord);
-		}
+		}  
 		
+		//페이징
 		BoardDAO dao = new BoardDAO();
-		//데이터가 담긴 어레이 리스트
-		//검색값이 있을때 해당 키필드, 키워드를 넘겨준다
-		ArrayList<BoardDTO> list = dao.list(keyField, keyWord,1,10);
+		int pageNo = 0;
+		if(request.getParameter("pageNo")!=null) {
+			pageNo = Integer.parseInt(request.getParameter("pageNo"));
+			System.out.println("pageNo"+pageNo);
+		}else {
+			System.out.println("pageNo"+pageNo);
+		}
+			
+	 	PageDTO paging = new PageDTO();
+        paging.setPageNo(1);
+        paging.setPageSize(10);
+        paging.setTotalCount(dao.getTotalCount(keyField, keyWord));
+
+		ArrayList<BoardDTO> list = dao.list(keyField, keyWord,(pageNo-1)*10, pageNo*10);
 		System.out.println(list.size());
 		request.setAttribute("list",list);
+		request.setAttribute("paging",paging);
 		RequestDispatcher dis = request.getRequestDispatcher("TeamPBbs/comunityBbs.jsp");
 		dis.forward(request, response);
 	}
@@ -180,6 +195,8 @@ public class BoardService {
 		dis.forward(request, response);
 		
 	}
+	
+	
 	//그룹 리스트 불러오기(그룹장 및 그룹원)
 	public void groupList() throws ServletException, IOException {
 		String keyField = "";

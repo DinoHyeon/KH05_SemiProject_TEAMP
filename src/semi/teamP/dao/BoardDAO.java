@@ -517,4 +517,26 @@ public class BoardDAO {
 		}
 		return list;
 	}
+	
+	   public int getTotalCount(String keyField, String keyWord) {
+		      int totalRecord = 0;
+		      String sql = "";
+		      try {
+		         if(keyWord.equals(null) || keyWord.equals("")) {
+		             sql = "SELECT COUNT(bbs_idx) FROM Bbs WHERE bbs_name = 'freeBbs' ORDER BY bbs_idx DESC";
+		            ps = conn.prepareStatement(sql);
+		         }else {
+		            sql = "SELECT COUNT(bbs_idx) FROM Bbs WHERE bbs_name = 'freeBbs' AND " + keyField + " like ? ORDER BY bbs_idx DESC";
+		            ps = conn.prepareStatement(sql);
+		             ps.setString(1, "%" + keyWord + "%");
+		         }
+		         rs = ps.executeQuery();
+		         if(rs.next()) {
+		            totalRecord = (rs.getInt("COUNT(bbs_idx)"));
+		         }
+		      } catch (SQLException e) {
+		         e.printStackTrace();
+		      }
+		      return totalRecord;
+		   }
 }
