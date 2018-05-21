@@ -173,6 +173,7 @@ public class PlanDAO {
 			e.printStackTrace();
 		} finally {
 			resClose();
+			
 		}
 		return dto;
 	}
@@ -219,6 +220,26 @@ public class PlanDAO {
 			resClose();
 		}
 		return list;
+	}
+
+	public int planDelete(String detail) {
+		int success=0;
+		String sql="DELETE FROM Plan where plan_idx=?";
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, Integer.parseInt(detail));
+			success = ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} finally {
+			resClose();
+
+		}
+		System.out.println("삭제 성공 여부"+success);
+		return success;
 	}
 
 }

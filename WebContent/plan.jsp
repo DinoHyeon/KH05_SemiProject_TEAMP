@@ -32,7 +32,7 @@
 			#navithree{
 				position: absolute;
 				background-color: none;
-				left : 81%;
+				left : 91%;
 				top : 15.7%;
 				width: 35%;           
 		    }      
@@ -93,7 +93,7 @@
 		   <div id="navitwo">
 		   <div id="navithree">
 		   <button id="plusplan">일정추가 </button>
-		   <button id="changeplan"> 일정 수정,삭제</button>
+		   
 		   </div>
 		   </div>
 	   </c:if>
@@ -144,38 +144,57 @@
 	         </div>   
 	         
 	   
+	   
+			<!--  일정상세보기 -->	   
 	       <div id="Infopopup">
 	             <div class="mainPopupClose">X</div>
 	       
 	         <h2>일정 </h2>
 	         <table>
-	            <tr>
+	    
+	         	<input type="hidden" id="planIdx">
+	         	<input type="hidden" id="planFinishDate">
+	          <tr>
 	               <td>수행자</td>
-	              <td><div id="person"></div></td>   
-	            </tr>
+	           		<td><input type="text" class="edit" id="planMember" readonly></td>
+ 
+	      </tr>
 	            <tr>
-	               <td>일정기간</td>
-	               <td><span></span></td>
+	               <td>일정 시작</td>
+	               <td><input type="date" class="edit" id="planStart" readonly></td>
+	            </tr>
+         	    <tr>
+	               <td>일정 종료</td>
+	               <td><input type="date" class="edit" id="planEnd" readonly></td>
 	            </tr>
 	            <tr>
 	               <td>제목</td>
-	               <td><span></span></td>
+	               <td><input type="text" class="edit" id="planTitle" readonly></td>
 	            </tr>
 	            <tr>
 	               <td>내용</td>
 	               <td>
-	                  <textarea id="inviteMsg" rows="20" cols="50" style="resize: none"></textarea>
+	                  <textarea id="planContent" class="edit" rows="20" cols="50" style="resize: none" readonly></textarea>
 	               </td>
-	               
-	            </tr>
+	               	<tr>
+					<td>상태</td>
+					<td>
+						
+						<select id="select" name="job">
+							    <option value="준비중">준비중</option>
+							    <option value="진행중">진행중</option>
+							    <option value="완료">완료</option>
+						</select>
+					</td> 
+				</tr>
+	          
 	               <tr>
-	                  <td><input id="PlanPlusBnt" type="button" value="일정삭제"></td>
+	                  <td><input id="PlandelBnt" type="button" value="일정삭제"></td>
 	               </tr>   
-	                  <tr>
-	                  <td><input id="PlanPlusBnt" type="button" value="일정수정"></td>
-	               </tr>   
+	           
 	         </table>
-	      
+	         <div id="changeplan">일정 수정</div>
+	      <div id="PlaneditBnt">일정 등록</div>
 	         </div>            
 	   	
 	   		<div id="page">
@@ -186,34 +205,176 @@
 	   
 	</body>
 	<script>
+	var groupStartDay="";
+	var groupEndDay="";
+	var obj = {};
+	var idx;
+	obj.type = "POST";
+	obj.dataType = "JSON";
+
+	obj.error = function(e) {
+		console.log(e)
+	};
+	
 		var date = [];
 		var day = [];
 		var content = "";
 	
 		$(document).ready(function(){
-			planListCall();
+		   
+			var dt;
+			dt = new Date();
+			dt = dt.getFullYear()+"/0"+(dt.getMonth()+1) + "/" + dt.getDate();
+	         console.log("오늘날짜"+dt);
+	           
+	      $("#planFinishDate").val(dt);
+			
+	           planListCall();
 		});
 		
+		 $(document).on('click','.plan_title', function() {
+			var tr = $(this);
+			
+			var detail = tr[0].id;
+			Clicklist(detail);
+
+			$("#bg").css("display","inline")
+			$("#Infopopup").css("display","inline");
+		} )
+		
+		
+		
+ //일정 삭제
+	$("#PlandelBnt").click(function() {
+			var detail=$("#planIdx").val();
+			console.log(detail);
+			//var detail=
+			obj.url ="./planDelete";
+			obj.date = {
+				detail : detail
+			};
+			obj.success = function(data){
+				console.log("성공");
+				if(data.success>0){
+					alert("삭제에 성공하였습니다.")
+					planListCall();
+					$("#bg").css("display","none")
+					$("#Infopopup").css("display","none");
+				}else{
+					alert("삭제 실패")
+				}
+			}
+			ajaxCall(obj);	
+			})
+
+		$("#changeplan").click(function(){
+			
+		
+		$(".edit").css("border-width","1px");
+		$(".edit").attr("readonly",false);
+		
+	
+	});
+	  
+	   
+	 
+	//일정 수정 	
+	     $("#PlaneditBnt").click(function(){
+	    	 //InfoLoad();
+	    	 //$("#groupInfoStartDate").val(data.groupInfo.group_StrartDay);
+	    	//groupStartDay=new Date($("#groupInfoStartDate").val());//시작일
+			//groupEndDay=data.groupInfo.group_EndDay;//종료일
+		 
+			console.log("시작일 "+groupStartDay);
+			console.log("종료일 "+groupEndDay);
+			
+	    	 var startDay= $("#planStart").val();
+			
+	    	 var endDay =$("#planEnd").val();	
+			
+			//var groupstartDay = new Date(groupStartDay);
+			//var groupEndDay = new Date(groupEndDay);
+	
+	    	console.log("시작 설정일"+startDay);
+	    	 console.log("종료 설정일"+endDay);  
+	    	if($("#planTitle").val()=="") {
+	    		alert("제목을 입력해주세요")
+	    	}
+	    	else if(startDay>endDay){
+	    		alert("일정 시작일이 종료일보다 빠를 수 없습니다.");
+	    	}
+	    	else if(groupStartDay>startDay){
+	    		alert("일정시작일이 프로젝트 시작일보다 빠를 수 없습니다. ");
+	    	}
+	    	else if(endDay>groupEndDay){
+	    		alert("일정 종료일이 프로젝트 종료일을 초과할 수 없습니다.");
+	    	}
+	    	 
+	       	 else{
+	    	 $.ajax({ 
+	 		type : "post",
+				url : "./planChange",
+				data : {
+					planIdx : $("#planIdx").val(),
+		 		     planMember : $("#planMember").val(),
+			    	planStartDay : $("#planStart").val(),
+				    planEndDay : $("#planEnd").val(),
+					planTitle : $("#planTitle").val(),
+					planContent : $("#planContent").val(),
+					planState : $("#select option:selected").val(),
+					planFinishDate : $("#planFinishDate").val()
+				},
+				dataType : "json", 
+				success : function(data) {//인자 값은 서버에서 주는 메세지
+					if (data.success) {
+						alert("일정이 변경되었습니다.")
+						planListCall();
+						$("#bg").css("display","none")
+						$("#Infopopup").css("display","none");
+					} else {
+						alert("일정 변경을 실패했습니다.")
+					}
+				}
+			}); 
+			
+	     }
+			console.log(planIdx)
+			ajaxCall(obj);
+		}) 
+
+	
+		
+
+		 
+		 /* 일정 디테일 */
+		function Clicklist(detail){
+			obj.url="./planDetail";
+	    	obj.data = {detail:detail};
+	    	obj.success=function(data){
+				if(data.success){
+					$("#planIdx").val(data.plandetail.plan_idx);
+					$("#planMember").val(data.plandetail.member_id);
+					$("#planStart").val(data.plandetail.plan_startDay);
+					$("#planEnd").val(data.plandetail.plan_endDay);
+					$("#planTitle").val(data.plandetail.plan_title);
+					$("#planContent").val(data.plandetail.plan_content);
+				}else{
+					alert("실패");
+				}
+	    	}
+	    	ajaxCall(obj);
+		}
 		
 		function planListCall(){
 			obj.url="./planTableList";
 			obj.data={};
-			obj.success=function(data){	
+			obj.success=function(data){
 				console.log(data);
-				var nowDate = new Date();
-		        var yyyy=nowDate.getFullYear();
-		        var mm=nowDate.getMonth()+1;
-				if(mm<10){mm = "0" + mm};
-		        var dd=nowDate.getDate();
-				if(dd<10){dd = "0" + dd};	
-		        var today = yyyy+"-"+mm+"-"+dd;
-				
 				var dayNum = 0;
 				var DupleMonthNum_key=[];
 				var DupleMonthNum_value=[];
 				var DupleMonthNum;
-				
-				date = data.date;//프로젝트 기간사이에 있는 날짜 출력 'yyyy-MM-dd'
+				date = data.date;
 				day = data.day;
 				dayNum = data.day.length;
 				DupleMonthNum=DuplicatesChk(data.month);
@@ -226,7 +387,7 @@
 					DupleMonthNum_value.push(value); 
 				});
 	
-				
+
 	 			/* 테이블 생성 apeend */
 	 			content += "<tr id='title'>";
 				content += "<td  class='plan_title' rowspan='2'>일정</td>";
@@ -241,15 +402,19 @@
 				content += "</tr>";
 				content += "<tr>";
 				for(var i=0; i<day.length; i++){
-					content += "<td class='planDate' id="+date[i]+">"+day[i]+"</td>";
+					content += "<td>"+day[i]+"</td>";
 				}
 				content += "</tr>"; 
 				
+				//<td><a href="detail?idx=${bbs.bbs_idx}">${bbs.bbs_subject }</a></td>
+
+				
 				data.planList.forEach(function(item,index){
 					 content +="<tr class="+item.plan_idx+">";
-					 content +="<td class='plan_title' rowspan='2'>"+item.plan_title+"</td>";//일정
-					 content +="<td class='member_id' rowspan='2'>"+item.member_id+"</td>";//수행자
-					 content +="<td class='plan_state' rowspan='2'>"+item.plan_state+"</td>";//상태
+					// content +="<td class='plan_title' rowspan='2'><a href='planlist?idx="+item.plan_idx+"'>"+item.plan_title+"</a></td>";//일정
+					content +="<td class='plan_title' rowspan='2' id="+item.plan_idx+">"+item.plan_title+"</a></td>";//일정
+					content +="<td class='member_id' rowspan='2' id="+item.plan_idx+" vlaue="+item.member_id+">"+item.member_id+"</td>";//수행자
+					 content +="<td class='plan_state' rowspan='2' id="+item.plan_idx+">"+item.plan_state+"</td>";//상태
 					 content +="<td class='plan_startDay' id="+item.plan_startDay+" rowspan='2'>"+item.plan_startDay+"</td>";//시작일
 					 content +="<td class='plan_endDay' id="+item.plan_endDay+" rowspan='2'>"+item.plan_endDay+"</td>";//종료일
 					 content +="</tr>";
@@ -259,22 +424,8 @@
 					}
 			      });   
 				
-				
-				
 				$("#1115").empty();
 				$("#1115").append(content);
-				
-				content = "";
-				
-				/* 오늘날짜 체크 */
-				console.log($("td[class='planDate']"));
- 				for(var i=0; i<day.length; i++){
-					if($("td[class='planDate']")[i].id == today){
-						$("td[class='planDate']")[i].style.fontWeight = '900';
-						console.log("현정");
-					}
-				}
-
 				
 				
 				data.planList.forEach(function(item,index){
@@ -282,32 +433,17 @@
 					for(var j=0; j<betweenDateArr.length; j++){
 						for(var i=0; i<day.length; i++){
 							if($("td[class="+item.plan_idx+"]")[i].id==betweenDateArr[j]){
-								$("td[class="+item.plan_idx+"]")[i].style.backgroundColor = '#FFFF48';
+								$("td[class="+item.plan_idx+"]")[i].style.backgroundColor = 'yellow';
 							}
 		   				}
 						if(item.plan_state=='완료'){
 							for(var i=0; i<day.length; i++){
 								if($("td[class="+item.plan_idx+"]")[i].id==item.plan_plan_finishDate){
-									$("td[class="+item.plan_idx+"]")[i+1].style.backgroundColor = '#004D65';
-									$("td[class="+item.plan_idx+"]")[i+1].html("X");
+									$("td[class="+item.plan_idx+"]")[i].style.backgroundColor = 'red';
 								}
 			   				}
 						}
 					} 
-					
-					if(item.plan_state=='진행중'||item.plan_state=='준비중'){
-						if(compareDate(item.plan_endDay,today)=='over'){
-							var overDate = []
-							overDate = betweenDate(item.plan_endDay,today);
-							for(var i=0; i<day.length; i++){
-									for(var n=1; n<overDate.length; n++){
-										if($("td[class="+item.plan_idx+"]")[i].id==overDate[n]){
-											$("td[class="+item.plan_idx+"]")[i].style.backgroundColor = '#FF4848';
-										}
-									}
-							}
-		   				}
-					}
 	
 			    });   
 				
@@ -316,6 +452,9 @@
 					console.log($(this)[0].id)
 				});
 				 */
+				
+				
+				content="";
 			} 
 			ajaxCall(obj);
 		}
@@ -375,20 +514,7 @@
 			return betweenDate;
 		}
 		
-		//날짜비교함수
-		function compareDate(EndDay, today){
-			var result = "";
-			var EndDayArr = EndDay.split('-');
-			var todayArr = today.split('-');
-			
-			var EnddayDate = new Date(EndDayArr[0],EndDayArr[1],EndDayArr[2]);
-			var todayDate = new Date(todayArr[0],todayArr[1],todayArr[2]);
-			
-			if(EnddayDate<todayDate){
-				result = "over"
-			}
-			return result
-		}
+		
 		
 		/*  */
 		
@@ -409,12 +535,32 @@
 		      $("#Infopopup").css("display","none");
 		      $("#popupContent").css("display","none");
 		   })
+
 		   
+		   //일정 추가
 		$("#PlanPlusBnt").click(function(){
-		//    $("#PlanPlusBtn").attr("type","submit");   
-		   
-		
-		   obj.url = "./planWrite";
+			
+			 InfoLoad();
+	  		console.log("시작일 "+groupStartDay);
+	  		
+	  		 var startDay= $("#planStart").val();
+				var endDay =$("#planEnd").val();	;
+				var groupstartDay = new Date(groupStartDay);
+				
+	  	 	if($("input[name='plantitle']").val() =="") {
+	    		alert("제목을 입력해주세요")
+	    	}
+	    	else if($("input[name='startDate']").val()>$("input[name='endDate']").val()){
+	    		alert("일정 시작일이 종료일보다 빠를 수 없습니다.");
+	    	}
+	    	else if(groupStartDay>$("input[name='startDate']").val()){
+	    		alert("일정시작일이 프로젝트 시작일보다 빠를 수 없습니다. ");
+	    	}
+	    	else if($("input[name='endDate']").val()>groupEndDay){
+	    		alert("일정 종료일이 프로젝트 종료일을 초과할 수 없습니다.");
+	    	}
+	  		else{
+			obj.url = "./planWrite";
 		   obj.data={ 
 		               groupidx:groupidx,  
 		               member:$("#memberid").val(),
@@ -434,11 +580,13 @@
 		         planListCall();
 		      }
 		   }
+		   }
 		   ajaxCall(obj);
 		   
 		   
 		})
-		function InfoLoad() {
+		
+		function InfoLoad(){
 		      obj.url="./groupDetail";
 		      obj.data={};
 		      obj.data={groupIdx:groupIdx};
@@ -451,7 +599,7 @@
 		         $("#groupInfoName").val(data.groupInfo.group_name);
 		         $("#groupInfoStartDate").val(data.groupInfo.group_StrartDay);
 		         $("#groupInfoEndDate").val(data.groupInfo.group_EndDay);
-		         
+	
 		         //그룹정보
 		         $("#groupInfoInquiryMasterName").html(data.groupInfo.member_id);
 		         $("#groupInfoInquiryIdx").val(data.groupInfo.group_idx);
@@ -459,7 +607,7 @@
 		         $("#groupInfoInquiryStartDate").val(data.groupInfo.group_StrartDay);
 		         $("#groupInfoInquiryEndDate").val(data.groupInfo.group_EndDay);
 		         //그룹 멤버 리스트
-		         MemberListCall();
+		        MemberListCall();
 		         
 		      };
 		      ajaxCall(obj);
@@ -485,7 +633,7 @@
 		
 		      ajaxCall(obj);
 		   }
-		
+
 		function ajaxCall(param){
 		   $.ajax(param);
 		}
