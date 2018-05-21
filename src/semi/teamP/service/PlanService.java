@@ -49,69 +49,84 @@ public class PlanService {
 	}
 	
 
-	   public void planWrite() throws IOException, ServletException {
-		      request.setCharacterEncoding("UTF-8");
-		      PlanDTO plandto= new PlanDTO();
-		      //String groupIdx = (String) request.getSession().getAttribute("groupNum"); //로그인 아이디
-		//${sessionScope.groupNum}
-		   //   int bbsidx = Integer.parseInt(request.getParameter("cid")); // 게시글 번호 
+	public void planWrite() throws IOException, ServletException {
+	      request.setCharacterEncoding("UTF-8");
+	      PlanDTO plandto= new PlanDTO();
+	      //String groupIdx = (String) request.getSession().getAttribute("groupNum"); //로그인 아이디
+	//${sessionScope.groupNum}
+	   //   int bbsidx = Integer.parseInt(request.getParameter("cid")); // 게시글 번호 
 
-		      plandto.setGroup_idx(Integer.parseInt(request.getParameter("groupidx")));
-		      plandto.setMember_id(request.getParameter("member"));
-		      plandto.setPlan_startDay(request.getParameter("StartDay"));
-		      plandto.setPlan_endDay(request.getParameter("endDay"));
-		      plandto.setPlan_content(request.getParameter("content"));
-		      plandto.setPlan_title(request.getParameter("title"));
-		      
-		      System.out.println("일정 : "+request.getParameter("content"));
-		      System.out.println("오잉 : "+Integer.parseInt(request.getParameter("groupidx")));
+	      plandto.setGroup_idx(Integer.parseInt(request.getParameter("groupidx")));
+	      plandto.setMember_id(request.getParameter("member"));
+	      plandto.setPlan_startDay(request.getParameter("StartDay"));
+	      plandto.setPlan_endDay(request.getParameter("endDay"));
+	      plandto.setPlan_content(request.getParameter("content"));
+	      plandto.setPlan_title(request.getParameter("title"));
+	      
+	      System.out.println("일정 : "+request.getParameter("content"));
+	      System.out.println("오잉 : "+Integer.parseInt(request.getParameter("groupidx")));
 
-		     PlanDAO dao = new PlanDAO();
-		      int success = dao.planWrite(plandto);
+	     PlanDAO dao = new PlanDAO();
+	      int success = dao.planWrite(plandto);
 
-		      String page = "plan.jsp";
-		      String msg = "일정생성에 실패했습니다.";
-		      System.out.println("일정 : "+success);
+	      String page = "plan.jsp";
+	      String msg = "일정생성에 실패했습니다.";
+	      System.out.println("일정 : "+success);
 
-		      if(success != 0) {
-		      
-		         msg = "일정 생성에 성공했습니다.";
-		      }
-		      
-		      Gson json = new Gson();
-		      HashMap<String, Object> map = new HashMap<>();
-		      request.getSession().setAttribute("success",Integer.toString(success));
-		      //      ArrayList<ReplyDTO> list =dao.replylist(bbsidx);
+	      if(success != 0) {
+	      
+	         msg = "일정 생성에 성공했습니다.";
+	      }
+	      
+	      Gson json = new Gson();
+	      HashMap<String, Object> map = new HashMap<>();
+	      request.getSession().setAttribute("success",Integer.toString(success));
+	      //      ArrayList<ReplyDTO> list =dao.replylist(bbsidx);
 
-		      map.put("success", success);
-		      String obj = json.toJson(map);
-		      response.setContentType("text/html; charset=UTF-8");
-		      response.getWriter().println(obj);
-		      
-//		      request.setAttribute("msg", msg);
-//		      RequestDispatcher dis = request.getRequestDispatcher(page);
-//		      dis.forward(request, response);
-		      //int success = dao.createGroup(infoDto);
-		      
-		   }
+	      map.put("success", success);
+	      String obj = json.toJson(map);
+	      response.setContentType("text/html; charset=UTF-8");
+	      response.getWriter().println(obj);
+	      
+//	      request.setAttribute("msg", msg);
+//	      RequestDispatcher dis = request.getRequestDispatcher(page);
+//	      dis.forward(request, response);
+	      //int success = dao.createGroup(infoDto);
+	      
+	   }
 
 	public void planDetail() throws IOException {
 		String detail = request.getParameter("detail");
 		PlanDAO dao = new PlanDAO();
 		//아이디 이름 생일 이메일 휴대폰번호
 		PlanDTO dto = dao.plandetail(detail);
+		boolean success = false;
 		
+		if(dto.getPlan_idx()>0) {
+			success = true;
+		}
 		Gson json = new Gson();
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("plandetail", dto);
+		map.put("success", success);
 		String obj = json.toJson(map);
 		response.setContentType("text/html; charset=UTF-8");
 		response.getWriter().println(obj);
 	}
 		
 
-	public void planDelete() {
-		// TODO Auto-generated method stub
+	public void planDelete() throws IOException {
+		int success;
+		String detail=request.getParameter("detail");
+		System.out.println(detail);
+		PlanDAO dao = new PlanDAO();
+		success =dao.planDelete(detail);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("success", success);
+		
+		Gson json = new Gson();
+		String obj=json.toJson(map);
+		 response.getWriter().println(obj);
 		
 	}
 	//일정상세보기 수정버튼 눌렀을때 !
@@ -130,12 +145,13 @@ public class PlanService {
 		PlanDAO dao = new PlanDAO();
 		boolean success = dao.groupInfoUpdate(dto);
 		
+		
+		
 		Gson json = new Gson();
 		HashMap<String, Boolean> map = new HashMap<>();
 		map.put("success", success);
 		String obj = json.toJson(map);
 		response.getWriter().println(obj);
-		
 	}
 	
 	//WBS형식 테이블 추출
