@@ -116,7 +116,7 @@ width: 90%;
    		<!-- dto에 셋팅된 bbs_name을 사용하여 리스트돌아가기 클릭시 각각의 페이지로 분기 시키기 -->
       <td colspan="2">
 	     	 <c:if test="${info.bbs_name == 'freeBbs'}">
-	     	 	<a href ="/SemiProject_TeamP/comunityList">리스트</a>
+	     	 	<a href ="/SemiProject_TeamP/comunityList?pageNo=${pageNo}">리스트</a>
 	     	 </c:if>
 	     	 
 	     	 <c:if test="${info.bbs_name == 'adminBbs'}">

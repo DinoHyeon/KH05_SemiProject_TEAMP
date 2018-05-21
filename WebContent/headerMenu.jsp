@@ -274,7 +274,7 @@
                 	 <button class="menu" onclick="location.href ='/SemiProject_TeamP/groupList'" id="groupBbs">그룹게시판</button>
                 </c:if>
                 
-                 <button class="menu" onclick="location.href ='/SemiProject_TeamP/comunityList'" id="comunityBbs">의견나눔게시판</button>
+                 <button class="menu" onclick="location.href ='/SemiProject_TeamP/comunityList?pageNo=1'" id="comunityBbs">의견나눔게시판</button>
             </div>
         </div>
         

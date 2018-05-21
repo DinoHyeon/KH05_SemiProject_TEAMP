@@ -80,6 +80,8 @@ public class BoardService {
 	      BoardDAO dao = new BoardDAO();
 	      BoardDTO dto =  dao.detail(request.getParameter("idx"));
 	      //가져온 데이터를 request 에 담기      
+	      System.out.println("페이지번호 : "+Integer.parseInt(request.getParameter("pageNo")));
+	      request.setAttribute("pageNo", Integer.parseInt(request.getParameter("pageNo")));
 	      request.setAttribute("info", dto);
 	      
 	      /*******************************
@@ -163,7 +165,7 @@ public class BoardService {
 		}
 			
 	 	PageDTO paging = new PageDTO();
-        paging.setPageNo(1);
+        paging.setPageNo(pageNo);
         paging.setPageSize(10);
         paging.setTotalCount(dao.getTotalCount(keyField, keyWord));
 

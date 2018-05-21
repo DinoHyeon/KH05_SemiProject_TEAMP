@@ -114,7 +114,7 @@
 			<c:forEach items="${list}" var="bbs">
 				<tr id="c">				
 				
-					<td id="f" valign="top" align="left"><a id="d" href="detail?idx=${bbs.bbs_idx}">${bbs.bbs_subject } (${bbs.reply_cnt})</a></td>
+					<td valign="top" align="left"><a href="detail?idx=${bbs.bbs_idx}&pageNo=${paging.pageNo}">${bbs.bbs_subject } (${bbs.reply_cnt})</a></td>
 					<td id="f" valign="top">${bbs.member_id }</td>
 					<td id="f" valign="top">${bbs.bbs_date }</td>
 					<td id="f" valign="top">${bbs.bbs_bHit }</td>
