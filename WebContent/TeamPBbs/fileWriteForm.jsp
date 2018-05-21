@@ -42,7 +42,7 @@
    		border-collapse: collapse;
    		padding: 10 5;
    		text-align: center;
-   		margin-top: 60px;
+   		margin-top: 58px;
    		margin-left: 50px;
    		width: 95%;
    		height: 50%;
@@ -62,7 +62,7 @@
 		<input type="hidden" name="bbs_name" value="fileBbs">
    			<table id="tel">
 			   <tr>
-			      <th>작성자</th>
+			      <th width="10%">작성자</th>
 			      <td><input id="sessionId" type="text" name="member_id"  value="${sessionScope.loginId}" readonly="readonly"/></td>
 			   </tr>
 			   <tr>

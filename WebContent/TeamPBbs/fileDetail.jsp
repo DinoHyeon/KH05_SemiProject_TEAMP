@@ -15,24 +15,22 @@
 	    height: 84.1%;
 		background-color: white;
    	}
-   	table{
+   		table{
 		border: 1px solid black;
 		border-collapse: collapse;
-		padding: 5px 10px;
-		width: 500px;
-		
-	}
+	}	
+	
 	th{
 		border: 1px solid black;
 		border-collapse: collapse;
-		padding: 5px 10px;
-		width: 100px;
+		/* padding: 5px 10px;
+		width: 100px; */
 	}
 	td{
 		border: 1px solid black;
 		border-collapse: collapse;
-		padding: 5px 10px;
-		width: 400px;		
+		/* padding: 5px 10px;
+		width: 400px;	 */	
 	}
   
 	#tel{
@@ -58,6 +56,7 @@
 .textname {
 	border: none;
 	text-align: center;
+	width: 10%;
 }
 
 .input_text {
@@ -76,11 +75,22 @@
 	text-align: center;
 	border-radius: 8px;
 }
-	
-	#listtable{
-	
+#ccontent{
+resize:none;
+height: 70%;
+width: 90%;
+}
+#listtable{		
+	margin-top: 4%;   	
+	width: 80%;
+}
+	#listTable2{
+	margin-left: 4.7%;
+	width: 119%;
+	margin-top: -5%;
+}
 
-	}
+	
 </style>
 </head>
 <body>
@@ -96,9 +106,9 @@
 				<td id="bbsno">${info.bbs_idx}</td>
 			</tr>
    
-   <tr>
+   
 		<tr>
-			<th>작성자</th>
+			<th width="10%">작성자</th>
 			<td align="left">${info.member_id}</td>
 		</tr>	
 		
@@ -206,12 +216,12 @@ var commentdate = '${sessionScope.comment_date}';
 						content += "<tr id =" +item.member_id+">";
 						content += "<td><input class='textname' type='text' value="+item.member_id+" readonly></td>";
 					    content += "<td width='50%'><input class="+item.comment_idx+" value='"+item.comment_content+"' type='text'  style='border:0px; width:100%' readonly/></td>";
-				        //content +="<td><input class="+item.comment_idx+" id="+item.comment_date+"</td>";
-					    content += "<td>" + item.comment_date + "</td>";
+				        //content +="<td><input class="+item.comment_idx+" id="+item.comment_date+"</td>";					   
 						content += "<td>"
 								+ "<input class='commentup' value='수정' type='button' id="+item.comment_idx+">"
 								+ "<input class='commentdel' type='button' value='삭제' id="+item.comment_idx+">"
 								+ "</td>";
+						content += "<td>" + item.comment_date + "</td>";
 						content += "</tr>";
 					});
 //

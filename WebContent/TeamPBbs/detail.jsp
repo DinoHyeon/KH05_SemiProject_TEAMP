@@ -27,6 +27,7 @@
 	td{
 		border: 1px solid black;
 		border-collapse: collapse;
+		
 	
 	}
   
@@ -58,8 +59,8 @@
 
 #register {
 	border: none;
-   font-weight: 900;
-   color: #004C63;
+    font-weight: 900;
+    color: #004C63;
 	background-color: #FFD724;
 	z-index: 2;
 	line-height: 23px;
@@ -71,16 +72,14 @@ resize:none;
 height: 70%;
 width: 90%;
 }
-#listtable{
-		
-		margin-top: 4%;
-   		margin-left: 15%;
-	
+#listtable{		
+	margin-top: 4%;   	
 	width: 80%;
 }
 #listTable2{
-	
-
+	margin-left: 2.5%;
+	width: 119%;
+	margin-top: -5%;
 }
 </style>
 </head>
@@ -103,7 +102,7 @@ width: 90%;
 				<td id="bbsno">${info.bbs_idx}</td>
 			</tr>
    <tr>
-      <th>작성자</th>
+      <th width="10%">작성자</th>
       <td align="left">${info.member_id }</td>
    </tr>
    
@@ -161,7 +160,7 @@ width: 90%;
 				</tr>
    </table>
    <div id="listtable">
-		<table id="listTable2">	</table>
+		<table id="listTable2"></table>
 		</div>
       </div>
    </div>

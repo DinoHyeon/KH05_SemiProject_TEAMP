@@ -62,7 +62,7 @@
 		<form action="update" method="get">
 		<table id="tel">
 			<tr>
-				<th>작성자</th>
+				<th width="10%">작성자</th>
 			<td>
 				${sessionScope.loginId}
 				<input type ="hidden" name="idx" value="${dto.bbs_idx}"/>

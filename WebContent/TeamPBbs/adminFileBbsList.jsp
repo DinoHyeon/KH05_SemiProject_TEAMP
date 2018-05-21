@@ -54,17 +54,17 @@
     <h2>관리자 파일 게시판</h2>
 		<table id="tel">
 			<tr>
-				<th>제목</th>
-				<th width="10%">작성자</th>
-				<th width="10%">날짜</th>
-				<th width="10%">조회수</th>
+				<th valign="top">제목</th>
+				<th valign="top" width="10%">작성자</th>
+				<th valign="top" width="10%">날짜</th>
+				<th valign="top" width="10%">조회수</th>
 			</tr>
 			<c:forEach items="${list}" var="bbs">
 				<tr>				
-					<td align="left"><a href="fileDetail?idx=${bbs.bbs_idx}">${bbs.bbs_subject }</a></td>
-					<td>${bbs.member_id }</td>
-					<td>${bbs.bbs_date }</td>
-					<td>${bbs.bbs_bHit }</td>
+					<td valign="top" align="left"><a href="fileDetail?idx=${bbs.bbs_idx}">${bbs.bbs_subject }</a></td>
+					<td valign="top">${bbs.member_id }</td>
+					<td valign="top">${bbs.bbs_date }</td>
+					<td valign="top">${bbs.bbs_bHit }</td>
 				</tr>
 			</c:forEach>
 		</table>

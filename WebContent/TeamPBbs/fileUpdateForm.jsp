@@ -60,7 +60,7 @@
 		<form action="./fileUpdate" method="post" enctype="multipart/form-data">
 		<table id="tel">
 			<tr>
-				<th>작성자</th>
+				<th width="10%">작성자</th>
 			<td>
 				<input id="sessionId" type ="text" name="member_id" value="${sessionScope.loginId}" readonly="readonly"/>
 				<input type ="hidden" name="idx" value="${dto.bbs_idx}"/>

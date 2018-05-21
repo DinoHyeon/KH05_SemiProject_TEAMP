@@ -73,7 +73,7 @@
 		
 		<table id="tel">
 			<tr>
-				<th>작성자</th>
+				<th width="10%">작성자</th>
 				<td><input id="sessionId" type ="text" value="${sessionScope.loginId}" readonly="readonly" /></td>
 			</tr>
 			<tr>

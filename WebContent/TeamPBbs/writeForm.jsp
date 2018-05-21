@@ -26,7 +26,7 @@
 		border: 1px solid black;
 		border-collapse: collapse;
 		padding: 5px 10px;
-		width: 100px;
+		width: 10%;
 	}
 	td{
 		border: 1px solid black;
@@ -96,11 +96,11 @@
 			
 			<table id="tel">
 				<tr>
-					<th>작성자</th>
+					<th width="10%">작성자</th>
 					<td><input id="sessionId" type ="text" value="${sessionScope.loginId}" readonly="readonly" /></td>
 				</tr>
 				<tr>
-					<th>제목</th>
+					<th width="10%">제목</th>
 					<td><input type ="text" name="bbs_subject"/></td>
 				</tr>
 				<tr>
@@ -140,7 +140,7 @@
 			
 			<table id="tel">
 				<tr>
-					<th>작성자</th>
+					<th width="10%">작성자</th>
 					<td><input id="sessionId" type ="text" value="${sessionScope.loginId}" readonly="readonly" /></td>
 				</tr>
 				<tr>
