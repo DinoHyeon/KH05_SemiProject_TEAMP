@@ -90,7 +90,14 @@ width: 90%;
 	margin-top: -5%;
 }
 
-	
+#commenttd{
+text-align: center;
+width: 4.7%;
+
+}
+#commentdate{
+text-align: right;
+}	
 </style>
 </head>
 <body>
@@ -213,16 +220,17 @@ var commentdate = '${sessionScope.comment_date}';
 		obj.success = function(data) {
 			var content = "";
 				data.list.forEach(function(item, index) {
-						content += "<tr id =" +item.member_id+">";
-						content += "<td><input class='textname' type='text' value="+item.member_id+" readonly></td>";
-					    content += "<td width='50%'><input class="+item.comment_idx+" value='"+item.comment_content+"' type='text'  style='border:0px; width:100%' readonly/></td>";
-				        //content +="<td><input class="+item.comment_idx+" id="+item.comment_date+"</td>";					   
-						content += "<td>"
-								+ "<input class='commentup' value='수정' type='button' id="+item.comment_idx+">"
-								+ "<input class='commentdel' type='button' value='삭제' id="+item.comment_idx+">"
-								+ "</td>";
-						content += "<td>" + item.comment_date + "</td>";
-						content += "</tr>";
+					content += "<tr id =" +item.member_id+">";
+					content += "<td><input class='textname' type='text' value="+item.member_id+" readonly></td>";
+				    content += "<td width='70%'><input class="+item.comment_idx+" value='"+item.comment_content+"' type='text'  style='border:0px; width:100%' readonly/></td>";
+			        //content +="<td><input class="+item.comment_idx+" id="+item.comment_date+"</td>";
+				   	content += "<td id=commenttd>"
+							+ "<input class='commentup' value='✎' type='button' id="+item.comment_idx+">"
+							+ "<input class='commentdel' type='button' value='✂' id="+item.comment_idx+">"
+							+ "</td>";
+			        content += "<td id=commentdate>" + item.comment_date + "</td>";
+				
+					content += "</tr>";
 					});
 //
 			$("#listTable2").empty();
@@ -260,12 +268,12 @@ var commentdate = '${sessionScope.comment_date}';
 
 	$(document).on('click', '.commentdel', function() {
 		console.log("삭제");
-
+		var cid = $("#bbsno").text();
 		var delcomment = $(this).attr("id");
 		obj.url = "./replyDelete";
-		obj.data = {
-			delcomment : delcomment
-		};
+		obj.data = {};
+		obj.data.delcomment = delcomment;
+		obj.data.cid = cid;
 		obj.success = function(data) {
 			console.log(data);
 			if (data.success) {

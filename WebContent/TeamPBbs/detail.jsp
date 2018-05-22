@@ -31,6 +31,7 @@
 	
 	}
   
+  
 	#tel{
   	 	border: 1px solid black;
    		border-collapse: collapse;
@@ -58,6 +59,7 @@
 }
 
 #register {
+   top: 10%;
 	border: none;
     font-weight: 900;
     color: #004C63;
@@ -67,9 +69,11 @@
 	text-align: center;
 	border-radius: 8px;
 }
+
+/*댓글 등록창 */
 #ccontent{
 resize:none;
-height: 70%;
+height: 80%;
 width: 90%;
 }
 #listtable{		
@@ -80,6 +84,23 @@ width: 90%;
 	margin-left: 2.5%;
 	width: 119%;
 	margin-top: -5%;
+}
+
+/* 댓글 테이블 수정,삭제 td*/
+#commenttd{
+text-align: center;
+width: 4.7%;
+
+}
+
+/* 댓글 테이블 date td*/
+#commentdate{
+text-align: right;
+}
+
+#commentcontent{
+width: 70%;
+
 }
 </style>
 </head>
@@ -215,13 +236,13 @@ function listPrint2() {
 			data.list.forEach(function(item, index) {
 					content += "<tr id =" +item.member_id+">";
 					content += "<td><input class='textname' type='text' value="+item.member_id+" readonly></td>";
-				    content += "<td width='50%'><input class="+item.comment_idx+" value='"+item.comment_content+"' type='text'  style='border:0px; width:100%' readonly/></td>";
+				    content += "<td id=commentcontent><input class="+item.comment_idx+" value='"+item.comment_content+"' type='text'  style='border:0px; width:100%' readonly/></td>";
 			        //content +="<td><input class="+item.comment_idx+" id="+item.comment_date+"</td>";
-				   	content += "<td>"
-							+ "<input class='commentup' value='수정' type='button' id="+item.comment_idx+">"
-							+ "<input class='commentdel' type='button' value='삭제' id="+item.comment_idx+">"
+				   	content += "<td id=commenttd>"
+							+ "<input class='commentup' value='✎' type='button' id="+item.comment_idx+">"
+							+ "<input class='commentdel' type='button' value='✂' id="+item.comment_idx+">"
 							+ "</td>";
-			        content += "<td>" + item.comment_date + "</td>";
+			        content += "<td id=commentdate>" + item.comment_date + "</td>";
 				
 					content += "</tr>";
 				});
@@ -261,12 +282,12 @@ function listPrint2() {
 
 $(document).on('click', '.commentdel', function() {
 	console.log("삭제");
-
+	var cid = $("#bbsno").text();
 	var delcomment = $(this).attr("id");
 	obj.url = "./replyDelete";
-	obj.data = {
-		delcomment : delcomment
-	};
+	obj.data = {};
+	obj.data.delcomment = delcomment;
+	obj.data.cid = cid;
 	obj.success = function(data) {
 		console.log(data);
 		if (data.success>0) {

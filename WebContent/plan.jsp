@@ -276,8 +276,33 @@
 	
 	});
 	  
-	   
+			$("#changeplan").click(function(){
+				$("#planState").css("display", "none");
+				$("#select").css("display","inline");
+				$("#PlaneditBnt").css("display","inline");
+				$(".edit").css("border-width","1px");
+				$(".edit").attr("readonly",false);
+				$("#changeplan").css("display","none");
+			});
+			
+
+		 $("#changeplan").mouseenter(function(){
+		        $("#changeplan").css("background","#00455A");
+		        $("#changeplan").css("color","#FFD724")
+		        $("#changeplan").mouseleave(function(){
+		            $("#changeplan").css("background","white");
+		            $("#changeplan").css("color","black")
+		        })
+		    })    
 	 
+		     $("#PlaneditBnt").mouseenter(function(){
+	        $("#PlaneditBnt").css("background","#00455A");
+	        $("#PlaneditBnt").css("color","#FFD724")
+	        $("#PlaneditBnt").mouseleave(function(){
+	            $("#PlaneditBnt").css("background","white");
+	            $("#PlaneditBnt").css("color","black")
+	        })
+	    })     
 	//일정 수정 	
 	     $("#PlaneditBnt").click(function(){
 	    	 //InfoLoad();
@@ -331,6 +356,11 @@
 						planListCall();
 						$("#bg").css("display","none")
 						$("#Infopopup").css("display","none");
+						$("#select").css("display","none");
+						$("#changeplan").css("display","inline");
+						$("#PlaneditBnt").css("display","none");
+						$(".edit").css("border-width","0px");
+						$(".edit").attr("readonly",true);
 					} else {
 						alert("일정 변경을 실패했습니다.")
 					}

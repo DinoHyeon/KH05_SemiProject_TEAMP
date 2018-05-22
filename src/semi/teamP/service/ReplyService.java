@@ -69,9 +69,9 @@ public void replyWrite() throws IOException {
 
 		String  delcomment = request.getParameter("delcomment");
 		String loginId = (String) request.getSession().getAttribute("loginId"); //로그인 아이디
-		
+		int bbsidx = Integer.parseInt(request.getParameter("cid")); // 게시글 번호 
 		ReplyDAO dao = new ReplyDAO();
-		success = dao.replyDelete(delcomment,loginId);
+		success = dao.replyDelete(delcomment,loginId,bbsidx);
 		
 		HashMap<String, Object> map= new HashMap<String, Object>();
 	    map.put("success", success);
