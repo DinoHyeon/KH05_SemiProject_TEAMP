@@ -45,7 +45,7 @@
    		 		
    	} */
    	
-   	h2{
+   	#w{
    		margin-left: 600px;
    	}
    	#aa{
@@ -104,7 +104,7 @@
 	-->
 	
     <div id="page">
-    <h2>그룹 게시판</h2>
+    <h2 id="w">그룹 게시판</h2>
 		<table id="tel">
 			<tr bgcolor="#004D65">				
 				<th valign="top"><a id="b">제목</a></th>

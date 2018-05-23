@@ -124,7 +124,10 @@
                 border-radius: 8px;
                	display: block;
             }
-            
+            #groupInfo:hover{
+            	cursor: pointer;
+            }
+                       
             /* 그룹관리 버튼 */
            #groupManage{
                 position: absolute;
@@ -139,6 +142,9 @@
                 font-weight: 900;
                 border-radius: 8px;
                	display: block;
+            }
+            #groupManage:hover{
+            	cursor: pointer;
             }
             
             /* 팝업배경 */
@@ -184,6 +190,10 @@
 			    color: #FFD724;
 			    top: 49.5%;
 			    left: 69.2%;
+			}
+			#invite:hover{
+				cursor: pointer;
+				text-decoration: underline; 
 			}
 			
 			#groupmemberName{
@@ -240,9 +250,70 @@
 				left: 97%;
 				top: 2%;
 				display: none;
-				z-index: 6
+				z-index: 6;
+				cursor: pointer;				
 			}
-	            
+			#g{
+				color: white;
+				margin-left: 45%;
+			}
+			#groupInfoManage{
+				margin-left: 35%;
+				padding: 10 10;
+				margin-top: 5%;
+			}
+			#changeGroupInfo{
+				color: white;
+				margin-left: 45%;
+				margin-top: 1.5%;
+			}			
+			#changeGroupInfo:hover {
+				text-decoration: underline; 
+			 	cursor: pointer;       		
+			}				
+			#out{
+				color: white;
+			}
+			#out:hover{				
+				cursor: pointer;
+				background-color: gray;				
+			}
+			#groupMemberId{
+				color: white;
+			}
+			#groupDel{
+				color: white;
+				margin-left: 65%;
+				margin-top: 5%;
+			}
+			#groupDel:hover{
+				cursor: pointer;
+				text-decoration: underline;
+			}			
+			#invitetable{
+				margin-left: 35%;
+				margin-top: 10%;			
+			}
+			#inviteinput{
+				margin-left: 43%;
+			}
+			#inviteinput:hover {
+				cursor: pointer;
+			}
+			#withdrawal{
+				color: white;
+				margin-left: 67%;
+			}
+			#withdrawal:hover{
+				color: white;			
+				cursor: pointer;	
+				text-decoration: underline;			
+			}
+			#groupInfoInquiry{
+				margin-left: 35%;
+				margin-top: 5%;	
+			}			
+			   
         </style>
 </head>
 <body>
@@ -299,29 +370,24 @@
        	
        	<div id="popupContentMaster"><!-- 그룹장일 때 나오는 팝업 창 -->
 			<div class="headerPopupClose">X</div>
-			<h2>그룹 관리</h2>
+			<h2 id="g">그룹 관리</h2>
 			<table id="groupInfoManage">
 				<tr>
-					<td>그룹장 <span id="groupInfoMasterName"></span></td>
+					<td id="g">그룹장 </td>
+					<td id="g"><span id="groupInfoMasterName"></span></td>
 				</tr>
 				<tr>
-					<td>그룹명</td>
-				</tr>
+					<td id="g">그룹명</td>
+					<td id="g"><input type='hidden' id="groupInfoIdx"><input id="groupInfoName" type="text"/></td>
+				</tr>				
 				<tr>
-					<td><input type='hidden' id="groupInfoIdx"><input id="groupInfoName" type="text"/></td>
-				</tr>
-				<tr>
-					<td>프로젝트 기간 - 시작</td>
-				</tr>	
-				<tr>
+					<td id="g">프로젝트 기간 - 시작</td>
 					<td><input id="groupInfoStartDate" type="date"/></td>
-				</tr>
-				<tr>
-					<td>프로젝트 기간 - 종료</td>
-				</tr>						
-				<tr>
-					<td><input id="groupInfoEndDate" type="date"/></td>
 				</tr>					
+				<tr>
+					<td id="g">프로젝트 기간 - 종료</td>
+					<td><input id="groupInfoEndDate" type="date"/></td>
+				</tr>										
 			</table>
 			<div id="groupmemberName">그룹원</div>
 			<table id="groupMemberList">
@@ -334,53 +400,48 @@
 		<!-- 그룹 초대 팝업 -->
 		<div id="popupContentInvite">
 			<div class="headerPopupClose">X</div>
-			<h2>그룹원 초대</h2>
-			<table>
+			<h2 id="g">그룹원 초대</h2>
+			<table id="invitetable">
 				<tr>
-					<td>그룹명</td>
-					<td><span id="inviteGroupName"></span></td>
+					<td id="g">그룹명</td>
+					<td id="g"><span id="inviteGroupName"></span></td>
 				</tr>
 				<tr>
-					<td>아이디</td>
-					<td><input id="inviteMember" type="text"/>    <input type="button" onclick="inviteMemberChk()" value="중복확인"/><span id="inviteMemberChkMsg"></span></td>
+					<td id="g">아이디</td>
+					<td><input id="inviteMember" type="text"/><input type="button" onclick="inviteMemberChk()" value="중복확인"/><span id="inviteMemberChkMsg"></span></td>
 				</tr>
 				<tr>
-					<td>초대 내용</td>
+					<td id="g">초대 내용</td>
 					<td>
 						<textarea id="inviteMsg" rows="5" cols="28" style="resize: none"></textarea>
 					</td>
 				</tr>
 			</table>
-			<input type="button" value="초대" onclick="groupInvite()">
+			<input id="inviteinput" type="button" value="초대" onclick="groupInvite()">
 			<div id="groupDel">그룹 삭제</div>
 		</div>
         
         <!-- 그룹원일 때 나오는 창 -->
         <div id="popupContenMember"><!-- 그룹장일 때 나오는 팝업 창 -->
 			<div class="headerPopupClose">X</div>
-			<h2>그룹 정보</h2>
+			<h2 id="g">그룹 정보</h2>
 			<table id="groupInfoInquiry">
 				<tr>
-					<td>그룹장 <span id="groupInfoInquiryMasterName"></span></td>
+					<td id="g">그룹장</td>
+					<td id="g"><span id="groupInfoInquiryMasterName"></span></td>
 				</tr>
 				<tr>
-					<td>그룹명</td>
-				</tr>
+					<td id="g">그룹명</td>
+					<td id="g"><input type='hidden' id="groupInfoIdx"><span id="groupInfoInquiryName"></span></td>
+				</tr>			
 				<tr>
-					<td><input type='hidden' id="groupInfoIdx"><span id="groupInfoInquiryName"></span></td>
-				</tr>
-				<tr>
-					<td>프로젝트 기간 - 시작</td>
-				</tr>	
-				<tr>
+					<td id="g">프로젝트 기간 - 시작</td>
 					<td><input id="groupInfoInquiryStartDate" type="date"/></td>
-				</tr>
-				<tr>
-					<td>프로젝트 기간 - 종료</td>
-				</tr>						
-				<tr>
-					<td><input id="groupInfoInquiryEndDate" type="date"/></td>
 				</tr>					
+				<tr>
+					<td id="g">프로젝트 기간 - 종료</td>
+					<td><input id="groupInfoInquiryEndDate" type="date"/></td>
+				</tr>									
 			</table>
 			<div id="groupmemberName">그룹원</div>
 			<table id="groupInquiryMemberList">
@@ -610,6 +671,7 @@
 		if($("#popupContentMaster").css("display")!="none"){
 			$("#groupBg").css("display","none");
 			$("#popupContentMaster").css("display","none");
+			$("#popupContenMember").css("display","none");
 		}else{
 			$("#popupContentInvite").css("display","none");
 			$("#popupContentMaster").css("display","inline");
@@ -617,7 +679,8 @@
 		
 		if($("#popupContenMember").css("display")!="none"){
 			$("#groupBg").css("display","none");
-			$("#popupContentMember").css("display","none");
+			$("#popupContenMember").css("display","none");
+			$("#popupContentMaster").css("display","none");
 		}
 
 	})
@@ -706,19 +769,19 @@
 								location.href="memberInfoForm.jsp";
 								break;
 							case "notice":
-								location.href="/SemiProject_TeamP/adminList.jsp";
+								location.href="/SemiProject_TeamP/adminList";
 								break;
 							case "plan":
 								location.href="/plan.jsp";
 								break;
 							case "fileBbs":
-								location.href="/SemiProject_TeamP/fileList.jsp";
+								location.href="/SemiProject_TeamP/fileList";
 								break;
 							case "groupBbs":
-								location.href="/SemiProject_TeamP/groupBbs.jsp";
+								location.href="/SemiProject_TeamP/groupList";
 								break;	
 							case "comunityBbs":
-								location.href="/SemiProject_TeamP/comunityBbs.jsp";
+								location.href="/SemiProject_TeamP/comunityList?pageNo=1";
 								break;					
 							}
 						}

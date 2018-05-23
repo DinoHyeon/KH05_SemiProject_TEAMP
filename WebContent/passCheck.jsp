@@ -30,7 +30,7 @@
 		    height: 40%;
 		}
 	    
-	    #passChkPopup h2{
+	    #passChkPopup #q{
 	        color: #FFD724;
 	        font-weight: 500;
 	        text-align: center;
@@ -71,6 +71,9 @@
 	        line-height: 34px;
 	        font-size: 16px;
 	    }
+	    #memberPassChk:hover{
+	    	cursor: pointer;
+	    }
 	    
 	   #passCheckResultMsg{
 	        position: absolute;
@@ -90,6 +93,9 @@
 		    top: 2%;
 			z-index: 8;
 		}
+		#passChkPopupClose:hover{
+			cursor: pointer;
+		}
 	</style>
 	</head>
 	<body>
@@ -97,10 +103,10 @@
 		</div>
 		<div id="passChkPopup">
 			<div id="passChkPopupClose">X</div>
-				<h2>현재 비밀번호를 입력해주세요.</h2>
+				<h2 id="q">현재 비밀번호를 입력해주세요.</h2>
 				<table>
 					<tr>
-						<td id="passwordMsg">현재 비밀번호</td>
+						<td id="passwordMsg"></td>
 					</tr>
 					<tr>
 						<td><input type="password" id="memberPass"><span id="passCheckResultMsg"></span></td>

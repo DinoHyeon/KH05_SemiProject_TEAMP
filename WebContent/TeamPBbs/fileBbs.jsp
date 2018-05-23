@@ -48,7 +48,7 @@
    		 		
    	} */
    	
-   	h2{
+   	#w{
    		margin-left: 600px;
    	}
    	#aa{
@@ -98,7 +98,7 @@
    <%@include file="../headerMenu.jsp"%>
    <%@include file="../sideMenu.jsp"%>
     <div id="page">
-    <h2>파일 게시판</h2>
+    <h2 id="w">파일 게시판</h2>
       <table id="tel">
          <tr bgcolor="#004D65">            
             <th valign="top"><a id="b">제목</a></th>
@@ -116,14 +116,15 @@
          </c:forEach>
       </table>
       
-      <div id="btnno">
-		<a id="aa" href="#">이전</a>
-		<a id="aa" href="#">[1]</a>
-		<a id="aa" href="#">2</a>
-		<a id="aa" href="#">3</a>
-		<a id="aa" href="#">4</a>
-		<a id="aa" href="#">다음</a>
-		</div>
+      <jsp:include page="paging.jsp" flush="true">
+		    <jsp:param name="firstPageNo" value="${paging.firstPageNo}" />
+		    <jsp:param name="prevPageNo" value="${paging.prevPageNo}" />
+		    <jsp:param name="startPageNo" value="${paging.startPageNo}" />
+		    <jsp:param name="pageNo" value="${paging.pageNo}" />
+		    <jsp:param name="endPageNo" value="${paging.endPageNo}" />
+		    <jsp:param name="nextPageNo" value="${paging.nextPageNo}" />
+		    <jsp:param name="finalPageNo" value="${paging.finalPageNo}" />
+		</jsp:include>
 		
 		<button id="btn" onclick="location.href = 'TeamPBbs/fileWriteForm.jsp'">글쓰기</button>
       
