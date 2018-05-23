@@ -16,18 +16,21 @@
 		       height: 77.1%;
 		      background-color: "white";
 		      }
-		     table,td,th{
-		         border: 1px solid black;
-		         border-collapse: collapse;
-		         padding: 10 5;
-		         text-align: center;
-		      }
+		    #plusplan {
+	border-radius: 8px;
+	border: none;
+	width: 20%;
+	top: 10%;
+	height: 7%;
+	
+}
+		    
 			#navitwo{
 			    position: absolute;
 			    width: 82.5%;
 			    height: 8%;
 			    top:15%;
-			    background-color: black;
+			 background-color: #CEFBC9;
 		    }
 			#navithree{
 				position: absolute;
@@ -38,13 +41,13 @@
 		    }      
 			            
 		 	#navithree button{
-				border: none;
-				background-color: black;
-				font-size: 14px;
-				
-				padding : 3%;
-				color : white;
-				border : 1px solid black;
+border: none;
+	background-color: #566A70;
+	font-size: 14px;
+	margin: 2%;
+	padding: 2%;
+	color: white;
+	border: none;
 			}       
 			            
 		     /* 팝업 내용 */
@@ -80,9 +83,147 @@
 		      top: 2%;
 		      display: inline;
 		   }                     
-		          
+		   #planinfo{
+		   	margin-left: 26%;
+				padding: 10 10;
+				margin-top: 5%;
+		   
+		   }     
+		   
+		   #g{
+				color: white;
+				margin-left: 45%;
+			}
 		
+		  	#plusplus{
+				color: white;
+				margin-left: 47%;
+				margin-top: 1.5%;
+				position: absolute;
+                background-color: #FFD724;
+                color: #004C63;                
+                text-align: center;
+                line-height: 33px;
+                font-weight: 900;
+                border-radius: 8px;
+               	display: block;
+			}		
+		
+				  	#delp{
+				color: white;
+				margin-left: 59%;
+				margin-top: 3.5%;
+				position: absolute;
+                background-color: #FFD724;
+                color: #004C63;                
+                text-align: center;
+                line-height: 33px;
+                font-weight: 900;
+                border-radius: 8px;
+               	display: block;
+			}		
+			
+			
+			#PlanPlusBnt{
+			 background-color: #FFD724;
+                color: #004C63;
+			
+				position: absolute;
+                           
+                text-align: center;
+                line-height: 33px;
+                font-weight: 900;
+                border-radius: 8px;
+               	display: block;
+               	border: none;
+			
+			
+			
+			}
+			 #PlanPlusBnt:hover{
+            	cursor: pointer;
+            	background-color: #004C63;
+            	color: #FFD724;
+            }
+			
+			
+			#PlandelBnt{
+			
+				color: white;
+							
+				position: absolute;
+                background-color: #FFD724;
+                color: #004C63;                
+                text-align: center;
+                line-height: 33px;
+                font-weight: 900;
+                border-radius: 8px;
+               	display: block;
+               	border: none;
+			
+			}
+			
+			     #PlandelBnt:hover{
+            	cursor: pointer;
+            	background-color: #004C63;
+            	color: #FFD724;
+            }
+			
+				  	#changeplan{
+			
+				margin-left: 35%;
+				margin-top: 3.5%;
+				position: absolute;
+             background-color: #FFD724;
+                color: #004C63;            
+                text-align: center;
+                line-height: 33px;
+                font-weight: 900;
+                border-radius: 8px;
+               	display: block;
+			}		
+			
+			
+					  	#PlaneditBnt{
+				color: white;
+				margin-left: 35%;
+				margin-top: 3.5%;
+				position: absolute;
+                background-color: #FFD724;
+                color: #004C63;                
+                text-align: center;
+                line-height: 33px;
+                font-weight: 900;
+                border-radius: 8px;
+               	display: block;
+               	display: none;
+			}		
+			#planedit{
+			 	margin-left: 26%;
+				padding: 10 10;
+				margin-top: 0%;
+			
+			}
+ table,td,th{
+		         border: 1px solid #004C63;
+		         border-collapse: collapse;
+		         padding: 10 5;
+		         text-align: center;
 		         
+		      }				     
+#popupContent table td input[type='text'], input[type='date'] {
+	width: 99%;
+	height: 70%;
+	text-align: center;
+}
+
+  #Infopopup table td input[type='text']{
+  	width: 99%;
+	height: 70%;
+	text-align: center;
+  
+  }
+  
 		</style>
 	</head>
 	<body>
@@ -102,82 +243,80 @@
 	    <div id="popupContent">
 	      <div class="mainPopupClose">X</div>
 	      <form action="./planWrite" method="post">
-	      <h2>일정 정보</h2>
-	         <table>
+	      <h2 id="g">일정 정보</h2>
+	         <table id="planinfo">
 	               <tr>
-	               <td>수행자</td>
-	              <td><div id="MemberList"></div></td>   
+	               <td id ="g">수행자</td>
+	              <td id="g"><div id="MemberList"></div></td>   
 	                  
 	                  </tr>         
 	                                       
 	               <tr>
-	                  <td>일정 - 시작</td>
+	                  <td id ="g">일정 - 시작</td>
 	               
-	                  <td><input name="startDate" type="date"/></td>
+	                  <td id ="g"><input name="startDate" type="date"/></td>
 	               </tr>
 	            <tr>
-	               <td>일정 - 종료</td>
+	               <td id ="g">일정 - 종료</td>
 	               
-	                  <td><input name="endDate" type="date"/></td>
+	                  <td id ="g"><input name="endDate" type="date"/></td>
 	               </tr>      
 	            <tr>
-	               <td>제목</td>
+	               <td id ="g">제목</td>
 	               <td><input name="plantitle" type="text"/></td>
 	            </tr>
 	            <tr>
-	               <td>내용</td>
+	               <td id ="g">내용</td>
 	               <td>
 	                  <textarea id="plancontent" rows="20" cols="50" style="resize: none"></textarea>
 	               </td>
 	            </tr>
-	            
-	            <tr>
-	                  <td><input id="PlanPlusBnt" type="button" value="일정추가"></td>
-	               </tr>      
+	             
 	               
 	            
 	               
 	         </table>
-	         <div id="groupmemberName">그룹원</div>
-	         
-	      </form>
+	   
+	         <div id="plusplus"><input id="PlanPlusBnt" type="button" value="일정추가"></div>
+	         </form>
 	         </div>   
 	         
+	    
 	   
 	   
 			<!--  일정상세보기 -->	   
 	       <div id="Infopopup">
 	             <div class="mainPopupClose">X</div>
 	       
-	         <h2>일정 </h2>
-	         <table>
+	         <h2 id="g">일정 수정,삭제 </h2>
+	         <table id="planedit">
 	    
 	         	<input type="hidden" id="planIdx">
 	         	<input type="hidden" id="planFinishDate">
 	          <tr>
-	               <td>수행자</td>
-	           		<td><input type="text" class="edit" id="planMember" readonly></td>
+	               <td id="g">수행자</td>
+	           		<td id="g"><input type="text"  id="planMember" readonly></td>
  
 	      </tr>
 	            <tr>
-	               <td>일정 시작</td>
-	               <td><input type="date" class="edit" id="planStart" readonly></td>
+	               <td id="g">일정 시작</td>
+	               <td id="g"><input type="date" class="edit" id="planStart" readonly></td>
 	            </tr>
          	    <tr>
-	               <td>일정 종료</td>
-	               <td><input type="date" class="edit" id="planEnd" readonly></td>
+	               <td id="g">일정 종료</td>
+	               <td id="g"><input type="date" class="edit" id="planEnd" readonly></td>
 	            </tr>
 	            <tr>
-	               <td>제목</td>
-	               <td><input type="text" class="edit" id="planTitle" readonly></td>
+	               <td id="g">제목</td>
+	               <td id="g"><input type="text" class="edit" id="planTitle" readonly></td>
 	            </tr>
 	            <tr>
-	               <td>내용</td>
-	               <td>
+	               <td id="g">내용</td>
+	               <td >
 	                  <textarea id="planContent" class="edit" rows="20" cols="50" style="resize: none" readonly></textarea>
 	               </td>
 	               	<tr>
-					<td>상태</td>
+					<td id="g">상태</td>
 					<td>
 						
 						<select id="select" name="job">
@@ -189,10 +328,11 @@
 				</tr>
 	          
 	               <tr>
-	                  <td><input id="PlandelBnt" type="button" value="일정삭제"></td>
+
 	               </tr>   
 	           
 	         </table>
+	         <div id="delp"><input id="PlandelBnt" type="button" value="일정 삭제"></div>
 	         <div id="changeplan">일정 수정</div>
 	      <div id="PlaneditBnt">일정 등록</div>
 	         </div>            
@@ -242,6 +382,39 @@
 			$("#Infopopup").css("display","inline");
 		} )
 		
+		 $(document).on('click','.member_id', function() {
+			var tr = $(this);
+			
+			var detail = tr[0].id;
+			Clicklist(detail);
+
+			$("#bg").css("display","inline")
+			$("#Infopopup").css("display","inline");
+		} )
+		
+			 $(document).on('click','.plan_state', function() {
+			var tr = $(this);
+			
+			var detail = tr[0].id;
+			Clicklist(detail);
+
+			$("#bg").css("display","inline")
+			$("#Infopopup").css("display","inline");
+		} )
+		
+				 $(document).on('click','.plan_state', function() {
+			var tr = $(this);
+			
+			var detail = tr[0].id;
+			Clicklist(detail);
+
+			$("#bg").css("display","inline")
+			$("#Infopopup").css("display","inline");
+		} )
+		
+		
+		
+		
 		
 		
  //일정 삭제
@@ -286,23 +459,7 @@
 			});
 			
 
-		 $("#changeplan").mouseenter(function(){
-		        $("#changeplan").css("background","#00455A");
-		        $("#changeplan").css("color","#FFD724")
-		        $("#changeplan").mouseleave(function(){
-		            $("#changeplan").css("background","white");
-		            $("#changeplan").css("color","black")
-		        })
-		    })    
-	 
-		     $("#PlaneditBnt").mouseenter(function(){
-	        $("#PlaneditBnt").css("background","#00455A");
-	        $("#PlaneditBnt").css("color","#FFD724")
-	        $("#PlaneditBnt").mouseleave(function(){
-	            $("#PlaneditBnt").css("background","white");
-	            $("#PlaneditBnt").css("color","black")
-	        })
-	    })     
+
 	//일정 수정 	
 	     $("#PlaneditBnt").click(function(){
 	    	 //InfoLoad();
@@ -566,7 +723,21 @@
 		      $("#popupContent").css("display","none");
 		   })
 
-		   
+		  //닫기
+	$(".mainPopupClose").click(function() {
+		if($("#popupContent").css("display")!="none"){
+			$("#groupBg").css("display","none");
+			$("#popupContent").css("display","none");
+			//$("#popupContenMember").css("display","none");
+		}
+		
+		if($("#Infopopup").css("display")!="none"){
+			$("#groupBg").css("display","none");
+		
+			$("#Infopopup").css("display","none");
+		}
+
+	}) 
 		   //일정 추가
 		$("#PlanPlusBnt").click(function(){
 			
@@ -605,6 +776,8 @@
 		   if(data.success>0){
 		         alert("일정 추가성공");
 		         planListCall();
+		         $("#popupContent").css("display","none");
+
 		      }else{
 		         alert("일정 추가실패");
 		         planListCall();
