@@ -40,7 +40,7 @@
    	
   
    	
-   	h2{
+   	#w{
    		margin-left: 600px;
    	}
    	#aa{
@@ -96,7 +96,7 @@
 	
     <div id="page">
     <c:if test="${sessionScope.loginId != 'admin' }">
-   		 <h2>의견 나눔 게시판</h2>
+   		 <h2 id="w">의견 나눔 게시판</h2>
    	 </c:if>
    	 <c:if test="${sessionScope.loginId == 'admin' }">
    		 <h2>관리자 의견 나눔 게시판</h2>
