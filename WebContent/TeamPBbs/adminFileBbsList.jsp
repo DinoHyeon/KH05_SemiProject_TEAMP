@@ -79,7 +79,7 @@
     <h2 id="w">관리자 파일 게시판</h2>
 		<table id="tel">
 			<tr bgcolor="#004D65">
-				<th valign="top"><a id="b">제목</a></th>
+				<th valign="top" height="10%"><a id="b">제목</a></th>
 				<th valign="top" width="10%"><a id="b">작성자</a></th>
 				<th valign="top" width="10%"><a id="b">날짜</a></th>
 				<th valign="top" width="10%"><a id="b">조회수</a></th>

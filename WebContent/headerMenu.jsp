@@ -37,6 +37,7 @@
                 width: 45%;
             }
             
+            
             #navi button{
                 border: none;
                 background-color:white;
@@ -286,6 +287,7 @@
 			}				
 			#out{
 				color: white;
+				text-align: center;
 			}
 			#out:hover{				
 				cursor: pointer;
@@ -295,13 +297,21 @@
 				color: white;
 			}
 			#groupDel{
-				color: white;
+				position: absolute;
+                background-color: #FFD724;
+                color: #004C63;                
+                text-align: center;                
+                font-weight: 900;
+                border-radius: 8px;
+               	display: block;
 				margin-left: 65%;
 				margin-top: 5%;
 			}
 			#groupDel:hover{
 				cursor: pointer;
-				text-decoration: underline;
+				text-decoration: none;
+				color: #FFD724;
+				background-color: #004D65;
 			}			
 			#invitetable{
 				margin-left: 20%;
@@ -316,11 +326,20 @@
 			#withdrawal{
 				color: white;
 				margin-left: 67%;
+				position: absolute;
+                background-color: #FFD724;
+                color: #004C63;                
+                text-align: center;                
+                font-weight: 900;
+                border-radius: 8px;
+               	display: block;
 			}
 			#withdrawal:hover{
 				color: white;			
 				cursor: pointer;	
-				text-decoration: underline;			
+				text-decoration: none;
+				color: #FFD724;
+				background-color: #004C63;
 			}
 			#groupInfoInquiry{
 				margin-left: 35%;
@@ -329,7 +348,12 @@
 			#g1{
 				color: white;
 				margin-left: 40%;		
-			}		
+			}				
+			#navi>button:hover{
+				background-color: #F6F6F6;
+				cursor: pointer;
+			}
+			
 			   
         </style>
 </head>
@@ -789,7 +813,7 @@
 								location.href="/SemiProject_TeamP/adminList";
 								break;
 							case "plan":
-								location.href="/plan.jsp";
+								location.href="/SemiProject_TeamP/plan.jsp";
 								break;
 							case "fileBbs":
 								location.href="/SemiProject_TeamP/fileList";
