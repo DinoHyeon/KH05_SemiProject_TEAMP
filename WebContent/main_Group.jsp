@@ -151,6 +151,14 @@
 
 .plandetail{
 cursor:pointer;
+	background-color: #FFD724;
+	line-height: 26px;
+	border-radius: 8px;
+	font-size:16px;
+	text-align: center;
+	z-index: 2;
+	color: #004C63;
+border:none;
 }
 
 #todayPlanDetail {
@@ -164,8 +172,11 @@ cursor:pointer;
 
 #detailTable {
 	font-family: 'Roboto';
-	width: 300px;
-	height: 250px;
+	width: 76%;
+	height: 39%;
+	margin-left: 3%;
+	font-size: 17px;
+	font-weight: 1000;
 }
 
 input[type='text'] {
@@ -174,9 +185,10 @@ input[type='text'] {
 }
 #changeplan{
 cursor: pointer;
+
 position: absolute;
-	left: 10%;
-	top:50%;
+	left:85%;
+	top:52%;
 	background-color: #FFD724;
 	line-height: 26px;
 	border-radius: 8px;
@@ -185,14 +197,14 @@ position: absolute;
 	z-index: 2;
 	color: #004C63;
 	border: none;
-	font-weight: 900;
+
 }
 #changesuc{
 	cursor: pointer;
-	display:none;
-	position: absolute;
-	left: 10%;
-	top:50%;
+
+position: absolute;
+	left:3%;
+	top:52%;
 	background-color: #FFD724;
 	line-height: 26px;
 	border-radius: 8px;
@@ -202,9 +214,12 @@ position: absolute;
 	color: #004C63;
 	border: none;
 	font-weight: 900;
-
 }
 
+#h3{
+margin-left: 3%;
+
+}
 
 /*댓글 수정 버튼 */
 .commentup{
@@ -373,13 +388,13 @@ function ajaxCall(param){
 		</div>
 		<div id="sectionDivisionLine"></div>
 		<div id="todayPlanDetail">
-			<h3>   세부일정    </h3>
+			<h2 id ="h3">  세부일정   </h2>
 			<table id="detailTable">
 				<input type="hidden" id="planIdx">
 				<input type="hidden" id="planFinishDate">
 				<tr>
 					<td>수행자</td>
-					<td><input type="text" maxlength="15" class="edit" id="planMember" readonly
+					<td width="10%"><input type="text" maxlength="15" class="edit" id="planMember" readonly
 						value=${dto.member_id}></td>
 				</tr>
 				<tr>

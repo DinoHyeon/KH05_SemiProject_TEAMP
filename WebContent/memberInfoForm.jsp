@@ -34,7 +34,7 @@
 	        color: #004D65;
 	        font-weight: 900;
 	        left: 46.2%;
-	        top: 7.55%;
+	        top: 2.3%;
 	    }
 	    
 	    #myInfoSection table{
@@ -43,6 +43,8 @@
 	        top: 19%;
 	        height: 52%;
 	        width: 33%;
+	        font-size: 19px;
+	        font-weight: 1000;
 	    }
 	    
 	    #myInfoSection table td{
@@ -185,7 +187,7 @@ box-shadow: 0 10px 10px 2px rgba(0,0,0,0.3);
 	       
     <div id="container">
     <i class="pin"></i>
- 
+ 			<h1>[ MYINFO ]</h1>
     
 			<table>
 			

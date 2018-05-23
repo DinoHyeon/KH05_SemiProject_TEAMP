@@ -93,7 +93,7 @@
 
 #g {
 	color: white;
-	margin-left: 45%;
+	margin-left: 42%;
 }
 
 #plusplus {
@@ -169,7 +169,7 @@
 	color: #004C63;
 	text-align: center;
 	line-height: 33px;
-	font-weight: 900;
+	
 	border-radius: 8px;
 	display: block;
 }
@@ -183,7 +183,7 @@
 	color: #004C63;
 	text-align: center;
 	line-height: 33px;
-	font-weight: 900;
+
 	border-radius: 8px;
 	display: block;
 	display: none;
@@ -245,7 +245,7 @@ table, td, th {
 	<div id="popupContent">
 		<div class="mainPopupClose">X</div>
 		<form action="./planWrite" method="post">
-			<h2 id="g">일정 정보</h2>
+			<h2 id="g">[ 일정 정보 ]</h2>
 			<table id="planinfo">
 				<tr>
 					<td id="g">수행자</td>
@@ -292,7 +292,7 @@ table, td, th {
 	<div id="Infopopup">
 		<div class="mainPopupClose">X</div>
 
-		<h2 id="g">일정 수정,삭제</h2>
+		<h2 id="g">[ 일정 수정,삭제 ]</h2>
 		<table id="planedit">
 
 			<input type="hidden" id="planIdx">
