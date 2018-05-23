@@ -260,15 +260,19 @@ var commentdate = '${sessionScope.comment_date}';
 
 	$(document).on('click', '.commentdel', function() {
 		console.log("삭제");
+	
+		var cid = $("#bbsno").text();
 
 		var delcomment = $(this).attr("id");
 		obj.url = "./replyDelete";
-		obj.data = {
-			delcomment : delcomment
-		};
+		obj.data = {	};
+		
+		obj.data = {};
+		obj.data.delcomment = delcomment;
+		obj.data.cid = cid;
 		obj.success = function(data) {
 			console.log(data);
-			if (data.success) {
+			if (data.success>0) {
 				alert("삭제에 성공하였습니다.")
 				listPrint2();
 			} else {

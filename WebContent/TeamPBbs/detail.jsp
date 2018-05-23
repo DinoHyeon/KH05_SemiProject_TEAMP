@@ -268,12 +268,15 @@ function listPrint2() {
 
 $(document).on('click', '.commentdel', function() {
 	console.log("삭제");
+	var cid = $("#bbsno").text();
 
 	var delcomment = $(this).attr("id");
 	obj.url = "./replyDelete";
-	obj.data = {
-		delcomment : delcomment
-	};
+	obj.data = {	};
+	
+	obj.data = {};
+	obj.data.delcomment = delcomment;
+	obj.data.cid = cid;
 	obj.success = function(data) {
 		console.log(data);
 		if (data.success>0) {
