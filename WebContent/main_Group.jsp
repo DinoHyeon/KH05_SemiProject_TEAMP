@@ -18,7 +18,7 @@
 
 #page #calender {
 	position: absolute;
-	top: 6.5%;
+	top: 2%;
 	left: 1%;
 	width: 50%;
 	height: 60%;
@@ -134,10 +134,23 @@
 }
 
 #todayPlan {
-	height: 450px;
-	width: 265px;
-	overflow: auto;
+	position: absolute;
+	top: 73%;
+    left: 0.6%;
+    width: 50%;
+    height: 25%;
 	
+}
+#PlanTable{
+	top:5%;
+	position:absolute;
+	width:99%;
+	font-weight: verdana;
+}
+
+
+.plandetail{
+cursor:pointer;
 }
 
 #todayPlanDetail {
@@ -148,17 +161,9 @@
 	display: none;
 }
 
-#changesuc {
-	display: none;
-}
-
-#changeplan {
-	left: 45%;
-	width: 70px;
-	height: 30px;
-}
 
 #detailTable {
+	font-family: 'Roboto';
 	width: 300px;
 	height: 250px;
 }
@@ -166,6 +171,38 @@
 input[type='text'] {
 	width: 100%;
 	border-width: 0;
+}
+#changeplan{
+cursor: pointer;
+position: absolute;
+	left: 10%;
+	top:50%;
+	background-color: #FFD724;
+	line-height: 26px;
+	border-radius: 8px;
+	font-size:16px;
+	text-align: center;
+	z-index: 2;
+	color: #004C63;
+	border: none;
+	font-weight: 900;
+}
+#changesuc{
+	cursor: pointer;
+	display:none;
+	position: absolute;
+	left: 10%;
+	top:50%;
+	background-color: #FFD724;
+	line-height: 26px;
+	border-radius: 8px;
+	font-size:16px;
+	text-align: center;
+	z-index: 2;
+	color: #004C63;
+	border: none;
+	font-weight: 900;
+
 }
 
 
@@ -420,28 +457,19 @@ var groupidx = '${sessionScope.groupNum}';
 	$("#changeplan").click(function(){
 		$("#planState").css("display", "none");
 		$("#select").css("display","inline");
+		$("#select").css("border","1px solid #004c63")
 		$("#changesuc").css("display","inline");
-		$(".edit").css("border-width","1px");
+		$(".edit").css("border","1px solid #004C63");
 		$(".edit").attr("readonly",false);
 		$("#changeplan").css("display","none");
 	});
-	
-	$("#changesuc").click(function(){
-		/* $("#planState").css("display", "inline");
-		$("#select").css("display","none");
-		$("#changeplan").css("display","inline");
-		$("#changesuc").css("display","none");
-		$(".edit").css("border-width","0px");
-		$(".edit").attr("readonly",true); */
-	});
-	
-	
+
 	
 	 $("#changeplan").mouseenter(function(){
 	        $("#changeplan").css("background","#00455A");
 	        $("#changeplan").css("color","#FFD724")
 	        $("#changeplan").mouseleave(function(){
-	            $("#changeplan").css("background","white");
+	            $("#changeplan").css("background","#FFD724");
 	            $("#changeplan").css("color","black")
 	        })
 	    })    
@@ -449,7 +477,7 @@ var groupidx = '${sessionScope.groupNum}';
 	        $("#changesuc").css("background","#00455A");
 	        $("#changesuc").css("color","#FFD724")
 	        $("#changesuc").mouseleave(function(){
-	            $("#changesuc").css("background","white");
+	            $("#changesuc").css("background","#FFD724");
 	            $("#changesuc").css("color","black")
 	        })
 	    })    
