@@ -86,7 +86,7 @@
 			
 			<tr>
 				<td colspan="2">
-					<a href="./fileDetail?idx=${dto.bbs_idx}">취소</a>
+					<a href="./fileDetail?idx=${dto.bbs_idx}&pageNo=${sessionScope.pageNo}">취소</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<button>저장</button>
 				</td>

@@ -31,7 +31,6 @@
 	
 	}
   
-  
 	#tel{
   	 	border: 1px solid black;
    		border-collapse: collapse;
@@ -59,7 +58,6 @@
 }
 
 #register {
-   top: 10%;
 	border: none;
     font-weight: 900;
     color: #004C63;
@@ -69,11 +67,9 @@
 	text-align: center;
 	border-radius: 8px;
 }
-
-/*댓글 등록창 */
 #ccontent{
 resize:none;
-height: 80%;
+height: 70%;
 width: 90%;
 }
 #listtable{		
@@ -84,23 +80,6 @@ width: 90%;
 	margin-left: 2.5%;
 	width: 119%;
 	margin-top: -5%;
-}
-
-/* 댓글 테이블 수정,삭제 td*/
-#commenttd{
-text-align: center;
-width: 4.7%;
-
-}
-
-/* 댓글 테이블 date td*/
-#commentdate{
-text-align: right;
-}
-
-#commentcontent{
-width: 70%;
-
 }
 </style>
 </head>
@@ -137,19 +116,19 @@ width: 70%;
    		<!-- dto에 셋팅된 bbs_name을 사용하여 리스트돌아가기 클릭시 각각의 페이지로 분기 시키기 -->
       <td colspan="2">
 	     	 <c:if test="${info.bbs_name == 'freeBbs'}">
-	     	 	<a href ="/SemiProject_TeamP/comunityList?pageNo=${pageNo}">리스트</a>
+	     	 	<a href ="/SemiProject_TeamP/comunityList?pageNo=${sessionScope.pageNo}">리스트</a>
 	     	 </c:if>
 	     	 
 	     	 <c:if test="${info.bbs_name == 'adminBbs'}">
-	     	 	<a href ="/SemiProject_TeamP/adminList">리스트</a>
+	     	 	<a href ="/SemiProject_TeamP/adminList?pageNo=${sessionScope.pageNo}">리스트</a>
 	     	 </c:if>
 	     	 
 	     	 <c:if test="${sessionScope.loginId != 'admin' && info.bbs_name == 'groupBbs'}">
-	     	 	<a href ="/SemiProject_TeamP/groupList">리스트</a>
+	     	 	<a href ="/SemiProject_TeamP/groupList?pageNo=${sessionScope.pageNo}">리스트</a>
 	     	 </c:if> 
 	     	 
 	     	 <c:if test="${sessionScope.loginId == 'admin' && info.bbs_name == 'groupBbs'}">
-	     	 	<a href ="/SemiProject_TeamP/adminGroupBbsList">리스트</a>
+	     	 	<a href ="/SemiProject_TeamP/adminGroupBbsList?pageNo=${sessionScope.pageNo}">리스트</a>
 	     	 </c:if> 
 	     	 
 	         &nbsp;&nbsp;&nbsp;&nbsp;
@@ -166,10 +145,17 @@ width: 70%;
 	         <c:if test="${(sessionScope.loginId == info.member_id || sessionScope.loginId == 'admin') && info.bbs_name == 'freeBbs'}">  
 	        	 <a href="./comunityBbsDelete?idx=${info.bbs_idx}">삭제</a>
 	  		 </c:if>
+	  		 
 			<!-- 관리자와 로그인한유저(그룹장)만 그룹게시판 삭제 가능-->
 			 <c:if test="${(sessionScope.loginId == info.member_id || sessionScope.loginId == 'admin') && info.bbs_name == 'groupBbs'}">  
 	        	 <a href="./groupBbsDelete?idx=${info.bbs_idx}">삭제</a>
 	  		 </c:if>
+	  		 
+	  		 <!-- 관리자만 공지사항게시판 삭제 가능-->
+			 <c:if test="${sessionScope.loginId == 'admin' && info.bbs_name == 'adminBbs'}">  
+	        	 <a href="./adminList?idx=${info.bbs_idx}&pageNo=${sessionScope.pageNo}">삭제</a>
+	  		 </c:if>
+	  		 
       </td>
    </tr>
    <tr>
@@ -236,13 +222,13 @@ function listPrint2() {
 			data.list.forEach(function(item, index) {
 					content += "<tr id =" +item.member_id+">";
 					content += "<td><input class='textname' type='text' value="+item.member_id+" readonly></td>";
-				    content += "<td id=commentcontent><input class="+item.comment_idx+" value='"+item.comment_content+"' type='text'  style='border:0px; width:100%' readonly/></td>";
+				    content += "<td width='50%'><input class="+item.comment_idx+" value='"+item.comment_content+"' type='text'  style='border:0px; width:100%' readonly/></td>";
 			        //content +="<td><input class="+item.comment_idx+" id="+item.comment_date+"</td>";
-				   	content += "<td id=commenttd>"
-							+ "<input class='commentup' value='✎' type='button' id="+item.comment_idx+">"
-							+ "<input class='commentdel' type='button' value='✂' id="+item.comment_idx+">"
+				   	content += "<td>"
+							+ "<input class='commentup' value='수정' type='button' id="+item.comment_idx+">"
+							+ "<input class='commentdel' type='button' value='삭제' id="+item.comment_idx+">"
 							+ "</td>";
-			        content += "<td id=commentdate>" + item.comment_date + "</td>";
+			        content += "<td>" + item.comment_date + "</td>";
 				
 					content += "</tr>";
 				});
@@ -282,12 +268,12 @@ function listPrint2() {
 
 $(document).on('click', '.commentdel', function() {
 	console.log("삭제");
-	var cid = $("#bbsno").text();
+
 	var delcomment = $(this).attr("id");
 	obj.url = "./replyDelete";
-	obj.data = {};
-	obj.data.delcomment = delcomment;
-	obj.data.cid = cid;
+	obj.data = {
+		delcomment : delcomment
+	};
 	obj.success = function(data) {
 		console.log(data);
 		if (data.success>0) {

@@ -322,27 +322,27 @@
 	 <div id="header">
 	 		<div id="TeamPTitle">TeamP</div>
             <div id="navi">
-           		 <button class="menu" id="main">메인</button>
+           		<button class="menu" id="main">메인</button>
                 <button class="menu" onclick="location.href='memberInfoForm.jsp'" id="myInfo">내정보</button>
-                <button class="menu" onclick="location.href='/SemiProject_TeamP/adminList'" id="notice">공지사항</button>
+                <button class="menu" onclick="location.href='/SemiProject_TeamP/adminList?pageNo=1'" id="notice">공지사항</button>
                 <button class="menu" onclick="location.href='plan.jsp'" id="plan">일정</button>
                 
                  <c:if test = "${sessionScope.loginId == 'admin' }">
-                	<button class="menu" onclick="location.href ='/SemiProject_TeamP/adminFileBbsList'" id="fileBbs">파일게시판</button>
+                   <button class="menu" onclick="location.href ='/SemiProject_TeamP/adminFileBbsList?pageNo=1'" id="fileBbs">파일게시판</button>
                 </c:if>
                 
                 <c:if test = "${sessionScope.loginId != 'admin'}">
-                	<button class="menu" onclick="location.href ='/SemiProject_TeamP/fileList'" id="fileBbs">파일게시판</button>
+                   <button class="menu" onclick="location.href ='/SemiProject_TeamP/fileList?pageNo=1'" id="fileBbs">파일게시판</button>
                 </c:if>
                 
                  <!-- 관리자 로그인시 adminGroupList로 분기시켜 모든 그룹의 글 보기 및 삭제 가능 하게 하기-->
                 <c:if test="${sessionScope.loginId == 'admin'}">
-                	 <button class="menu" onclick="location.href ='/SemiProject_TeamP/adminGroupBbsList'" id="groupBbs">그룹게시판</button>
+                    <button class="menu" onclick="location.href ='/SemiProject_TeamP/adminGroupBbsList?pageNo=1'" id="groupBbs">그룹게시판</button>
                 </c:if>
                 
                 <!-- 관리자가 아니면(그룹장 및 그룹원) 자신이 속한 그룹의 글들만 조회 가능 -->
                 <c:if test="${sessionScope.loginId != 'admin'}">
-                	 <button class="menu" onclick="location.href ='/SemiProject_TeamP/groupList'" id="groupBbs">그룹게시판</button>
+                    <button class="menu" onclick="location.href ='/SemiProject_TeamP/groupList?pageNo=1'" id="groupBbs">그룹게시판</button>
                 </c:if>
                 
                  <button class="menu" onclick="location.href ='/SemiProject_TeamP/comunityList?pageNo=1'" id="comunityBbs">의견나눔게시판</button>
@@ -781,7 +781,7 @@
 								location.href="/SemiProject_TeamP/groupList";
 								break;	
 							case "comunityBbs":
-								location.href="/SemiProject_TeamP/comunityList?pageNo=1";
+								location.href="/SemiProject_TeamP/comunityList?";
 								break;					
 							}
 						}

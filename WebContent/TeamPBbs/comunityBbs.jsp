@@ -122,7 +122,7 @@
 			</c:forEach>
 		</table>
 		
-		<jsp:include page="paging.jsp" flush="true">
+		<jsp:include page="paging/paging.jsp" flush="true">
 		    <jsp:param name="firstPageNo" value="${paging.firstPageNo}" />
 		    <jsp:param name="prevPageNo" value="${paging.prevPageNo}" />
 		    <jsp:param name="startPageNo" value="${paging.startPageNo}" />

@@ -104,7 +104,7 @@
 			</tr>
 			<c:forEach items="${list}" var="bbs">
 				<tr id="c">					
-					<td id="f" valign="top" align="left"><a id="d"  href="detail?idx=${bbs.bbs_idx}">${bbs.bbs_subject }</a></td>
+					<td id="f" valign="top" align="left"><a id="d" href="detail?idx=${bbs.bbs_idx}&pageNo=${paging.pageNo}">${bbs.bbs_subject } (${bbs.reply_cnt})</a></td>
 					<td id="f" valign="top">${bbs.member_id }</td>
 					<td id="f" valign="top">${bbs.bbs_date }</td>
 					<td id="f" valign="top">${bbs.bbs_bHit }</td>
@@ -112,13 +112,16 @@
 			</c:forEach>
 		</table>
 		
-		<div id="btnno">
-		<a id="aa" href="#">이전</a>
-		<a id="aa" href="#">[1]</a>
-		<a id="aa" href="#">2</a>
-		<a id="aa" href="#">3</a>
-		<a id="aa" href="#">4</a>
-		<a id="aa" href="#">다음</a>
+		<jsp:include page="paging/adminGroupBbsPaging.jsp" flush="true">
+		    <jsp:param name="firstPageNo" value="${paging.firstPageNo}" />
+		    <jsp:param name="prevPageNo" value="${paging.prevPageNo}" />
+		    <jsp:param name="startPageNo" value="${paging.startPageNo}" />
+		    <jsp:param name="pageNo" value="${paging.pageNo}" />
+		    <jsp:param name="endPageNo" value="${paging.endPageNo}" />
+		    <jsp:param name="nextPageNo" value="${paging.nextPageNo}" />
+		    <jsp:param name="finalPageNo" value="${paging.finalPageNo}" />
+		</jsp:include>
+		
 		</div>
 		
 		<form action="./adminGroupBbsList" method="get">

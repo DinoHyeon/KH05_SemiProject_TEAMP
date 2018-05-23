@@ -45,7 +45,7 @@
    		 		
    	} */
    	
-   	w{
+   	#w{
    		margin-left: 600px;
    	}
    	#aa{
@@ -115,7 +115,7 @@
 			<!-- 셋팅된 dto값을 테이블에 뿌려준다 -->
 			<c:forEach items="${list}" var="bbs">
 				<tr id="c">					
-					<td id="f" valign="top" align="left"><a id="d" href="detail?idx=${bbs.bbs_idx}">${bbs.bbs_subject }</a></td>
+					<td id="f" valign="top" align="left"><a id="d" href="detail?idx=${bbs.bbs_idx}&pageNo=${paging.pageNo}">${bbs.bbs_subject } (${bbs.reply_cnt})</a></td>
 					<td id="f" valign="top">${bbs.member_id }</td>
 					<td id="f" valign="top">${bbs.bbs_date }</td>
 					<td id="f" valign="top">${bbs.bbs_bHit }</td>
@@ -123,7 +123,7 @@
 			</c:forEach>
 		</table>
 		
-		<jsp:include page="paging.jsp" flush="true">
+		<jsp:include page="paging/adminPaging.jsp" flush="true">
 		    <jsp:param name="firstPageNo" value="${paging.firstPageNo}" />
 		    <jsp:param name="prevPageNo" value="${paging.prevPageNo}" />
 		    <jsp:param name="startPageNo" value="${paging.startPageNo}" />
