@@ -46,6 +46,9 @@
 		line-height: 30px;
 		border-radius: 8px;
 	}
+	#logout:hover{
+		cursor: pointer;
+	}
 	
 	#userName {
 		position: absolute;

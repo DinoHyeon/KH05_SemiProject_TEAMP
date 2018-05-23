@@ -41,6 +41,9 @@
         font-weight: 600;
         color: #004D65;
     }
+    #join:hover{
+    	cursor: pointer;
+    }
     
     #login{
         position: absolute;
@@ -55,6 +58,9 @@
         text-align: center;
         line-height: 40px;
         top: 58%;
+    }
+    #login:hover{
+    	cursor: pointer;
     }
     
     #findIdPw{
@@ -71,6 +77,9 @@
         line-height: 37px;
         top: 65%;
     }
+     #findIdPw:hover{
+     	cursor: pointer;
+     }
     
     #title{
     position: absolute;

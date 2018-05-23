@@ -145,6 +145,8 @@
             }
             #groupManage:hover{
             	cursor: pointer;
+            	background-color: #004C63;
+            	color: #FFD724;
             }
             
             /* 팝업배경 */
@@ -235,9 +237,9 @@
 			    display: none;
 			    z-index: 5;
 			    top: 13%;
-			    left: 18%;
-			    width: 60%;
-			    height: 75%;
+			    left: 30%;
+			    width: 35%;
+			    height: 45%;
 			    background-color: #004C63;
 			}
 			
@@ -261,15 +263,26 @@
 				margin-left: 35%;
 				padding: 10 10;
 				margin-top: 5%;
+				
 			}
+			/*그룹 정보수정  */
 			#changeGroupInfo{
 				color: white;
 				margin-left: 45%;
 				margin-top: 1.5%;
+				position: absolute;
+                background-color: #FFD724;
+                color: #004C63;                
+                text-align: center;
+                line-height: 33px;
+                font-weight: 900;
+                border-radius: 8px;
+               	display: block;
 			}			
-			#changeGroupInfo:hover {
-				text-decoration: underline; 
-			 	cursor: pointer;       		
+			#changeGroupInfo:hover {				 
+			 	cursor: pointer;  
+			 	background-color: #004C63;
+            	color: #FFD724;     		
 			}				
 			#out{
 				color: white;
@@ -291,11 +304,11 @@
 				text-decoration: underline;
 			}			
 			#invitetable{
-				margin-left: 35%;
+				margin-left: 20%;
 				margin-top: 10%;			
 			}
 			#inviteinput{
-				margin-left: 43%;
+				margin-left: 33.5%;
 			}
 			#inviteinput:hover {
 				cursor: pointer;
@@ -312,7 +325,11 @@
 			#groupInfoInquiry{
 				margin-left: 35%;
 				margin-top: 5%;	
-			}			
+			}	
+			#g1{
+				color: white;
+				margin-left: 40%;		
+			}		
 			   
         </style>
 </head>
@@ -400,7 +417,7 @@
 		<!-- 그룹 초대 팝업 -->
 		<div id="popupContentInvite">
 			<div class="headerPopupClose">X</div>
-			<h2 id="g">그룹원 초대</h2>
+			<h2 id="g1">그룹원 초대</h2>
 			<table id="invitetable">
 				<tr>
 					<td id="g">그룹명</td>

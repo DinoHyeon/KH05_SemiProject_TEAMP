@@ -9,61 +9,41 @@
 <style>
 	/* 페이지 영역을 잡기 위한 css 설정입니다. */
     #page{
-       position: absolute;
+        position: absolute;
 		top: 15.9%;
-	  	width: 82.5%;
+	    width: 82.5%;
 	    height: 84.1%;
 		background-color: white;
-   	}
+		
+			
+   	}   	
    	#tel{
   	 	border: 1px solid black;
    		border-collapse: collapse;
    		padding: 10 5;
    		text-align: center;
-   		margin-top: 60px;
-   		margin-left: 50px;
+   		margin-top: 5%;
+   		margin-left: 3%;
    		width: 95%;
    		height: 50%;
    	}
    	#tab{
-   		margin-left: 550px;
-   		margin-top: 20px;
+   		margin-left: 43%;   
+   		margin-top: -2%;	
    	}
    	#btn{
-   		margin-left: 825px;
-   		margin-top: -20px;
-   	}
-   	
-   /* 	table,td,th{
-   		border: 1px solid black;
-   		border-collapse: collapse;
-   		padding: 10 5;
-   		text-align: center;
-   		margin-top: 100px;
-   		margin-left: 500px;
-   		width: 35%; 
-   		 		
-   	} */
-   	
+   		margin-left: 70%;
+   		
+   	}  	
    	#w{
-   		margin-left: 600px;
-   	}
-   	#aa{
-  	 	margin-left: 10px;  	 	
-   	}
-   	#btnno{
-   		margin-left: 580px;
-   		margin-top: 20px;
-   	}
+   		margin-left: 45%;
+   	}   	
    	#b{
    		color: #FFD724;
    	}
    	#c:hover{   	
 		background-color: #F6F6F6;
-		
-	}
-	#d{
-		color: black;
+		/* #566A70 */
 	}
 	#d{
 		color: black;

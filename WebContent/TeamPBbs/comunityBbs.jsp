@@ -17,39 +17,28 @@
 		background-color: white;
 		
 			
-   	}
-   	
+   	}   	
    	#tel{
   	 	border: 1px solid black;
    		border-collapse: collapse;
    		padding: 10 5;
    		text-align: center;
-   		margin-top: 60px;
-   		margin-left: 50px;
+   		margin-top: 5%;
+   		margin-left: 3%;
    		width: 95%;
    		height: 50%;
    	}
    	#tab{
-   		margin-left: 550px;
-   		margin-top: 20px;
+   		margin-left: 43%;   
+   		margin-top: -2%;	
    	}
    	#btn{
-   		margin-left: 825px;
-   		margin-top: -20px;
-   	}
-   	
-  
-   	
+   		margin-left: 70%;
+   		
+   	}  	
    	#w{
-   		margin-left: 600px;
-   	}
-   	#aa{
-  	 	margin-left: 10px;  	 	
-   	}
-   	#btnno{
-   		margin-left: 580px;
-   		margin-top: 20px;
-   	}
+   		margin-left: 45%;
+   	}   	
    	#b{
    		color: #FFD724;
    	}
@@ -137,7 +126,13 @@
 		<c:if test="${sessionScope.loginId != 'admin'}">
 			<button id="btn"  onclick="location.href = 'TeamPBbs/writeForm.jsp'">글쓰기</button>
 		</c:if>
+		<c:if test="${sessionScope.loginId == 'admin'}">
+			<br/><br/>
+		</c:if>
 		
+		
+   		
+   		
 		<!-- 게시판 검색 폼 -->
 		<form action="./comunityList" method="get">
 			<table id="tab">
@@ -155,6 +150,7 @@
 				</tr>
 			</table>
 		</form>
+	
 		
 			
 		
