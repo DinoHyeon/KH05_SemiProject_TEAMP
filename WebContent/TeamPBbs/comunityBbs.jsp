@@ -99,7 +99,7 @@
    		 <h2 id="w">의견 나눔 게시판</h2>
    	 </c:if>
    	 <c:if test="${sessionScope.loginId == 'admin' }">
-   		 <h2>관리자 의견 나눔 게시판</h2>
+   		 <h2 id="w">관리자 의견 나눔 게시판</h2>
    	 </c:if>
 		<table id="tel">		
 			<tr bgcolor="#004D65">		
