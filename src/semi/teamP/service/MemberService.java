@@ -133,7 +133,8 @@ public class MemberService {
 	public void login() throws IOException{
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
-		
+		System.out.println(id);
+		System.out.println(pw);
 		MemberDAO dao = new MemberDAO();
 		MemberDTO dto = dao.login(id, pw);
 		

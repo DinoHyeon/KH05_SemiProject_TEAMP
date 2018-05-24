@@ -9,8 +9,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import oracle.net.aso.a;
-import oracle.net.aso.s;
 import semi.teamP.dto.MemberDTO;
 
 /*CREATE TABLE member(
