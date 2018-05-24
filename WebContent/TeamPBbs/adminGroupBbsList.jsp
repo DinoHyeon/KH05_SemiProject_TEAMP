@@ -123,7 +123,7 @@
 		    <jsp:param name="finalPageNo" value="${paging.finalPageNo}" />
 		</jsp:include>
 		
-		<c:if test="${sessionScope.loginId == 'admin'}">
+		<c:if test="${sessionScope.memberLv == 'admin'}">
 			<br/><br/>
 		</c:if>
 		

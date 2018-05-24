@@ -88,12 +88,12 @@
 			<form action="../write" method="get">
 			<input type = "hidden" name="pageNo" value="${sessionScope.pageNo}"/>
 			<!-- 세션아이디가 admin 이 아닐때  == 의견나눔게시판 말고는 작성할 곳이 없으므로 freeBbs를 hidden 타입으로 보냄 -->
-			<c:if test="${sessionScope.loginId != 'admin' }">
+			<c:if test="${sessionScope.memberLv != 'admin' }">
 				<input type="hidden" name="bbs_name" value="freeBbs"/>
 			</c:if>
 			
 			<!-- 세션아이디가 admin 일떼 == 공지사항 말고는 작성할 곳이 없으므로 adminBbs를 hidden 타입으로 보냄 -->
-			<c:if test="${sessionScope.loginId == 'admin'}">
+			<c:if test="${sessionScope.memberLv == 'admin'}">
 				<input type="hidden" name="bbs_name" value = "adminBbs"/>
 			</c:if>
 			
@@ -113,11 +113,11 @@
 				<tr>
 					<td colspan="2">
 						<!-- admin 일시 공지사항게시판에 글을 작성한 것이므로 adminList 로 복귀 -->
-						<c:if test="${sessionScope.loginId == 'admin'}">
+						<c:if test="${sessionScope.memberLv == 'admin'}">
 							<a href="../adminList?pageNo=${sessionScope.pageNo}">리스트가기</a>
 						</c:if>
 						<!-- admin이 아닐시 의견나눔게시판에 글을 작성한 것이므로 comunityList로 복귀 -->
-						<c:if test="${sessionScope.loginId != 'admin'}">
+						<c:if test="${sessionScope.memberLv != 'admin'}">
 							<a href="../comunityList?pageNo=${sessionScope.pageNo}">리스트가기</a>
 						</c:if>		
 							&nbsp;&nbsp;&nbsp;&nbsp;
@@ -134,11 +134,11 @@
 			<form action="../groupWrite" method="get">
 			<input type = "hidden" name="pageNo" value="${sessionScope.pageNo}"/>
 			
-			<c:if test="${sessionScope.loginId != 'admin' }">
+			<c:if test="${sessionScope.memberLv != 'admin' }">
 				<input type="hidden" name="bbs_name" value="freeBbs"/>
 			</c:if>
 			
-			<c:if test="${sessionScope.loginId == 'admin'}">
+			<c:if test="${sessionScope.memberLv == 'admin'}">
 				<input type="hidden" name="bbs_name" value = "adminBbs"/>
 			</c:if>
 			
@@ -157,10 +157,10 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<c:if test="${sessionScope.loginId == 'admin'}">
+						<c:if test="${sessionScope.memberLv == 'admin'}">
 							<a href="../adminList?pageNo=${sessionScope.pageNo}">리스트가기</a>
 						</c:if>
-						<c:if test="${sessionScope.loginId != 'admin'}">
+						<c:if test="${sessionScope.memberLv != 'admin'}">
 							<a href="../comunityList?pageNo=${sessionScope.pageNo}">리스트가기</a>
 						</c:if>		
 							&nbsp;&nbsp;&nbsp;&nbsp;

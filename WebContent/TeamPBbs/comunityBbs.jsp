@@ -92,10 +92,10 @@
 	-->
 	
     <div id="page">
-    <c:if test="${sessionScope.loginId != 'admin' }">
+    <c:if test="${sessionScope.memberLv != 'admin' }">
    		 <h2 id="w">의견 나눔 게시판</h2>
    	 </c:if>
-   	 <c:if test="${sessionScope.loginId == 'admin' }">
+   	 <c:if test="${sessionScope.memberLv == 'admin' }">
    		 <h2 id="w">관리자 의견 나눔 게시판</h2>
    	 </c:if>
 		<table id="tel">		
@@ -130,10 +130,10 @@
 
 		
 		<!-- 관리자는 의견나눔게시판에 글을 쓸 이유가 없어서 아이디가 'admin' 일시 버튼을 막아놓음 -->
-		<c:if test="${sessionScope.loginId != 'admin'}">
+		<c:if test="${sessionScope.memberLv != 'admin'}">
 			<button id="btn"  onclick="location.href = 'TeamPBbs/writeForm.jsp'">글쓰기</button>
 		</c:if>
-		<c:if test="${sessionScope.loginId == 'admin'}">
+		<c:if test="${sessionScope.memberLv == 'admin'}">
 			<br/><br/>
 		</c:if>
 		

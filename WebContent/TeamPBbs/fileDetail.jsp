@@ -131,11 +131,11 @@
 		
 		<tr>
 			<td colspan="2">
-			<c:if test="${sessionScope.loginId == 'admin'}">
+			<c:if test="${sessionScope.memberLv == 'admin'}">
 				<a id="o" href="./adminFileBbsList?pageNo=${sessionScope.pageNo}">리스트가기</a>
 			</c:if>
 			
-			<c:if test="${sessionScope.loginId != 'admin'}">
+			<c:if test="${sessionScope.memberLv != 'admin'}">
 				<a id="o" href="./fileList?pageNo=${sessionScope.pageNo}">리스트가기</a>
 			</c:if>		
 								
@@ -145,7 +145,7 @@
 					&nbsp;&nbsp;&nbsp;&nbsp;
 				</c:if>
 				
-				<c:if test="${sessionScope.loginId == info.member_id || sessionScope.loginId == 'admin' }">
+				<c:if test="${sessionScope.loginId == info.member_id || sessionScope.memberLv == 'admin' }">
 					<a id="o" href="./fileDelete?idx=${info.bbs_idx}">삭제</a>
 				</c:if>	
 			</td>

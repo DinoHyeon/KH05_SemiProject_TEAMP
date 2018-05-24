@@ -121,11 +121,11 @@
 		</jsp:include>
 		
 		<!-- 아이디가 (세션에 저장된 아이디) 'admin'인 사람만 글쓰기 버튼을 보여준다-->
-		<c:if test="${sessionScope.loginId == 'admin'}">
+		<c:if test="${sessionScope.memberLv == 'admin'}">
 			<button id="btn" onclick="location.href = 'TeamPBbs/writeForm.jsp'">글쓰기</button>
 		</c:if>
 		
-		<c:if test="${sessionScope.loginId != 'admin'}">
+		<c:if test="${sessionScope.memberLv != 'admin'}">
 			<br/><br/>
 		</c:if>
 		

@@ -130,11 +130,11 @@
 	     	 	<a id="o" href ="/SemiProject_TeamP/adminList?pageNo=${sessionScope.pageNo}">리스트</a>
 	     	 </c:if>
 	     	 
-	     	 <c:if test="${sessionScope.loginId != 'admin' && info.bbs_name == 'groupBbs'}">
+	     	 <c:if test="${sessionScope.memberLv != 'admin' && info.bbs_name == 'groupBbs'}">
 	     	 	<a id="o" href ="/SemiProject_TeamP/groupList?pageNo=${sessionScope.pageNo}">리스트</a>
 	     	 </c:if> 
 	     	 
-	     	 <c:if test="${sessionScope.loginId == 'admin' && info.bbs_name == 'groupBbs'}">
+	     	 <c:if test="${sessionScope.memberLv == 'admin' && info.bbs_name == 'groupBbs'}">
 	     	 	<a id="o" href ="/SemiProject_TeamP/adminGroupBbsList?pageNo=${sessionScope.pageNo}">리스트</a>
 	     	 </c:if> 
 	     	 
@@ -149,17 +149,17 @@
 	         <!-- 자신 과 관리자만 삭제 가능 -->
 	         
 	         <!-- 관리자와 로그인한유저만 의견나눔게시판 삭제 가능-->
-	         <c:if test="${(sessionScope.loginId == info.member_id || sessionScope.loginId == 'admin') && info.bbs_name == 'freeBbs'}">  
+	         <c:if test="${(sessionScope.loginId == info.member_id || sessionScope.memberLv == 'admin') && info.bbs_name == 'freeBbs'}">  
 	        	 <a id="o" href="./comunityBbsDelete?idx=${info.bbs_idx}">삭제</a>
 	  		 </c:if>
 	  		 
 			<!-- 관리자와 로그인한유저(그룹장)만 그룹게시판 삭제 가능-->
-			 <c:if test="${(sessionScope.loginId == info.member_id || sessionScope.loginId == 'admin') && info.bbs_name == 'groupBbs'}">  
+			 <c:if test="${(sessionScope.loginId == info.member_id || sessionScope.memberLv == 'admin') && info.bbs_name == 'groupBbs'}">  
 	        	 <a id="o" href="./groupBbsDelete?idx=${info.bbs_idx}">삭제</a>
 	  		 </c:if>
 	  		 
 	  		 <!-- 관리자만 공지사항게시판 삭제 가능-->
-			 <c:if test="${sessionScope.loginId == 'admin' && info.bbs_name == 'adminBbs'}">  
+			 <c:if test="${sessionScope.memberLv == 'admin' && info.bbs_name == 'adminBbs'}">  
 	        	 <a id="o" href="./adminList?idx=${info.bbs_idx}&pageNo=${sessionScope.pageNo}">삭제</a>
 	  		 </c:if>
 	  		 
