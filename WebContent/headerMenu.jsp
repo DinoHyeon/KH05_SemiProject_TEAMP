@@ -548,7 +548,7 @@
 					groupProgress=finishPlan/totalPlan*100;
 				}
 				console.log(groupProgress);
-				$("#groupProgress").html(groupProgress+" %  진행");
+				$("#groupProgress").html(Math.floor(groupProgress)+" %  진행");
 				
 				if(groupProgress == 100 && groupDday<=0){
 					$("#groupfinish").css("display","block");

@@ -210,7 +210,7 @@
 			<button id="insert">+</button>
 			<div class="divnamecolor" id="myTodo">
 				할일 리스트 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<button id="slide">▲</button>
+				<button id="slide">↕</button>
 			</div>
 			<div class="scrollbar" id="TodoList">
 				<table id="TodoTable">
@@ -219,7 +219,7 @@
 
 			<div class="divnamecolor" id="myPlan">
 				나의 일정 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<button id="planslide">▲</button>
+				<button id="planslide">↕</button>
 			</div>
 			<div class="scrollbar" id="planList">
 				<table id="planTable">
@@ -367,12 +367,7 @@
 	});
 
 	$("#slide").click(function() {
-		$("#TodoList").slideToggle("slow", function() {
-				$("#slide").html("▼")
-				if($("#slide").html=="▼"){
-					$("#slide").html("▲");
-				}
-		});
+		$("#TodoList").slideToggle("slow")
 	})
 
 	
