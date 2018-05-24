@@ -132,7 +132,7 @@
             #contentPopup #popupTitle{
                 position: absolute;
                 left: 44.5%;
-                top: 9%;
+                top: 6%;
                 font-size: 24px;
                 font-weight: 900;                
                 color: #FFD724;
@@ -147,22 +147,58 @@
             	text-align: center;
             }
             
-/*스크롤바 css */
-::-webkit-scrollbar{
-width: 11px;
-}
-::-webkit-scrollbar-track{
-background: #c4c6c8;
-}
-::-webkit-scrollbar-thumb{
-background: #105B74;
-border-radius: 10px;
--webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.4);
-}
-::-webkit-scrollbar-thumb:vertical:hover,
-::-webkit-scrollbar-thumb:horizontal:hover{ 
-background: #08A67C;
-}
+            #memberId{
+                position: absolute;
+                left: 10%;
+                top: 16%;
+                text-align: center;
+                font-weight: 700; 
+                color: #FFD724;
+            }
+            
+            #memberName{
+                position: absolute;
+                left: 25.2%;
+                top: 16%;
+                text-align: center;
+                font-weight: 700; 
+                color: #FFD724;
+            }
+            
+            #groupName{
+                position: absolute;
+                left: 44.5%;
+                top: 16%;
+                text-align: center;
+                font-weight: 700; 
+                color: #FFD724;
+            }
+            
+            #memberLv{
+                position: absolute;
+                left: 65.5%;
+                top: 16%;
+                text-align: center;
+                font-weight: 700; 
+                color: #FFD724;
+            }            
+            
+			/*스크롤바 css */
+			::-webkit-scrollbar{
+			width: 11px;
+			}
+			::-webkit-scrollbar-track{
+			background: #c4c6c8;
+			}
+			::-webkit-scrollbar-thumb{
+			background: #105B74;
+			border-radius: 10px;
+			-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.4);
+			}
+			::-webkit-scrollbar-thumb:vertical:hover,
+			::-webkit-scrollbar-thumb:horizontal:hover{ 
+			background: #08A67C;
+			}
             
             
         </style>
@@ -173,6 +209,10 @@ background: #08A67C;
         <h2>[ 관리자 페이지 ]</h2>
         <div id="contentPopup">
             <div id="popupTitle"></div>
+            <div id="memberId">아이디</div>
+            <div id="memberName">회원명</div>
+            <div id="groupName">그룹명</div>
+            <div id="memberLv">회원등급</div>
             <div id="close">X</div>
             <div id="groupSelectList">
             	<table id="adminPageList">
@@ -217,6 +257,13 @@ background: #08A67C;
         $("#memberList").click(function(){
             $("#bg").css("display","inline");
             $("#contentPopup").css("display","inline");
+            $("#memberId").html("아이디");
+            $("#memberName").html("회원명");
+            $("#memberName").css("left","25.2%");
+            $("#groupName").html("그룹명");
+            $("#groupName").css("left","44.5%");
+            $("#memberLv").html("회원등급");
+            $("#memberLv").css("left","65.5%");
             $("#popupTitle").html("회원 관리")
             memberList();
         })
@@ -243,6 +290,14 @@ background: #08A67C;
             $("#bg").css("display","inline");
             $("#contentPopup").css("display","inline");
             $("#popupTitle").html("그룹 관리")
+            $("#memberId").html("아이디");
+            $("#memberName").html("그룹명");
+            $("#memberName").css("left","21.2%");
+            $("#groupName").html("시작 기간");
+            $("#groupName").css("left","35%");
+            $("#memberLv").html("종료 기간");
+            $("#memberLv").css("left","60.8%");
+
             groupList();
        	})
    
@@ -277,14 +332,21 @@ background: #08A67C;
             $("#bg").css("display","inline");
             $("#contentPopup").css("display","inline");
             $("#popupTitle").html("페이지 관리")
+            $("#memberId").html("아이디");
+            $("#memberName").html("그룹명");
+            $("#memberName").css("left","21.2%");
+            $("#groupName").html("시작 기간");
+            $("#groupName").css("left","35%");
+            $("#memberLv").html("종료 기간");
+            $("#memberLv").css("left","60.8%");
             
             obj.url="./adGroupList";
             obj.data={};
 			obj.success=function(data){
 				$("#adminPageList").empty();
+				console.log(data);
 				data.groupList.forEach(function(item,index){
 					 content += "<tr>";
-					 content +=	"<td>"+item.group_name+"</td>";
 					 content += "<td>"+item.group_masterId+"</td>";
 					 content += "<td>"+item.group_name+"</td>";
 					 content += "<td>"+item.group_StrartDay+"</td>";
@@ -362,7 +424,6 @@ background: #08A67C;
 				$("#adminPageList").empty();
 				data.groupList.forEach(function(item,index){
 					 content += "<tr>";
-					 content +=	"<td>"+item.group_name+"</td>";
 					 content += "<td>"+item.group_masterId+"</td>";
 					 content += "<td>"+item.group_name+"</td>";
 					 content += "<td>"+item.group_StrartDay+"</td>";

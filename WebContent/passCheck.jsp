@@ -116,6 +116,12 @@
 		</div>
 	</body>
 	<script>
+		var path = window.location.pathname;
+		var loaction = "";
+		if(path.indexOf('WriteForm')>-1||path.indexOf('dateForm')>-1||path.indexOf('writeForm')>-1){
+			loaction= ".";
+		}
+	
 		var pwChkResult = false;
  		$("#passChkPopupClose").click(function() {
 			$("#passChkBg").css("display","none");
@@ -128,7 +134,7 @@
 					location.href="main_Group.jsp";
 				}
 			}else if('${sessionScope.menuName}'=='myInfo'){
-				obj.url="./createMenuSession";
+				obj.url=loaction+"./createMenuSession";
 				obj.data={menuName:"main"};
 				obj.success = function(data){
 					if('${sessionScope.groupNum}'=='0'){
@@ -168,7 +174,7 @@
 		
 		//확인 버튼을 눌렀을 때
 		$("#memberPassChk").click(function() {
-				obj.url="./memberPasswordCheck";
+				obj.url=loaction+"./memberPasswordCheck";
 				obj.data={memberPass:$("#memberPass").val()};
 				obj.success = function(data){
 						if(data.success){
