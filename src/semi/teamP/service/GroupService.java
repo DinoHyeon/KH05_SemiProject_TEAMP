@@ -31,10 +31,6 @@ public class GroupService {
 		GroupDAO dao = new GroupDAO();
 		GroupInfoDTO dto = dao.getGroupInfo(groupIdx);
 		
-		String groupName=dto.getGroup_name();
-		request.getSession().setAttribute("groupname", groupName);
-		System.out.println(groupName+"지금나의 그룹명");
-		
 		Gson json = new Gson();
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("groupInfo", dto);

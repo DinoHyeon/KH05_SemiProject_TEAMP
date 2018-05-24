@@ -229,7 +229,9 @@ public class PlanService {
 	}
 	public void planToday() throws IOException {
 		PlanDAO dao=new PlanDAO();
+		GroupDAO gDao = new  GroupDAO();
 		int groupIdx =(int) request.getSession().getAttribute("groupNum");
+		GroupInfoDTO groupName = gDao.getGroupInfo(groupIdx);
 		String memberId = (String) request.getSession().getAttribute("loginId");
 		//데이터가 담긴 어레이리스트 
 		ArrayList<PlanDTO> list= dao.list(groupIdx,memberId);
@@ -238,6 +240,7 @@ public class PlanService {
 		HashMap<String, Object>map=new HashMap<>();
 		request.setAttribute("list", list); 
 		map.put("list",list);//리스트 넣고
+		map.put("groupName",groupName);
 		String obj = json.toJson(map);
 		response.setContentType("text/html; charset=UTF-8");//한글있으니까 깨짐방지
 		response.getWriter().println(obj);

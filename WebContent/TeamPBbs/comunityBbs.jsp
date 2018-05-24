@@ -26,7 +26,7 @@
    		margin-top: 5%;
    		margin-left: 3%;
    		width: 95%;
-   		height: 50%;
+   		height: 10%;
    	}
    	#tab{
    		margin-left: 43%;   
@@ -34,8 +34,15 @@
    	}
    	#btn{
    		margin-left: 70%;
-   		
-   	}  	
+   		color: #FFD724;
+        background-color: #004C63;   
+        border-radius: 8px;		
+   	}
+	#btn:hover{
+		cursor: pointer;
+		background-color: #FFD724;
+        color: #004C63; 
+	} 	
    	#w{
    		margin-left: 45%;
    	}   	
@@ -85,10 +92,10 @@
 	-->
 	
     <div id="page">
-    <c:if test="${sessionScope.loginId != 'admin' }">
+    <c:if test="${sessionScope.memberLv != 'admin' }">
    		 <h2 id="w">의견 나눔 게시판</h2>
    	 </c:if>
-   	 <c:if test="${sessionScope.loginId == 'admin' }">
+   	 <c:if test="${sessionScope.memberLv == 'admin' }">
    		 <h2 id="w">관리자 의견 나눔 게시판</h2>
    	 </c:if>
 		<table id="tel">		
@@ -102,8 +109,7 @@
 			
 			<!-- 셋팅된 dto값을 테이블에 뿌려준다 -->
 			<c:forEach items="${list}" var="bbs">
-				<tr id="c">				
-				
+				<tr id="c">					
 					<td id="f" valign="top" align="left"><a id="d" href="detail?idx=${bbs.bbs_idx}&pageNo=${paging.pageNo}">${bbs.bbs_subject } (${bbs.reply_cnt})</a></td>
 					<td id="f" valign="top">${bbs.member_id }</td>
 					<td id="f" valign="top">${bbs.bbs_date }</td>
@@ -124,10 +130,10 @@
 
 		
 		<!-- 관리자는 의견나눔게시판에 글을 쓸 이유가 없어서 아이디가 'admin' 일시 버튼을 막아놓음 -->
-		<c:if test="${sessionScope.loginId != 'admin'}">
+		<c:if test="${sessionScope.memberLv != 'admin'}">
 			<button id="btn"  onclick="location.href = 'TeamPBbs/writeForm.jsp'">글쓰기</button>
 		</c:if>
-		<c:if test="${sessionScope.loginId == 'admin'}">
+		<c:if test="${sessionScope.memberLv == 'admin'}">
 			<br/><br/>
 		</c:if>
 		

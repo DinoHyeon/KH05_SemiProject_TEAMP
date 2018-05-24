@@ -22,8 +22,9 @@
 	border: none;
 	width: 20%;
 	top: 10%;
-	height: 7%;
+	height: 7%;	
 }
+
 
 #navitwo {
 	position: absolute;
@@ -49,6 +50,10 @@
 	padding: 2%;
 	color: white;
 	border: none;
+}
+#navithree button:hover {
+	background-color: black;
+	cursor: pointer;
 }
 
 /* 팝업 내용 */
@@ -91,9 +96,11 @@
 	margin-top: 5%;
 }
 
+
 #g {
 	color: white;
 	margin-left: 42%;
+	text-align: left;
 }
 
 #plusplus {
@@ -226,6 +233,12 @@ table, td, th {
 	width: 100%;
 	height: 100%;
 }
+.plan_title:hover{
+	background-color: yellow;
+	cursor: pointer;
+}
+
+
 </style>
 </head>
 <body>

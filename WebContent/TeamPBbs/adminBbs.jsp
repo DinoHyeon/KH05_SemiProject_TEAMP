@@ -25,7 +25,7 @@
    		margin-top: 5%;
    		margin-left: 3%;
    		width: 95%;
-   		height: 50%;
+   		height: 10%;
    	}
    	#tab{
    		margin-left: 43%;   
@@ -33,8 +33,15 @@
    	}
    	#btn{
    		margin-left: 70%;
-   		
-   	}  	
+   		color: #FFD724;
+        background-color: #004C63;   
+        border-radius: 8px;		
+   	}
+	#btn:hover{
+		cursor: pointer;
+		background-color: #FFD724;
+        color: #004C63; 
+	}  	
    	#w{
    		margin-left: 45%;
    	}   	
@@ -114,11 +121,11 @@
 		</jsp:include>
 		
 		<!-- 아이디가 (세션에 저장된 아이디) 'admin'인 사람만 글쓰기 버튼을 보여준다-->
-		<c:if test="${sessionScope.loginId == 'admin'}">
+		<c:if test="${sessionScope.memberLv == 'admin'}">
 			<button id="btn" onclick="location.href = 'TeamPBbs/writeForm.jsp'">글쓰기</button>
 		</c:if>
 		
-		<c:if test="${sessionScope.loginId != 'admin'}">
+		<c:if test="${sessionScope.memberLv != 'admin'}">
 			<br/><br/>
 		</c:if>
 		
@@ -130,7 +137,7 @@
 					<td>
 						<select name ="keyField">
 							<!-- DB컬럼값과 동일한 value를 주어 keyField를 구분 -->
-							<option value="member_id">이 름</option>
+							<option value="member_id">작성자</option>
 							<option value="bbs_subject">제 목</option>
 							<option value="bbs_content">내 용</option>
 						</select>

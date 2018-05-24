@@ -264,6 +264,8 @@
 	$(document).ready(function() {
 		obj.url = "./planToday"
 		obj.success = function(data) {
+			console.log(data.groupName.group_name);
+			$("#groupName").html(data.groupName.group_name	);
 			data.list.forEach(function(item, idx) {
 				content += "<tr id='bordernone'>";
 				content += "<td id='bordernone'> -  " + item.plan_title + "</td>";
@@ -293,7 +295,6 @@
 		$("input[type='button']").css("display", "inline");
 	} else {
 		$("#groupState").html('');
-		$("#groupName").html('${sessionScope.groupname}');
 	}
 
 	$("button").click(function() {
