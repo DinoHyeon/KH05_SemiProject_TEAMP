@@ -139,15 +139,15 @@
 					 };
 				ajaxCall(obj);
 			}else if('${sessionScope.menuName}'=='notice'){
-				location.href='/SemiProject_TeamP/adminList';
+				location.href='/SemiProject_TeamP/adminList?pageNo=${sessionScope.pageNo}';
 			}else if('${sessionScope.menuName}'=='plan'){
 				location.href='plan.jsp';
 			}else if('${sessionScope.menuName}'=='fileBbs'){
-				location.href ='/SemiProject_TeamP/fileList';
+				location.href ='/SemiProject_TeamP/fileList?pageNo=${sessionScope.pageNo}';
 			}else if('${sessionScope.menuName}'=='groupBbs'){
-				location.href ='/SemiProject_TeamP/groupList';
+				location.href ='/SemiProject_TeamP/groupList?pageNo=${sessionScope.pageNo}';
 			}else if('${sessionScope.menuName}'=='comunityBbs'){
-				location.href ='/SemiProject_TeamP/comunityList';
+				location.href ='/SemiProject_TeamP/comunityList?pageNo=${sessionScope.pageNo}';
 			}
 		}) 
 		
