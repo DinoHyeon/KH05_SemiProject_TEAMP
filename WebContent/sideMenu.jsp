@@ -46,9 +46,6 @@
 		line-height: 30px;
 		border-radius: 8px;
 	}
-	#logout:hover{
-		cursor: pointer;
-	}
 	
 	#userName {
 		position: absolute;
@@ -85,7 +82,7 @@
 		position: absolute;
 		color: white;
 		width: 83%;
-		top: 20%;
+		top: 16%;
 		font-weight: 500;
 		font-size: 16px;
 		text-align: center;
@@ -120,29 +117,41 @@
 	}
 	
 	#planList {
-		float: left;
-		height: 200px;
-		width: 265px;
+	     position: absolute;
+    float: left;
+    height: 210%;
+    width: 115%;
+    top: 360%;
 		font-weight: 500;
 		font-size: 14px;
 		text-align: left;
 		background-color: #004C63;
 		overflow: auto;
-		margin-bottom: 25px;
 		border: 1px solid #FFD724;
 	}
-	
 	#TodoList {
+		position: absolute;
 		float: left;
-		height: 220px;
-		width: 265px;
+    height: 190%;
+    width: 115%;
+    top: 130%; 
 		font-weight: 500;
-		font-size: 14px;
+		font-size: 15px;
 		text-align: left;
 		background-color: #004C63;
 		overflow: auto;
-		margin-bottom: 25px;
 		border: 1px solid #FFD724;
+	}
+	#myPlan{
+	position: absolute;
+	top: 330%;
+	}
+	#myTodo{
+	position: absolute;
+	top:100%;
+	}
+	#bordernone,#planTable,#TodoTable{
+	border: none;
 	}
 	
 	#TodoList::-webkit-scrollbar-track {
@@ -182,6 +191,9 @@
 	.divnamecolor {
 		color: #FFD724;
 	}
+	#logout{
+	 cursor:pointer;
+	}
 </style>
 </head>
 <body>
@@ -196,7 +208,7 @@
 			</h3>
 			<input id="content" type="text" maxlength="15" />
 			<button id="insert">+</button>
-			<div class="divnamecolor">
+			<div class="divnamecolor" id="myTodo">
 				할일 리스트 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<button id="slide">▲</button>
 			</div>
@@ -205,7 +217,7 @@
 				</table>
 			</div>
 
-			<div class="divnamecolor">
+			<div class="divnamecolor" id="myPlan">
 				나의 일정 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<button id="planslide">▲</button>
 			</div>
@@ -253,10 +265,11 @@
 		obj.url = "./planToday"
 		obj.success = function(data) {
 			data.list.forEach(function(item, idx) {
-				content += "<tr>";
-				content += "<td> -  " + item.plan_title + "</td>";
-				content += "<td>" + item.plan_endDay + "</td>";
-				content += "</tr>";
+				content += "<tr id='bordernone'>";
+				content += "<td id='bordernone'> -  " + item.plan_title + "</td>";
+				content += "<td id='bordernone'>―</td>";
+				content += "<td id='bordernone'>" + item.plan_state + "</td>";
+				content += "</tr id='bordernone'>";
 			});
 			$("#planTable").empty();
 			$("#planTable").append(content);
@@ -319,11 +332,10 @@
 		obj.success = function(data) {
 			data.list
 					.forEach(function(item, idx) {
-						content += "<tr>";
-						content += "<td><input onclick='del()' class='tododel' value='-' type='button' id="
-								+ item.to_do_idx + "></td>";
-						content += "<td>" + item.todo_content + "</td>";
-						content += "</tr>";
+						content += "<tr id='bordernone'>";
+						content += "<td id='bordernone'><input class='tododel' value='-' type='button' id="+ item.to_do_idx + "></td>";
+						content += "<td id='bordernone'>" + item.todo_content + "</td>";
+						content += "</tr id='bordernone'>";
 					});
 			$("#TodoTable").empty();
 			$("#TodoTable").append(content);
@@ -332,33 +344,41 @@
 		ajaxCall(obj);
 	}
 
-	function del() {
+	$(document).on('click','.tododel', function() {
 		$.ajax({
 			type : "post",
 			url : "./todoDelete",
 			data : {
-				delcontent : $(".tododel").attr('id')
+				delcontent : $(this).attr('id')
 			},
 			dataType : "json",
 			success : function(data) {//인자 값은 서버에서 주는 메세지
 				if (data.success) {
-					listPrint(data.list)
+					//listPrint(data.list)
+					$("#TodoTable").empty();
+					listPrint();
+					$("#content").val("");
 				} else {
 					alert("삭제 실패")
 				}
 			}
 		});
 		ajaxCall(obj);
-	};
+	});
 
 	$("#slide").click(function() {
-		$("#TodoList").slideToggle("slow");
-
+		$("#TodoList").slideToggle("slow", function() {
+				$("#slide").html("▼")
+				if($("#slide").html=="▼"){
+					$("#slide").html("▲");
+				}
+		});
 	})
+
+	
 	$("#planslide").click(function() {
 		$("#planList").slideToggle("slow");
-
-	})
+	});
 
 	function ajaxCall(param) {
 		$.ajax(param);
