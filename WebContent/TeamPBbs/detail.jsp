@@ -14,33 +14,29 @@
         height: 84.1%;
       background-color: white;
    }
-   	table{
-		border: 1px solid black;
-		border-collapse: collapse;
-	}
-	th{
+ 	
+	#tel th{
 		border: 1px solid black;
 		border-collapse: collapse;
 		
 	
 	}
-	td{
+	#tel td{
 		border: 1px solid black;
-		border-collapse: collapse;
-		
+		border-collapse: collapse;		
 	
-	}
+	}  
   
 	#tel{
   	 	border: 1px solid black;
-   		border-collapse: collapse;
-   		
+   		border-collapse: collapse;   		
    		text-align: center;
    		margin-top: 0%;
    		margin-left:  2%;
    		width: 95%;
    		height: 50%;
    	}
+   	
      	
    	h2{
    		margin-left: 50%;
@@ -49,38 +45,44 @@
   .textname {
 	border: none;
 	text-align: center;
-}
+	}
+	
+	.input_text {
+		width: 29%;
+		border: none;
+		background-color: red;
+	}
 
-.input_text {
-	width: 29%;
-	border: none;
-	background-color: red;
-}
-
-#register {
-	border: none;
-    font-weight: 900;
-    color: #004C63;
-	background-color: #FFD724;
-	z-index: 2;
-	line-height: 23px;
-	text-align: center;
-	border-radius: 8px;
-}
-#ccontent{
-resize:none;
-height: 70%;
-width: 90%;
-}
-#listtable{		
-	margin-top: 4%;   	
-	width: 80%;
-}
-#listTable2{
-	margin-left: 2.5%;
-	width: 119%;
-	margin-top: -5%;
-}
+	#register {
+		border: none;
+	    font-weight: 900;
+	    color: #004C63;
+		background-color: #FFD724;
+		z-index: 2;
+		line-height: 23px;
+		text-align: center;
+		border-radius: 8px;
+	}
+	#ccontent{
+		resize:none;
+		height: 70%;
+		width: 90%;
+	}
+	#listtable{		
+		margin-top: 4%;   	
+		width: 80%;
+		
+	}
+	#listTable2{
+		margin-left: 2.5%;
+		width: 119%;
+		margin-top: -5%;
+		border: 1px solid black;
+	}
+	#o{
+		color: black;
+	}
+	
 </style>
 </head>
 <body>
@@ -116,26 +118,26 @@ width: 90%;
    		<!-- dto에 셋팅된 bbs_name을 사용하여 리스트돌아가기 클릭시 각각의 페이지로 분기 시키기 -->
       <td colspan="2">
 	     	 <c:if test="${info.bbs_name == 'freeBbs'}">
-	     	 	<a href ="/SemiProject_TeamP/comunityList?pageNo=${sessionScope.pageNo}">리스트</a>
+	     	 	<a id="o" href ="/SemiProject_TeamP/comunityList?pageNo=${sessionScope.pageNo}">리스트</a>
 	     	 </c:if>
 	     	 
 	     	 <c:if test="${info.bbs_name == 'adminBbs'}">
-	     	 	<a href ="/SemiProject_TeamP/adminList?pageNo=${sessionScope.pageNo}">리스트</a>
+	     	 	<a id="o" href ="/SemiProject_TeamP/adminList?pageNo=${sessionScope.pageNo}">리스트</a>
 	     	 </c:if>
 	     	 
 	     	 <c:if test="${sessionScope.loginId != 'admin' && info.bbs_name == 'groupBbs'}">
-	     	 	<a href ="/SemiProject_TeamP/groupList?pageNo=${sessionScope.pageNo}">리스트</a>
+	     	 	<a id="o" href ="/SemiProject_TeamP/groupList?pageNo=${sessionScope.pageNo}">리스트</a>
 	     	 </c:if> 
 	     	 
 	     	 <c:if test="${sessionScope.loginId == 'admin' && info.bbs_name == 'groupBbs'}">
-	     	 	<a href ="/SemiProject_TeamP/adminGroupBbsList?pageNo=${sessionScope.pageNo}">리스트</a>
+	     	 	<a id="o" href ="/SemiProject_TeamP/adminGroupBbsList?pageNo=${sessionScope.pageNo}">리스트</a>
 	     	 </c:if> 
 	     	 
 	         &nbsp;&nbsp;&nbsp;&nbsp;
 	         
 	         <!-- 자신의 글만 수정가능 -->
 	         <c:if test="${sessionScope.loginId == info.member_id}">
-	         <a href="./updateForm?idx=${info.bbs_idx}">수정</a>
+	         <a id="o" href="./updateForm?idx=${info.bbs_idx}">수정</a>
 	         </c:if>
 	         &nbsp;&nbsp;&nbsp;&nbsp;
 	         
@@ -143,17 +145,17 @@ width: 90%;
 	         
 	         <!-- 관리자와 로그인한유저만 의견나눔게시판 삭제 가능-->
 	         <c:if test="${(sessionScope.loginId == info.member_id || sessionScope.loginId == 'admin') && info.bbs_name == 'freeBbs'}">  
-	        	 <a href="./comunityBbsDelete?idx=${info.bbs_idx}">삭제</a>
+	        	 <a id="o" href="./comunityBbsDelete?idx=${info.bbs_idx}">삭제</a>
 	  		 </c:if>
 	  		 
 			<!-- 관리자와 로그인한유저(그룹장)만 그룹게시판 삭제 가능-->
 			 <c:if test="${(sessionScope.loginId == info.member_id || sessionScope.loginId == 'admin') && info.bbs_name == 'groupBbs'}">  
-	        	 <a href="./groupBbsDelete?idx=${info.bbs_idx}">삭제</a>
+	        	 <a id="o" href="./groupBbsDelete?idx=${info.bbs_idx}">삭제</a>
 	  		 </c:if>
 	  		 
 	  		 <!-- 관리자만 공지사항게시판 삭제 가능-->
 			 <c:if test="${sessionScope.loginId == 'admin' && info.bbs_name == 'adminBbs'}">  
-	        	 <a href="./adminList?idx=${info.bbs_idx}&pageNo=${sessionScope.pageNo}">삭제</a>
+	        	 <a id="o" href="./adminList?idx=${info.bbs_idx}&pageNo=${sessionScope.pageNo}">삭제</a>
 	  		 </c:if>
 	  		 
       </td>
@@ -166,11 +168,11 @@ width: 90%;
 
 				</tr>
    </table>
-   <div id="listtable">
-		<table id="listTable2"></table>
-		</div>
-      </div>
-   </div>
+	   <div id="listtable">
+			<table id="listTable2"></table>
+			</div>
+	      </div>
+	   </div>
 </body>
 <script>
 var commentdate = '${sessionScope.comment_date}';

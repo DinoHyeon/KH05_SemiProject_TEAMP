@@ -15,23 +15,18 @@
 	    height: 84.1%;
 		background-color: white;
    	}
-   		table{
+   
+	#tel th{
 		border: 1px solid black;
 		border-collapse: collapse;
-	}	
+		
 	
-	th{
-		border: 1px solid black;
-		border-collapse: collapse;
-		/* padding: 5px 10px;
-		width: 100px; */
 	}
-	td{
+	#tel td{
 		border: 1px solid black;
-		border-collapse: collapse;
-		/* padding: 5px 10px;
-		width: 400px;	 */	
-	}
+		border-collapse: collapse;		
+	
+	} 
   
 	#tel{
   	 	border: 1px solid black;
@@ -47,48 +42,53 @@
    	h2{
    		margin-left: 600px;
    	}
-		.edit {
-	width: 100%;
-	resize: none;
-	border: 1px solid white;
-}
+	.edit {
+		width: 100%;
+		resize: none;
+		border: 1px solid white;
+	}
+	
+	.textname {
+		border: none;
+		text-align: center;
+		width: 10%;
+	}
+	
+	.input_text {
+		width: 29%;
+		border: none;
+		background-color: red;
+	}
 
-.textname {
-	border: none;
-	text-align: center;
-	width: 10%;
-}
-
-.input_text {
-	width: 29%;
-	border: none;
-	background-color: red;
-}
-
-#register {
-	border: none;
-   font-weight: 900;
-   color: #004C63;
-	background-color: #FFD724;
-	z-index: 2;
-	line-height: 23px;
-	text-align: center;
-	border-radius: 8px;
-}
-#ccontent{
-resize:none;
-height: 70%;
-width: 90%;
-}
-#listtable{		
-	margin-top: 4%;   	
-	width: 80%;
-}
+	#register {
+		border: none;
+	   font-weight: 900;
+	   color: #004C63;
+		background-color: #FFD724;
+		z-index: 2;
+		line-height: 23px;
+		text-align: center;
+		border-radius: 8px;
+	}
+	#ccontent{
+		resize:none;
+		height: 70%;
+		width: 90%;
+	}
+	#listtable{		
+		margin-top: 4%;   	
+		width: 80%;
+		border: 1px solid black;
+	}
 	#listTable2{
-	margin-left: 4.7%;
-	width: 119%;
-	margin-top: -5%;
-}
+		margin-left: 4.7%;
+		width: 119%;
+		margin-top: -5%;
+		border: 1px solid black;
+	}
+	#o{
+		color: black;
+	}
 
 	
 </style>
@@ -127,21 +127,21 @@ width: 90%;
 		<tr>
 			<td colspan="2">
 			<c:if test="${sessionScope.loginId == 'admin'}">
-				<a href="./adminFileBbsList?pageNo=${sessionScope.pageNo}">리스트가기</a>
+				<a id="o" href="./adminFileBbsList?pageNo=${sessionScope.pageNo}">리스트가기</a>
 			</c:if>
 			
 			<c:if test="${sessionScope.loginId != 'admin'}">
-				<a href="./fileList?pageNo=${sessionScope.pageNo}">리스트가기</a>
+				<a id="o" href="./fileList?pageNo=${sessionScope.pageNo}">리스트가기</a>
 			</c:if>		
 								
 				&nbsp;&nbsp;&nbsp;&nbsp;
 				<c:if test="${sessionScope.loginId == info.member_id}">
-					<a href="./fileUpdateForm?idx=${info.bbs_idx}">수정</a>
+					<a id="o" href="./fileUpdateForm?idx=${info.bbs_idx}">수정</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 				</c:if>
 				
 				<c:if test="${sessionScope.loginId == info.member_id || sessionScope.loginId == 'admin' }">
-					<a href="./fileDelete?idx=${info.bbs_idx}">삭제</a>
+					<a id="o" href="./fileDelete?idx=${info.bbs_idx}">삭제</a>
 				</c:if>	
 			</td>
 		</tr>
