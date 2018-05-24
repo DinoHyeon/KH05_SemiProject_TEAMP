@@ -495,6 +495,13 @@
 		</div>
 </body>
 <script>
+	var path = window.location.pathname;
+	var loaction = "";
+	if(path.indexOf('WriteForm')>-1||path.indexOf('dateForm')>-1||path.indexOf('writeForm')>-1){
+		loaction= ".";
+	}
+	
+	console.log(path.indexOf('WriteForm'));
 	var groupIdx = '${sessionScope.groupNum}';
 	var groupName = "";
 	var groupMemberContent = "";
@@ -525,7 +532,7 @@
 			//그룹이 있을 경우 nongroup를 none으로
 			$("#Nongroup").css("display","none");
 			//상단 부분 출력
-			obj.url="./headerMenuInfo";
+			obj.url=loaction+"./headerMenuInfo";
 			obj.data={};
 			obj.success = function(data){
 				groupStartDay=data.groupInfo.group_StrartDay;//시작일
@@ -604,7 +611,7 @@
 	
 	//메뉴 클릭시 세션부여
 	$(".menu").click(function() {
-		obj.url="./createMenuSession";
+		obj.url=loaction+"./createMenuSession";
 		obj.data={};
 		obj.data={menuName:$(this).attr("id")};
 		obj.success = function(data) {
@@ -656,7 +663,7 @@
 			$("#inviteMemberChkMsg").css("color","red");
 			idChk=false;
 		}else{
-			obj.url="./inviteMemberIdChk";
+			obj.url=loaction+"./inviteMemberIdChk";
 			obj.data={};
 			obj.data={inviteMemberId:$("#inviteMember").val()};
 			obj.success = function(data) {
@@ -688,7 +695,7 @@
 			alert("초대 내용을 입력해주세요.");
 			$("#inviteMsg").focus();
 		}else{
-			obj.url="./groupInvite";
+			obj.url=loaction+"./groupInvite";
 			obj.data={};
 			obj.data={
 					inviteMemberId:$("#inviteMember").val(),
@@ -733,7 +740,7 @@
 	
 	//그룹정보 호출
 	function groupInfoLoad() {
-		obj.url="./groupDetail";
+		obj.url=loaction+"./groupDetail";
 		obj.data={};
 		obj.data={groupIdx:groupIdx};
 		obj.success = function(data){
@@ -766,7 +773,7 @@
 		var startDay = new Date($("#groupInfoStartDate").val());
 		var endDay = new Date($("#groupInfoEndDate").val());
 		
-		obj.url="./planlist";
+		obj.url=loaction+"./planlist";
 		obj.data={};
 		obj.success = function(data){
 			data.list.forEach(function(item,index){
@@ -794,7 +801,7 @@
 				alert("진행해야하는 일정이 존재합니다.")
 				$("#groupInfoStartDate").focus();
 			}else{
-				obj.url="./groupInfoUpdate";
+				obj.url=loaction+"./groupInfoUpdate";
 				obj.data={};
 				obj.data={
 						groupInfoIdx:$('#groupInfoIdx').val(),
@@ -847,7 +854,7 @@
 		if(con){
 			var groupMemberId = $(this).attr("value");
 			passCheckCss();
-			obj.url="./memberOut";
+			obj.url=loaction+"./memberOut";
 			obj.data = {groupMemberId:groupMemberId};
 			obj.success = function(data){
 				if(data.success){
@@ -866,7 +873,7 @@
 	$("#withdrawal").click(function() {
 		var con = confirm("회원님 정말 그룹에서 탈퇴 하시겠습니까?");
 		if(con){
-			obj.url="./groupWithdrawal";
+			obj.url=loaction+"./groupWithdrawal";
 			obj.data = {groupIdx:groupIdx};
 			obj.success = function(data){
 				if(data.success){
@@ -882,7 +889,7 @@
 	
 	//그룹 멤버조회
 	function groupMemberListCall(){
-		obj.url="./groupMemberList";
+		obj.url=loaction+"./groupMemberList";
 		obj.data={groupIdx:groupIdx};
 		obj.success = function(data) {
 			console.log("멤버 그룹 조회");
@@ -920,7 +927,7 @@
 		var con = confirm("정말 그룹을 삭제 하시겠습니까?");
 		if(con){
 			//오늘
-			obj.url="./groupDelete";
+			obj.url=loaction+"./groupDelete";
 			obj.data={};
 			obj.data={groupInfoIdx:$('#groupInfoIdx').val()};
 			obj.success = function(data){
@@ -938,7 +945,7 @@
 	$("#groupfinish").click(function() {
 		var con = confirm("프로젝트를 완료하시겠습니까?");
 		if(con){
-			obj.url="./groupDelete";
+			obj.url=loaction+"./groupDelete";
 			obj.data={};
 			obj.data={groupInfoIdx:$('#groupInfoIdx').val()};
 			obj.success = function(data){

@@ -20,180 +20,185 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style>
-	body {
-		margin: 0%;
-	}
-	
-	#mainInfo {
-		position: fixed;
-		left: 82.5%;
-		width: 17.5%;
-		height: 100%;
-		background-color: #004C63;
-	}
-	
-	#logout {
-		position: absolute;
-		color: #004C63;
-		left: 66%;
-		top: 1.5%;
-		width: 28%;
-		height: 4%;
-		font-weight: 900;
-		font-size: 14px;
-		background-color: #FFD724;
-		text-align: center;
-		line-height: 30px;
-		border-radius: 8px;
-	}
-	
-	#userName {
-		position: absolute;
-		color: #FFD724;
-		width: 100%;
-		text-align: center;
-		top: 8%;
-		font-weight: 900;
-		font-size: 20px;
-	}
-	
-	#groupState {
-		position: absolute;
-		color: #FFD724;
-		width: 83%;
-		top: 10.5%;
-		font-weight: 900;
-		font-size: 16px;
-		text-align: center;
-	}
-	
-	#groupName {
-		position: absolute;
-		color: #FFD724;
-		width: 83%;
-		top: 10.5%;
-		left: 8%;
-		font-weight: 900;
-		font-size: 28px;
-		text-align: center;
-	}
-	
-	#Todo {
-		position: absolute;
-		color: white;
-		width: 83%;
-		top: 16%;
-		font-weight: 500;
-		font-size: 16px;
-		text-align: center;
-		backgour-color: "black";
-		left: 2%;
-	}
-	
-	#content {
-		background-color: #004D65;
-		border: 1px solid white;
-		width: 225px;
-		border-style: none none solid none;
-		color: white;
-		margin: 10;
-	}
-	
-	.tododel {
-		border: none;
-		margin-bottom: 10px;
-		background-color: #004D65;
-		font-size: 20px;
-		color: white;
-	}
-	
-	button {
-		margin-left: -20px;
-		border: none;
-		margin-bottom: 10px;
-		background-color: #004D65;
-		font-size: 20px;
-		color: white;
-	}
-	
-	#planList {
-	     position: absolute;
-    float: left;
-    height: 210%;
-    width: 115%;
-    top: 360%;
-		font-weight: 500;
-		font-size: 14px;
-		text-align: left;
-		background-color: #004C63;
-		overflow: auto;
-		border: 1px solid #FFD724;
-	}
-	#TodoList {
-		position: absolute;
-		float: left;
-    height: 190%;
-    width: 115%;
-    top: 130%; 
-		font-weight: 500;
-		font-size: 15px;
-		text-align: left;
-		background-color: #004C63;
-		overflow: auto;
-		border: 1px solid #FFD724;
-	}
-	#myPlan{
+body {
+	margin: 0%;
+}
+
+#mainInfo {
+	position: fixed;
+	left: 82.5%;
+	width: 17.5%;
+	height: 100%;
+	background-color: #004C63;
+}
+
+#logout {
+	position: absolute;
+	color: #004C63;
+	left: 66%;
+	top: 1.5%;
+	width: 28%;
+	height: 4%;
+	font-weight: 900;
+	font-size: 14px;
+	background-color: #FFD724;
+	text-align: center;
+	line-height: 30px;
+	border-radius: 8px;
+}
+
+#userName {
+	position: absolute;
+	color: #FFD724;
+	width: 100%;
+	text-align: center;
+	top: 8%;
+	font-weight: 900;
+	font-size: 20px;
+}
+
+#groupState {
+	position: absolute;
+	color: #FFD724;
+	width: 83%;
+	top: 10.5%;
+	font-weight: 900;
+	font-size: 16px;
+	text-align: center;
+}
+
+#groupName {
+	position: absolute;
+	color: #FFD724;
+	width: 83%;
+	top: 10.5%;
+	left: 8%;
+	font-weight: 900;
+	font-size: 28px;
+	text-align: center;
+}
+
+#Todo {
+	position: absolute;
+	color: white;
+	width: 83%;
+	top: 16%;
+	font-weight: 500;
+	font-size: 16px;
+	text-align: center;
+	backgour-color: "black";
+	left: 2%;
+}
+
+#content {
+	background-color: #004D65;
+	border: 1px solid white;
+	width: 225px;
+	border-style: none none solid none;
+	color: white;
+	margin: 10;
+}
+
+.tododel {
+	border: none;
+	margin-bottom: 10px;
+	background-color: #004D65;
+	font-size: 20px;
+	color: white;
+}
+
+button {
+	margin-left: -20px;
+	border: none;
+	margin-bottom: 10px;
+	background-color: #004D65;
+	font-size: 20px;
+	color: white;
+}
+
+#planList {
+	position: absolute;
+	float: left;
+	height: 210%;
+	width: 115%;
+	top: 360%;
+	font-weight: 500;
+	font-size: 14px;
+	text-align: left;
+	background-color: #004C63;
+	overflow: auto;
+	border: 1px solid #FFD724;
+}
+
+#TodoList {
+	position: absolute;
+	float: left;
+	height: 180%;
+	width: 115%;
+	top: 130%;
+	font-weight: 500;
+	font-size: 15px;
+	text-align: left;
+	background-color: #004C63;
+	overflow: auto;
+	border: 1px solid #FFD724;
+}
+
+#myPlan {
 	position: absolute;
 	top: 330%;
-	}
-	#myTodo{
+}
+
+#myTodo {
 	position: absolute;
-	top:100%;
-	}
-	#bordernone,#planTable,#TodoTable{
+	top: 100%;
+}
+
+#bordernone, #planTable, #TodoTable {
 	border: none;
-	}
-	
-	#TodoList::-webkit-scrollbar-track {
-		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-		border-radius: 10px;
-		background-color: #F5F5F5;
-	}
-	
-	#TodoList::-webkit-scrollbar {
-		width: 12px;
-		background-color: #F5F5F5;
-	}
-	
-	#TodoList::-webkit-scrollbar-thumb {
-		border-radius: 10px;
-		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-		background-color: #555;
-	}
-	
-	#planList::-webkit-scrollbar-track {
-		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-		border-radius: 10px;
-		background-color: #F5F5F5;
-	}
-	
-	#planList::-webkit-scrollbar {
-		width: 12px;
-		background-color: #F5F5F5;
-	}
-	
-	#planList::-webkit-scrollbar-thumb {
-		border-radius: 10px;
-		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-		background-color: #555;
-	}
-	
-	.divnamecolor {
-		color: #FFD724;
-	}
-	#logout{
-	 cursor:pointer;
-	}
+}
+
+#TodoList::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+#TodoList::-webkit-scrollbar {
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+#TodoList::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+	background-color: #555;
+}
+
+#planList::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+#planList::-webkit-scrollbar {
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+#planList::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+	background-color: #555;
+}
+
+.divnamecolor {
+	color: #FFD724;
+}
+
+#logout {
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -229,6 +234,13 @@
 	</div>
 </body>
 <script>
+	var path = window.location.pathname;
+	var loaction = "";
+	if(path.indexOf('WriteForm')>-1||path.indexOf('dateForm')>-1||path.indexOf('writeForm')>-1){
+		loaction= ".";
+	}
+	console.log(loaction);
+	
 	var content = "";
 	var obj = {};
 	obj.type = "post";
@@ -262,7 +274,8 @@
 
 	//페이지가 로드되었을 때 session에 그룹번호가 없는 경우 화면을 다르게 보여줘야한다.
 	$(document).ready(function() {
-		obj.url = "./planToday"
+		console.log(loaction);
+		obj.url = loaction+"./planToday";
 		obj.success = function(data) {
 			console.log(data.groupName.group_name);
 			$("#groupName").html(data.groupName.group_name	);
@@ -309,7 +322,7 @@
 		} else {
 			$.ajax({
 				type : "post",
-				url : "./todoWrite",
+				url : loaction+"./todoWrite",
 				data : {
 					content : $("#content").val()
 				},
@@ -329,7 +342,7 @@
 	});
 
 	function listPrint() {
-		obj.url = "./todoDetail"
+		obj.url = loaction+"./todoDetail"
 		obj.success = function(data) {
 			data.list
 					.forEach(function(item, idx) {
@@ -348,7 +361,7 @@
 	$(document).on('click','.tododel', function() {
 		$.ajax({
 			type : "post",
-			url : "./todoDelete",
+			url : loaction+"./todoDelete",
 			data : {
 				delcontent : $(this).attr('id')
 			},
