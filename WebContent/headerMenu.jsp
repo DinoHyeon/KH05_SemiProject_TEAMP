@@ -367,9 +367,9 @@
 	 		<div id="TeamPTitle">TeamP</div>
             <div id="navi">
            		<button class="menu" id="main">메인</button>
-                <button class="menu" onclick="location.href='memberInfoForm.jsp'" id="myInfo">내정보</button>
+                <button class="menu" onclick="location.href='/SemiProject_TeamP/memberInfoForm.jsp'" id="myInfo">내정보</button>
                 <button class="menu" onclick="location.href='/SemiProject_TeamP/adminList?pageNo=1'" id="notice">공지사항</button>
-                <button class="menu" onclick="location.href='plan.jsp'" id="plan">일정</button>
+                <button class="menu" onclick="location.href='/SemiProject_TeamP/plan.jsp'" id="plan">일정</button>
                 
                  <c:if test = "${sessionScope.memberLv == 'admin' }">
                    <button class="menu" onclick="location.href ='/SemiProject_TeamP/adminFileBbsList?pageNo=1'" id="fileBbs">파일게시판</button>
