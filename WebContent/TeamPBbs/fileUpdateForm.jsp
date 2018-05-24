@@ -16,12 +16,22 @@
 		background-color: white;
    	}
    	
-   	table,th,td{
+   	#tel{
+   		border: 1px solid black;
+		border-collapse: collapse;
+		padding: 5px 10px;
+   	}
+   	#tel th{
+   		border: 1px solid black;
+		border-collapse: collapse;
+		padding: 5px 10px;
+   	}
+   	#tel td{
 		border: 1px solid black;
 		border-collapse: collapse;
 		padding: 5px 10px;
 	}
-	table{
+	#tel{
 		width: 500px;
 	}
 	input[type='text']{
@@ -51,6 +61,18 @@
    	h2{
    		margin-left: 600px;
    	}
+   	#tel button{
+   		color: black;
+   		background-color: white;
+   		font-size: 5;
+   		
+   	}
+   	button:hover {
+		cursor: pointer;
+	}
+	#o{
+		color: black;
+	}
 </style>
 </head>
 <body>
@@ -74,7 +96,7 @@
 				<th>사진</th>
 				<td>
 				<c:if test="${dto.newFileName != null}">
-					<img src="./upload/${dto.newFileName}"/>
+					<img src="./upload/${dto.newFileName}" width="500"/>
 				</c:if>
 					<input type="file" name="photo"/>
 				</td>
@@ -86,7 +108,7 @@
 			
 			<tr>
 				<td colspan="2">
-					<a href="./fileDetail?idx=${dto.bbs_idx}&pageNo=${sessionScope.pageNo}">취소</a>
+					<a id="o" href="./fileDetail?idx=${dto.bbs_idx}&pageNo=${sessionScope.pageNo}">취소</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<button>저장</button>
 				</td>

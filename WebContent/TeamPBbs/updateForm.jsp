@@ -15,12 +15,22 @@
 		background-color: white;
    	}
    	
-   	table,th,td{
+   	#tel{
+   		border: 1px solid black;
+		border-collapse: collapse;
+		padding: 5px 10px;
+   	}
+   	#tel th{
+   		border: 1px solid black;
+		border-collapse: collapse;
+		padding: 5px 10px;
+   	}
+   	#tel td{
 		border: 1px solid black;
 		border-collapse: collapse;
 		padding: 5px 10px;
 	}
-	table{
+	#tel{
 		width: 500px;
 	}
 	input[type='text']{
@@ -30,7 +40,7 @@
 		width: 100%;
 		resize: none;
 	}
-	td{
+	#tel td{
 		text-align: center;
 	}
 	#tel{
@@ -47,6 +57,18 @@
    	h2{
    		margin-left: 600px;
    	}
+   	#o{
+   		color: black;
+   	}
+   	#tel button{
+   		color: black;
+   		background-color: white;
+   		font-size: 5;
+   		
+   	}
+   	button:hover {
+		cursor: pointer;
+	}
 </style>
 </head>
 <body>
@@ -78,7 +100,7 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-					<a href="./detail?idx=${dto.bbs_idx}&pageNo=${sessionScope.pageNo}">취소</a>
+					<a id="o" href="./detail?idx=${dto.bbs_idx}&pageNo=${sessionScope.pageNo}">취소</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<button>저장</button>
 				</td>

@@ -121,7 +121,7 @@
 			
 		<tr>
 			<th>내용</th>
-			<td height="400px" align="left">${info.bbs_content}</td>
+			<td height="400px" align="left" valign="top">${info.bbs_content}</td>
 		</tr>		
 		
 		<tr>

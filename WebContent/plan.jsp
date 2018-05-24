@@ -90,6 +90,9 @@
 	padding: 10 10;
 	margin-top: 5%;
 }
+#planinfo:hover{
+	background-color: gray;
+}
 
 #g {
 	color: white;
@@ -226,6 +229,12 @@ table, td, th {
 	width: 100%;
 	height: 100%;
 }
+.plan_title:hover{
+	background-color: yellow;
+	cursor: pointer;
+}
+
+
 </style>
 </head>
 <body>

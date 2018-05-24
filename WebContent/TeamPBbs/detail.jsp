@@ -78,7 +78,7 @@
 		width: 119%;
 		margin-top: -5%;
 		border: 1px solid black;
-	}
+	}	
 	#o{
 		color: black;
 	}
@@ -110,7 +110,7 @@
    
    <tr>
       <th>내용</th>
-      <td height="400px" align="left">${info.bbs_content }</td>
+      <td height="400px" align="left" valign="top">${info.bbs_content }</td>
    </tr>
    
 

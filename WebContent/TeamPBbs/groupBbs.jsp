@@ -25,7 +25,7 @@
    		margin-top: 5%;
    		margin-left: 3%;
    		width: 95%;
-   		height: 50%;
+   		height: 10%;
    	}
    	#tab{
    		margin-left: 43%;   
@@ -33,8 +33,14 @@
    	}
    	#btn{
    		margin-left: 70%;
-   		
-   	}  	
+   		color: #FFD724;
+        background-color: #004C63;   		
+   	}
+	#btn:hover{
+		cursor: pointer;
+		background-color: #FFD724;
+        color: #004C63; 
+	}  	
    	#w{
    		margin-left: 45%;
    	}   	
