@@ -32,7 +32,8 @@
       #btn{
    		margin-left: 70%;
    		color: #FFD724;
-        background-color: #004C63;   		
+        background-color: #004C63;   
+        border-radius: 8px;		
    	}
 	#btn:hover{
 		cursor: pointer;

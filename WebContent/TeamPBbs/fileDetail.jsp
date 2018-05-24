@@ -70,6 +70,11 @@
 		text-align: center;
 		border-radius: 8px;
 	}
+	#register:hover{
+		background-color: #004C63;
+		color: #FFD724;
+		cursor: pointer;
+	}
 	#ccontent{
 		resize:none;
 		height: 70%;
