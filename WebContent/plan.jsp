@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -22,9 +23,8 @@
 	border: none;
 	width: 20%;
 	top: 10%;
-	height: 7%;	
+	height: 7%;
 }
-
 
 #navitwo {
 	position: absolute;
@@ -50,10 +50,6 @@
 	padding: 2%;
 	color: white;
 	border: none;
-}
-#navithree button:hover {
-	background-color: black;
-	cursor: pointer;
 }
 
 /* 팝업 내용 */
@@ -96,11 +92,9 @@
 	margin-top: 5%;
 }
 
-
 #g {
 	color: white;
 	margin-left: 42%;
-	text-align: left;
 }
 
 #plusplus {
@@ -233,12 +227,6 @@ table, td, th {
 	width: 100%;
 	height: 100%;
 }
-.plan_title:hover{
-	background-color: yellow;
-	cursor: pointer;
-}
-
-
 </style>
 </head>
 <body>
@@ -637,25 +625,29 @@ table, td, th {
 	                  for(var i=0; i<day.length; i++){
 	                     if($("td[class="+item.plan_idx+"]")[i].id==betweenDateArr[j]){
 	                        $("td[class="+item.plan_idx+"]")[i].style.backgroundColor = 'yellow';
+	                        
 	                     }
 	                     }
 	               }
-	                  if(item.plan_state=='완료'){
-	                     for(var i=0; i<day.length; i++){
-	                        if($("td[class="+item.plan_idx+"]")[i].id==item.plan_plan_finishDate){
-	                           $("td[class="+item.plan_idx+"]")[i].style.backgroundColor = 'green';
+	               
+	               if(item.plan_state=='진행중'||item.plan_state=='준비중'){
+	            	   for(var j=1; j<extendDateArr.length; j++){
+	                       for(var i=0; i<day.length; i++){
+	                          	if($("td[class="+item.plan_idx+"]")[i].id==extendDateArr[j]){
+	                          		$("td[class="+item.plan_idx+"]")[i].style.backgroundColor = 'red';			        
+	                          	}
 	                        }
-	                      }
-	                  }else{
-	                     /*일정의 상태가 완료가 아닐시*/
+	            	   }
+                     }else{
+	                     /*일정의 상태가 완료일떄*/
 	                     for(var j=1; j<extendDateArr.length; j++){
 	                          for(var i=0; i<day.length; i++){
-	                           if($("td[class="+item.plan_idx+"]")[i].id==extendDateArr[j]){
-	                           $("td[class="+item.plan_idx+"]")[i].style.backgroundColor = 'red';
-	                           if($("td[class="+item.plan_idx+"]")[i].id==item.plan_plan_finishDate){
-	                        	   $("td[class="+item.plan_idx+"]")[i].style.backgroundColor = 'green';
-	                            }
-	                           }
+	                           	if($("td[class="+item.plan_idx+"]")[i].id==extendDateArr[j]){
+	                           		$("td[class="+item.plan_idx+"]")[i].style.backgroundColor = 'red';			
+	                           		if($("td[class="+item.plan_idx+"]")[i].id==item.plan_plan_finishDate){
+	                        	 	  $("td[class="+item.plan_idx+"]")[i].style.backgroundColor = 'green';
+	                           	 	}
+	                           	}
 	                         }
 	                      }
 	                     

@@ -27,10 +27,10 @@
 
 #page #todayPlan {
 	position: absolute;
-	top: 65%;
+	top: 69%;
 	left: 0.6%;
 	width: 50%;
-	height: 33%;
+	height: 30%;
 	background-color: white;
 	border: 3px solid #004D65;
 }

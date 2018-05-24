@@ -269,7 +269,7 @@
 			/*그룹 정보수정  */
 			#changeGroupInfo{
 				color: white;
-				margin-left: 45%;
+				margin-left: 40%;
 				margin-top: 1.5%;
 				position: absolute;
                 background-color: #FFD724;
@@ -297,15 +297,18 @@
 				color: white;
 			}
 			#groupDel{
-				position: absolute;
+				color: white;
+           		margin-left: 55%;
+            	margin-top: 1.5%;
+            	position: absolute;
                 background-color: #FFD724;
                 color: #004C63;                
-                text-align: center;                
+                text-align: center;
+                line-height: 33px;
                 font-weight: 900;
                 border-radius: 8px;
-               	display: block;
-				margin-left: 65%;
-				margin-top: 5%;
+                display: block;
+
 			}
 			#groupDel:hover{
 				cursor: pointer;
@@ -435,6 +438,7 @@
 			</table>
 			<div id="invite">초대</div>
 			<div id="changeGroupInfo">그룹정보 수정</div>
+			<div id="groupDel">그룹 삭제</div>
 		</div>
 		
 		
@@ -459,7 +463,7 @@
 				</tr>
 			</table>
 			<input id="inviteinput" type="button" value="초대" onclick="groupInvite()">
-			<div id="groupDel">그룹 삭제</div>
+			
 		</div>
         
         <!-- 그룹원일 때 나오는 창 -->
