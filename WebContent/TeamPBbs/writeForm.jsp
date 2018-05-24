@@ -83,7 +83,7 @@
     	<c:if test="${groupNum == 0}">
     		<!-- /write 컨트롤러 에서 처리 -->
 			<form action="../write" method="get">
-			
+			<input type = "hidden" name="pageNo" value="${sessionScope.pageNo}"/>
 			<!-- 세션아이디가 admin 이 아닐때  == 의견나눔게시판 말고는 작성할 곳이 없으므로 freeBbs를 hidden 타입으로 보냄 -->
 			<c:if test="${sessionScope.loginId != 'admin' }">
 				<input type="hidden" name="bbs_name" value="freeBbs"/>
@@ -111,11 +111,11 @@
 					<td colspan="2">
 						<!-- admin 일시 공지사항게시판에 글을 작성한 것이므로 adminList 로 복귀 -->
 						<c:if test="${sessionScope.loginId == 'admin'}">
-							<a href="../adminList">리스트가기</a>
+							<a href="../adminList?pageNo=${sessionScope.pageNo}">리스트가기</a>
 						</c:if>
 						<!-- admin이 아닐시 의견나눔게시판에 글을 작성한 것이므로 comunityList로 복귀 -->
 						<c:if test="${sessionScope.loginId != 'admin'}">
-							<a href="../comunityList">리스트가기</a>
+							<a href="../comunityList?pageNo=${sessionScope.pageNo}">리스트가기</a>
 						</c:if>		
 							&nbsp;&nbsp;&nbsp;&nbsp;
 							<button>저장</button>		
@@ -129,6 +129,7 @@
 	<c:if test="${groupNum != 0}">
 			<!-- /groupWrite 컨트롤러에서 처리 -->
 			<form action="../groupWrite" method="get">
+			<input type = "hidden" name="pageNo" value="${sessionScope.pageNo}"/>
 			
 			<c:if test="${sessionScope.loginId != 'admin' }">
 				<input type="hidden" name="bbs_name" value="freeBbs"/>
@@ -154,10 +155,10 @@
 				<tr>
 					<td colspan="2">
 						<c:if test="${sessionScope.loginId == 'admin'}">
-							<a href="../adminList">리스트가기</a>
+							<a href="../adminList?pageNo=${sessionScope.pageNo}">리스트가기</a>
 						</c:if>
 						<c:if test="${sessionScope.loginId != 'admin'}">
-							<a href="../comunityList">리스트가기</a>
+							<a href="../comunityList?pageNo=${sessionScope.pageNo}">리스트가기</a>
 						</c:if>		
 							&nbsp;&nbsp;&nbsp;&nbsp;
 							<button>저장</button>		

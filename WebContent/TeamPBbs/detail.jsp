@@ -116,19 +116,19 @@ width: 90%;
    		<!-- dto에 셋팅된 bbs_name을 사용하여 리스트돌아가기 클릭시 각각의 페이지로 분기 시키기 -->
       <td colspan="2">
 	     	 <c:if test="${info.bbs_name == 'freeBbs'}">
-	     	 	<a href ="/SemiProject_TeamP/comunityList?pageNo=${pageNo}">리스트</a>
+	     	 	<a href ="/SemiProject_TeamP/comunityList?pageNo=${sessionScope.pageNo}">리스트</a>
 	     	 </c:if>
 	     	 
 	     	 <c:if test="${info.bbs_name == 'adminBbs'}">
-	     	 	<a href ="/SemiProject_TeamP/adminList">리스트</a>
+	     	 	<a href ="/SemiProject_TeamP/adminList?pageNo=${sessionScope.pageNo}">리스트</a>
 	     	 </c:if>
 	     	 
 	     	 <c:if test="${sessionScope.loginId != 'admin' && info.bbs_name == 'groupBbs'}">
-	     	 	<a href ="/SemiProject_TeamP/groupList">리스트</a>
+	     	 	<a href ="/SemiProject_TeamP/groupList?pageNo=${sessionScope.pageNo}">리스트</a>
 	     	 </c:if> 
 	     	 
 	     	 <c:if test="${sessionScope.loginId == 'admin' && info.bbs_name == 'groupBbs'}">
-	     	 	<a href ="/SemiProject_TeamP/adminGroupBbsList">리스트</a>
+	     	 	<a href ="/SemiProject_TeamP/adminGroupBbsList?pageNo=${sessionScope.pageNo}">리스트</a>
 	     	 </c:if> 
 	     	 
 	         &nbsp;&nbsp;&nbsp;&nbsp;
@@ -145,10 +145,17 @@ width: 90%;
 	         <c:if test="${(sessionScope.loginId == info.member_id || sessionScope.loginId == 'admin') && info.bbs_name == 'freeBbs'}">  
 	        	 <a href="./comunityBbsDelete?idx=${info.bbs_idx}">삭제</a>
 	  		 </c:if>
+	  		 
 			<!-- 관리자와 로그인한유저(그룹장)만 그룹게시판 삭제 가능-->
 			 <c:if test="${(sessionScope.loginId == info.member_id || sessionScope.loginId == 'admin') && info.bbs_name == 'groupBbs'}">  
 	        	 <a href="./groupBbsDelete?idx=${info.bbs_idx}">삭제</a>
 	  		 </c:if>
+	  		 
+	  		 <!-- 관리자만 공지사항게시판 삭제 가능-->
+			 <c:if test="${sessionScope.loginId == 'admin' && info.bbs_name == 'adminBbs'}">  
+	        	 <a href="./adminList?idx=${info.bbs_idx}&pageNo=${sessionScope.pageNo}">삭제</a>
+	  		 </c:if>
+	  		 
       </td>
    </tr>
    <tr>
@@ -261,12 +268,15 @@ function listPrint2() {
 
 $(document).on('click', '.commentdel', function() {
 	console.log("삭제");
+	var cid = $("#bbsno").text();
 
 	var delcomment = $(this).attr("id");
 	obj.url = "./replyDelete";
-	obj.data = {
-		delcomment : delcomment
-	};
+	obj.data = {	};
+	
+	obj.data = {};
+	obj.data.delcomment = delcomment;
+	obj.data.cid = cid;
 	obj.success = function(data) {
 		console.log(data);
 		if (data.success>0) {

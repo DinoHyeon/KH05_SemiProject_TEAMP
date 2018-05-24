@@ -70,7 +70,7 @@
 		<form action="../groupWrite" method="get">
 		<!-- Bbs 테이블에 bbs_name 값을 groupBbs 로 추가  -->
 		<input type="hidden" name="bbs_name" value="groupBbs"/>
-		
+		<input type = "hidden" name="pageNo" value="${sessionScope.pageNo}"/>
 		<table id="tel">
 			<tr>
 				<th width="10%">작성자</th>

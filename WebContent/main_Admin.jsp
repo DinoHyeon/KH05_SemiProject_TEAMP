@@ -126,7 +126,7 @@
                 left: 2.5%;
                 top: 21%;
                 background: white;
-                overflow: auto;
+             	overflow-y: scroll;
             }
             
             #contentPopup #popupTitle{
@@ -146,6 +146,25 @@
             	font-size: 15px;
             	text-align: center;
             }
+            
+/*스크롤바 css */
+::-webkit-scrollbar{
+width: 11px;
+}
+::-webkit-scrollbar-track{
+background: #c4c6c8;
+}
+::-webkit-scrollbar-thumb{
+background: #105B74;
+border-radius: 10px;
+-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.4);
+}
+::-webkit-scrollbar-thumb:vertical:hover,
+::-webkit-scrollbar-thumb:horizontal:hover{ 
+background: #08A67C;
+}
+            
+            
         </style>
     </head>
     

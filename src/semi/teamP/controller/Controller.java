@@ -16,6 +16,7 @@ import semi.teamP.service.BoardService;
 import semi.teamP.service.GroupService;
 import semi.teamP.service.HeaderMenuService;
 import semi.teamP.service.MemberService;
+import semi.teamP.service.PlanReplyService;
 import semi.teamP.service.PlanService;
 import semi.teamP.service.ReplyService;
 import semi.teamP.service.TodoService;
@@ -29,7 +30,7 @@ import semi.teamP.service.TodoService;
 	,"/planWrite", "/planlist", "/planChange", "/planDelete", "/planDetail", "/planTableList","/planDayList","/planToday"
 	,"/todoDetail", "/todoWrite", "/todoUpdate", "/todoDelete", "/todoChange"
 	,"/adMemberList", "/adMemberDel", "/adGroupList", "/adGroupDel", "/adGroupSession"
-	,"/headerMenuInfo"})
+	,"/headerMenuInfo","/planreplyWrite","/planreplyUpdate","/planreplyDelete","/planreplyCheck"})
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -61,7 +62,7 @@ public class Controller extends HttpServlet {
 		TodoService todo = null;
 		AdminService admin = null;
 		HeaderMenuService header = null;
-		
+		PlanReplyService planreply= null;
 		switch (subAddr) {
 		case "/createMenuSession":
 			System.out.println("메뉴세션 생성 요청");
@@ -360,6 +361,32 @@ public class Controller extends HttpServlet {
 			reply = new ReplyService(request, response);
 			reply.replyUpdateForm();
 			break;
+			
+			
+		case "/planreplyWrite":
+			System.out.println("일정 댓글 작성 요청");
+			planreply = new PlanReplyService(request, response);
+			planreply.planreplyWrite();
+			break;	
+			
+		case "/planreplyUpdate":
+			System.out.println("일정댓글 수정 요청");
+			planreply = new PlanReplyService(request, response);
+			planreply.planreplyUpdate();
+			break;
+				
+		case "/planreplyDelete":
+			System.out.println("일정댓글 삭제 요청");
+			planreply = new PlanReplyService(request, response);
+			planreply.planreplyDelete();
+			break;
+		
+		case "/planreplyCheck":
+			System.out.println("일정리스트 불러오기");
+			planreply = new PlanReplyService(request, response);
+			planreply.planreplyCheck();
+			break;			
+			
 			
 		case "/planWrite":
 			System.out.println("일정 작성 요청");

@@ -17,39 +17,28 @@
 		background-color: white;
 		
 			
-   	}
-   	
+   	}   	
    	#tel{
   	 	border: 1px solid black;
    		border-collapse: collapse;
    		padding: 10 5;
    		text-align: center;
-   		margin-top: 60px;
-   		margin-left: 50px;
+   		margin-top: 5%;
+   		margin-left: 3%;
    		width: 95%;
    		height: 50%;
    	}
    	#tab{
-   		margin-left: 550px;
-   		margin-top: 20px;
+   		margin-left: 43%;   
+   		margin-top: -2%;	
    	}
    	#btn{
-   		margin-left: 825px;
-   		margin-top: -20px;
-   	}
-   	
-  
-   	
-   	h2{
-   		margin-left: 600px;
-   	}
-   	#aa{
-  	 	margin-left: 10px;  	 	
-   	}
-   	#btnno{
-   		margin-left: 580px;
-   		margin-top: 20px;
-   	}
+   		margin-left: 70%;
+   		
+   	}  	
+   	#w{
+   		margin-left: 45%;
+   	}   	
    	#b{
    		color: #FFD724;
    	}
@@ -82,6 +71,7 @@
     }
 	#f{
 		border: 1px solid #E7E7E7;
+
 	}
 </style>
 </head>
@@ -96,18 +86,18 @@
 	
     <div id="page">
     <c:if test="${sessionScope.loginId != 'admin' }">
-   		 <h2>의견 나눔 게시판</h2>
+   		 <h2 id="w">의견 나눔 게시판</h2>
    	 </c:if>
    	 <c:if test="${sessionScope.loginId == 'admin' }">
-   		 <h2>관리자 의견 나눔 게시판</h2>
+   		 <h2 id="w">관리자 의견 나눔 게시판</h2>
    	 </c:if>
 		<table id="tel">		
-			<tr bgcolor="#004D65">		
-				
-				<th valign="top"><a id="b">제목</a></th>
-				<th valign="top" width="10%"><a id="b">작성자</a></th>
-				<th valign="top" width="10%"><a id="b">날짜</a></th>
-				<th valign="top" width="10%"><a id="b">조회수</a></th>
+			<tr bgcolor="#004D65">
+
+				<th valign="top" height="10%"><a id="b">제목</a></th>
+				<th valign="top" width="10%" height="10%"><a id="b">작성자</a></th>
+				<th valign="top" width="10%" height="10%"><a id="b">날짜</a></th>
+				<th valign="top" width="10%" height="10%"><a id="b">조회수</a></th>
 			</tr>
 			
 			<!-- 셋팅된 dto값을 테이블에 뿌려준다 -->
@@ -122,7 +112,7 @@
 			</c:forEach>
 		</table>
 		
-		<jsp:include page="paging.jsp" flush="true">
+		<jsp:include page="paging/paging.jsp" flush="true">
 		    <jsp:param name="firstPageNo" value="${paging.firstPageNo}" />
 		    <jsp:param name="prevPageNo" value="${paging.prevPageNo}" />
 		    <jsp:param name="startPageNo" value="${paging.startPageNo}" />
@@ -137,7 +127,13 @@
 		<c:if test="${sessionScope.loginId != 'admin'}">
 			<button id="btn"  onclick="location.href = 'TeamPBbs/writeForm.jsp'">글쓰기</button>
 		</c:if>
+		<c:if test="${sessionScope.loginId == 'admin'}">
+			<br/><br/>
+		</c:if>
 		
+		
+   		
+   		
 		<!-- 게시판 검색 폼 -->
 		<form action="./comunityList" method="get">
 			<table id="tab">
@@ -155,6 +151,7 @@
 				</tr>
 			</table>
 		</form>
+	
 		
 			
 		

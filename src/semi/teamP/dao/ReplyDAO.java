@@ -95,14 +95,15 @@ public class ReplyDAO {
 
 	}
 
-	public int replyDelete(String delcomment, String loginId) {
+	public int replyDelete(String delcomment, String loginId, int bbsidx) {
 		int success = 0;
-		String sql = "DELETE FROM Bbs_comment where comment_idx=? AND member_id=?";
-
+		delcnt(bbsidx);
+		String sql = "DELETE FROM Bbs_comment where comment_idx=? AND member_id=? AND bbs_idx=?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, Integer.parseInt(delcomment));
 			ps.setString(2, loginId);
+			ps.setInt(3, bbsidx);
 			success = ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -117,12 +118,25 @@ public class ReplyDAO {
 
 	}
 
-	private void replycnt(int idx) {  //게시글 조회수 
+	private void replycnt(int idx) {  //댓글 증가cnt
 		String sql = "update bbs set reply_cnt=reply_cnt+1 where bbs_idx=?";
 		try {
 		ps= conn.prepareStatement(sql);
 		ps.setInt(1, idx);
 		ps.executeUpdate();
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+}
+	private void delcnt(int idx) {  //댓글 감소cnt 
+		String sql = "update bbs set reply_cnt=reply_cnt-1 where bbs_idx=?";
+		
+		try {
+		ps= conn.prepareStatement(sql);
+		ps.setInt(1, idx);
+		ps.executeUpdate();
+	
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}

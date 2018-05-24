@@ -7,6 +7,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Insert title here</title>
 	<style>
+
+
+	
 		/* 페이지 영역을 잡기 위한 css 설정입니다. */
 	    #myInfoSection{
 	        position: absolute;
@@ -31,7 +34,7 @@
 	        color: #004D65;
 	        font-weight: 900;
 	        left: 46.2%;
-	        top: 7.55%;
+	        top: 2.3%;
 	    }
 	    
 	    #myInfoSection table{
@@ -40,6 +43,8 @@
 	        top: 19%;
 	        height: 52%;
 	        width: 33%;
+	        font-size: 19px;
+	        font-weight: 1000;
 	    }
 	    
 	    #myInfoSection table td{
@@ -60,8 +65,8 @@
 	        width: 6%;
 	        height: 4%;
 	        border-radius: 8px;
-	        background-color: #FFD724;
-	        color: #004D65;
+	        background-color: #00455A;
+	        color: #FFD724;
 	        border: none;
 	        font-weight: 900;
 	        text-align: center;
@@ -79,13 +84,13 @@
 	    #changInfo{
 	        position: absolute;
 	        left: 42%;
-	        top: 74%;
+	        top: 72%;
 	        float: left;
 	        width: 20%;
 	        height: 6%;
 	        border-radius: 8px;
-	        background-color: #FFD724;
-	        color: #004D65;
+	        background-color: #004D65;  
+	        color: #FFD724;
 	        border: none;
 	        font-weight: 900;
 	        text-align: center;
@@ -116,6 +121,60 @@
 	        top: 65.2%;
 	        font-size: 12px;
 	    }
+	    
+	    .pin {
+  background-color: #aaa;
+  display: block;
+  height: 32px;
+  width: 2px;
+  position: absolute;
+  left: 50%;
+  top: 16%;
+  z-index: 1;
+}
+.pin:after {
+  background-color: #A31;
+   border-radius: 50%;
+  box-shadow: inset 0 0 0 1px hsla(0,0%,0%,.1),
+              inset 3px 3px 3px hsla(0,0%,100%,.2),
+              inset -3px -3px 3px hsla(0,0%,0%,.2),
+              23px 20px 3px hsla(0,0%,0%,.15);
+  content: '';
+  height: 12px;
+  left: -5px;
+  position: absolute;
+  top: -10px;
+  width: 12px;
+}
+.pin:before {
+  background-color: hsla(0,0%,0%,0.1);
+  box-shadow: 0 0 .25em hsla(0,0%,0%,.1);
+  content: '';
+
+  height: 24px;
+  width: 2px;
+  left: 0;
+  position: absolute;
+  top: 8px;
+
+}
+#container{
+ color: #333;
+margin: 9% auto;
+border:none;
+width : 62%;
+height: 62%;
+left:30%;
+box-shadow: 0 10px 10px 2px rgba(0,0,0,0.3);
+ background: #eae672;
+
+
+ 
+
+
+}
+	    
+	    
 	</style>
 	</head>
 	
@@ -125,8 +184,13 @@
 		<div id="memberInfoFormBg">
 		</div>
 	    <div id="myInfoSection">
-	        <h1>내 정보</h1>
+	       
+    <div id="container">
+    <i class="pin"></i>
+ 			<h1>[ MYINFO ]</h1>
+    
 			<table>
+			
 				<tr>
 					<td>이름</td>
 					<td><span id="memberInfoName"></span></td>
@@ -160,8 +224,12 @@
 					</td>
 				</tr>
 			</table>
-	        <div id="emailOverlay">중복체크</div><span id="emailOverlayMsg"></span>
+	
+			
+			
+				        <div id="emailOverlay">중복체크</div><span id="emailOverlayMsg"></span>
 			<div id="changInfo">회원정보 수정</div>
+					</div>
 			<span id="PwChkMsg"></span>
 	        <div id="memberWithdrawal">회원 탈퇴</div>
 	    </div>
@@ -209,20 +277,20 @@
 		});
 	    
 	 $("#emailOverlay").mouseenter(function(){
-		        $("#emailOverlay").css("background","#00455A");
-		        $("#emailOverlay").css("color","#FFD724")
+		        $("#emailOverlay").css("background","#FFD724");
+		        $("#emailOverlay").css("color","#00455A")
 		        $("#emailOverlay").mouseleave(function(){
-		            $("#emailOverlay").css("background","#FFD724");
-		            $("#emailOverlay").css("color","#004D65")
+		            $("#emailOverlay").css("background","#00455A");
+		            $("#emailOverlay").css("color","#FFD724")
 		        })
 		    })
 	    
 	 $("#changInfo").mouseenter(function(){
-		        $("#changInfo").css("background","#00455A");
-		        $("#changInfo").css("color","#FFD724")
+		        $("#changInfo").css("background","#FFD724");
+		        $("#changInfo").css("color","#00455A")
 		        $("#changInfo").mouseleave(function(){
-		            $("#changInfo").css("background","#FFD724");
-		            $("#changInfo").css("color","#004D65")
+		            $("#changInfo").css("background","#00455A");
+		            $("#changInfo").css("color","#FFD724")
 		        })
 		    })    
 	    

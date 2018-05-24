@@ -202,7 +202,7 @@ public class PlanDAO {
 
 	public ArrayList<PlanDTO> list(int groupIdx, String memberId) {
 		ArrayList<PlanDTO> list = new ArrayList<PlanDTO>(); // list변수만들어주고
-		String sql = "SELECT * FROM Plan WHERE group_idx=? AND member_id=? ORDER BY plan_idx DESC";
+		String sql = "SELECT * FROM Plan WHERE group_idx=? AND member_id=? AND plan_state='준비중' OR plan_state='진행중' ORDER BY plan_idx DESC";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1,groupIdx);
@@ -211,7 +211,8 @@ public class PlanDAO {
 			while (rs.next()) {
 				PlanDTO dto = new PlanDTO();
 				dto.setPlan_title(rs.getString("plan_title"));
-				dto.setPlan_endDay(castingString(rs.getDate("plan_endDay")));
+				dto.setPlan_state(rs.getString("plan_state"));
+				//dto.setPlan_endDay(castingString(rs.getDate("plan_endDay")));
 				list.add(dto);// dto 를 list 에 담기
 			}
 		} catch (SQLException e) {

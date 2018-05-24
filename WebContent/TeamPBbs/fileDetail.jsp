@@ -127,11 +127,11 @@ width: 90%;
 		<tr>
 			<td colspan="2">
 			<c:if test="${sessionScope.loginId == 'admin'}">
-				<a href="./adminFileBbsList">리스트가기</a>
+				<a href="./adminFileBbsList?pageNo=${sessionScope.pageNo}">리스트가기</a>
 			</c:if>
 			
 			<c:if test="${sessionScope.loginId != 'admin'}">
-				<a href="./fileList">리스트가기</a>
+				<a href="./fileList?pageNo=${sessionScope.pageNo}">리스트가기</a>
 			</c:if>		
 								
 				&nbsp;&nbsp;&nbsp;&nbsp;
@@ -260,15 +260,19 @@ var commentdate = '${sessionScope.comment_date}';
 
 	$(document).on('click', '.commentdel', function() {
 		console.log("삭제");
+	
+		var cid = $("#bbsno").text();
 
 		var delcomment = $(this).attr("id");
 		obj.url = "./replyDelete";
-		obj.data = {
-			delcomment : delcomment
-		};
+		obj.data = {	};
+		
+		obj.data = {};
+		obj.data.delcomment = delcomment;
+		obj.data.cid = cid;
 		obj.success = function(data) {
 			console.log(data);
-			if (data.success) {
+			if (data.success>0) {
 				alert("삭제에 성공하였습니다.")
 				listPrint2();
 			} else {

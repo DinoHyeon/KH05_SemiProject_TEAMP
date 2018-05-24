@@ -9,61 +9,43 @@
 <title>Insert title here</title>
 <style>
    
-   #page{
-       position: absolute;
-      top: 15.9%;
-      width: 82.5%;
-       height: 84.1%;
-      background-color: white;
-      }
-      
-   	
+  /* 페이지 영역을 잡기 위한 css 설정입니다. */
+    #page{
+        position: absolute;
+		top: 15.9%;
+	    width: 82.5%;
+	    height: 84.1%;
+		background-color: white;
+		
+			
+   	}   	
    	#tel{
   	 	border: 1px solid black;
    		border-collapse: collapse;
    		padding: 10 5;
    		text-align: center;
-   		margin-top: 60px;
-   		margin-left: 50px;
+   		margin-top: 5%;
+   		margin-left: 3%;
    		width: 95%;
-   		height: 40%;
+   		height: 50%;
    	}
    	#tab{
-   		margin-left: 550px;
-   		margin-top: 20px;
+   		margin-left: 43%;   
+   		margin-top: -2%;	
    	}
    	#btn{
-   		margin-left: 825px;
-   		margin-top: -20px;
-   	}
-   	
-   /* 	table,td,th{
-   		border: 1px solid black;
-   		border-collapse: collapse;
-   		padding: 10 5;
-   		text-align: center;
-   		margin-top: 100px;
-   		margin-left: 500px;
-   		width: 35%; 
-   		 		
-   	} */
-   	
-   	h2{
-   		margin-left: 600px;
-   	}
-   	#aa{
-  	 	margin-left: 10px;  	 	
-   	}
-   	#btnno{
-   		margin-left: 580px;
-   		margin-top: 20px;
-   	}
+   		margin-left: 70%;
+   		
+   	}  	
+   	#w{
+   		margin-left: 45%;
+   	}   	
    	#b{
    		color: #FFD724;
    	}
-    #c:hover{   	
+   	#c:hover{   	
 		background-color: #F6F6F6;
-		
+		/* #566A70 */
 	}
 	#d{
 		color: black;
@@ -98,10 +80,10 @@
    <%@include file="../headerMenu.jsp"%>
    <%@include file="../sideMenu.jsp"%>
     <div id="page">
-    <h2>파일 게시판</h2>
+    <h2 id="w">파일 게시판</h2>
       <table id="tel">
          <tr bgcolor="#004D65">            
-            <th valign="top"><a id="b">제목</a></th>
+            <th valign="top" height="10%"><a id="b">제목</a></th>
 			<th valign="top" width="10%"><a id="b">작성자</a></th>
 			<th valign="top" width="10%"><a id="b">날짜</a></th>
 			<th valign="top" width="10%"><a id="b">조회수</a></th>
@@ -116,14 +98,15 @@
          </c:forEach>
       </table>
       
-      <div id="btnno">
-		<a id="aa" href="#">이전</a>
-		<a id="aa" href="#">[1]</a>
-		<a id="aa" href="#">2</a>
-		<a id="aa" href="#">3</a>
-		<a id="aa" href="#">4</a>
-		<a id="aa" href="#">다음</a>
-		</div>
+      <jsp:include page="paging/filePaging.jsp" flush="true">
+		    <jsp:param name="firstPageNo" value="${paging.firstPageNo}" />
+		    <jsp:param name="prevPageNo" value="${paging.prevPageNo}" />
+		    <jsp:param name="startPageNo" value="${paging.startPageNo}" />
+		    <jsp:param name="pageNo" value="${paging.pageNo}" />
+		    <jsp:param name="endPageNo" value="${paging.endPageNo}" />
+		    <jsp:param name="nextPageNo" value="${paging.nextPageNo}" />
+		    <jsp:param name="finalPageNo" value="${paging.finalPageNo}" />
+		</jsp:include>
 		
 		<button id="btn" onclick="location.href = 'TeamPBbs/fileWriteForm.jsp'">글쓰기</button>
       

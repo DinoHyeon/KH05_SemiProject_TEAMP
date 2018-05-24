@@ -60,6 +60,7 @@
     <h2>글쓰기</h2>
 		<form action="../fileWrite" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="bbs_name" value="fileBbs">
+		
    			<table id="tel">
 			   <tr>
 			      <th width="10%">작성자</th>
@@ -80,7 +81,7 @@
 			   
 			   <tr>      
 			      <td colspan="2">
-			         <a href="../fileList">리스트 </a>
+			         <a href="../fileList?pageNo=${sessionScope.pageNo}">리스트 </a>
 			         &nbsp;&nbsp;&nbsp;&nbsp;
 			         <button>저장</button>
 			      </td>

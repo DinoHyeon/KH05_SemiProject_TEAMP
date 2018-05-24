@@ -37,6 +37,7 @@
                 width: 45%;
             }
             
+            
             #navi button{
                 border: none;
                 background-color:white;
@@ -124,7 +125,10 @@
                 border-radius: 8px;
                	display: block;
             }
-            
+            #groupInfo:hover{
+            	cursor: pointer;
+            }
+                       
             /* 그룹관리 버튼 */
            #groupManage{
                 position: absolute;
@@ -139,6 +143,11 @@
                 font-weight: 900;
                 border-radius: 8px;
                	display: block;
+            }
+            #groupManage:hover{
+            	cursor: pointer;
+            	background-color: #004C63;
+            	color: #FFD724;
             }
             
             /* 팝업배경 */
@@ -185,6 +194,10 @@
 			    top: 49.5%;
 			    left: 69.2%;
 			}
+			#invite:hover{
+				cursor: pointer;
+				text-decoration: underline; 
+			}
 			
 			#groupmemberName{
 				position: absolute;
@@ -225,9 +238,9 @@
 			    display: none;
 			    z-index: 5;
 			    top: 13%;
-			    left: 18%;
-			    width: 60%;
-			    height: 75%;
+			    left: 30%;
+			    width: 35%;
+			    height: 45%;
 			    background-color: #004C63;
 			}
 			
@@ -240,9 +253,108 @@
 				left: 97%;
 				top: 2%;
 				display: none;
-				z-index: 6
+				z-index: 6;
+				cursor: pointer;				
 			}
-	            
+			#g{
+				color: white;
+				margin-left: 45%;
+			}
+			#groupInfoManage{
+				margin-left: 35%;
+				padding: 10 10;
+				margin-top: 5%;
+				
+			}
+			/*그룹 정보수정  */
+			#changeGroupInfo{
+				color: white;
+				margin-left: 45%;
+				margin-top: 1.5%;
+				position: absolute;
+                background-color: #FFD724;
+                color: #004C63;                
+                text-align: center;
+                line-height: 33px;
+                font-weight: 900;
+                border-radius: 8px;
+               	display: block;
+			}			
+			#changeGroupInfo:hover {				 
+			 	cursor: pointer;  
+			 	background-color: #004C63;
+            	color: #FFD724;     		
+			}				
+			#out{
+				color: white;
+				text-align: center;
+			}
+			#out:hover{				
+				cursor: pointer;
+				background-color: gray;				
+			}
+			#groupMemberId{
+				color: white;
+			}
+			#groupDel{
+				position: absolute;
+                background-color: #FFD724;
+                color: #004C63;                
+                text-align: center;                
+                font-weight: 900;
+                border-radius: 8px;
+               	display: block;
+				margin-left: 65%;
+				margin-top: 5%;
+			}
+			#groupDel:hover{
+				cursor: pointer;
+				text-decoration: none;
+				color: #FFD724;
+				background-color: #004D65;
+			}			
+			#invitetable{
+				margin-left: 20%;
+				margin-top: 10%;			
+			}
+			#inviteinput{
+				margin-left: 33.5%;
+			}
+			#inviteinput:hover {
+				cursor: pointer;
+			}
+			#withdrawal{
+				color: white;
+				margin-left: 67%;
+				position: absolute;
+                background-color: #FFD724;
+                color: #004C63;                
+                text-align: center;                
+                font-weight: 900;
+                border-radius: 8px;
+               	display: block;
+			}
+			#withdrawal:hover{
+				color: white;			
+				cursor: pointer;	
+				text-decoration: none;
+				color: #FFD724;
+				background-color: #004C63;
+			}
+			#groupInfoInquiry{
+				margin-left: 35%;
+				margin-top: 5%;	
+			}	
+			#g1{
+				color: white;
+				margin-left: 40%;		
+			}				
+			#navi>button:hover{
+				background-color: #F6F6F6;
+				cursor: pointer;
+			}
+			
+			   
         </style>
 </head>
 <body>
@@ -251,27 +363,27 @@
 	 <div id="header">
 	 		<div id="TeamPTitle">TeamP</div>
             <div id="navi">
-           		 <button class="menu" id="main">메인</button>
+           		<button class="menu" id="main">메인</button>
                 <button class="menu" onclick="location.href='memberInfoForm.jsp'" id="myInfo">내정보</button>
-                <button class="menu" onclick="location.href='/SemiProject_TeamP/adminList'" id="notice">공지사항</button>
+                <button class="menu" onclick="location.href='/SemiProject_TeamP/adminList?pageNo=1'" id="notice">공지사항</button>
                 <button class="menu" onclick="location.href='plan.jsp'" id="plan">일정</button>
                 
                  <c:if test = "${sessionScope.loginId == 'admin' }">
-                	<button class="menu" onclick="location.href ='/SemiProject_TeamP/adminFileBbsList'" id="fileBbs">파일게시판</button>
+                   <button class="menu" onclick="location.href ='/SemiProject_TeamP/adminFileBbsList?pageNo=1'" id="fileBbs">파일게시판</button>
                 </c:if>
                 
                 <c:if test = "${sessionScope.loginId != 'admin'}">
-                	<button class="menu" onclick="location.href ='/SemiProject_TeamP/fileList'" id="fileBbs">파일게시판</button>
+                   <button class="menu" onclick="location.href ='/SemiProject_TeamP/fileList?pageNo=1'" id="fileBbs">파일게시판</button>
                 </c:if>
                 
                  <!-- 관리자 로그인시 adminGroupList로 분기시켜 모든 그룹의 글 보기 및 삭제 가능 하게 하기-->
                 <c:if test="${sessionScope.loginId == 'admin'}">
-                	 <button class="menu" onclick="location.href ='/SemiProject_TeamP/adminGroupBbsList'" id="groupBbs">그룹게시판</button>
+                    <button class="menu" onclick="location.href ='/SemiProject_TeamP/adminGroupBbsList?pageNo=1'" id="groupBbs">그룹게시판</button>
                 </c:if>
                 
                 <!-- 관리자가 아니면(그룹장 및 그룹원) 자신이 속한 그룹의 글들만 조회 가능 -->
                 <c:if test="${sessionScope.loginId != 'admin'}">
-                	 <button class="menu" onclick="location.href ='/SemiProject_TeamP/groupList'" id="groupBbs">그룹게시판</button>
+                    <button class="menu" onclick="location.href ='/SemiProject_TeamP/groupList?pageNo=1'" id="groupBbs">그룹게시판</button>
                 </c:if>
                 
                  <button class="menu" onclick="location.href ='/SemiProject_TeamP/comunityList?pageNo=1'" id="comunityBbs">의견나눔게시판</button>
@@ -299,29 +411,24 @@
        	
        	<div id="popupContentMaster"><!-- 그룹장일 때 나오는 팝업 창 -->
 			<div class="headerPopupClose">X</div>
-			<h2>그룹 관리</h2>
+			<h2 id="g">그룹 관리</h2>
 			<table id="groupInfoManage">
 				<tr>
-					<td>그룹장 <span id="groupInfoMasterName"></span></td>
+					<td id="g">그룹장 </td>
+					<td id="g"><span id="groupInfoMasterName"></span></td>
 				</tr>
 				<tr>
-					<td>그룹명</td>
-				</tr>
+					<td id="g">그룹명</td>
+					<td id="g"><input type='hidden' id="groupInfoIdx"><input id="groupInfoName" type="text"/></td>
+				</tr>				
 				<tr>
-					<td><input type='hidden' id="groupInfoIdx"><input id="groupInfoName" type="text"/></td>
-				</tr>
-				<tr>
-					<td>프로젝트 기간 - 시작</td>
-				</tr>	
-				<tr>
+					<td id="g">프로젝트 기간 - 시작</td>
 					<td><input id="groupInfoStartDate" type="date"/></td>
-				</tr>
-				<tr>
-					<td>프로젝트 기간 - 종료</td>
-				</tr>						
-				<tr>
-					<td><input id="groupInfoEndDate" type="date"/></td>
 				</tr>					
+				<tr>
+					<td id="g">프로젝트 기간 - 종료</td>
+					<td><input id="groupInfoEndDate" type="date"/></td>
+				</tr>										
 			</table>
 			<div id="groupmemberName">그룹원</div>
 			<table id="groupMemberList">
@@ -334,53 +441,48 @@
 		<!-- 그룹 초대 팝업 -->
 		<div id="popupContentInvite">
 			<div class="headerPopupClose">X</div>
-			<h2>그룹원 초대</h2>
-			<table>
+			<h2 id="g1">그룹원 초대</h2>
+			<table id="invitetable">
 				<tr>
-					<td>그룹명</td>
-					<td><span id="inviteGroupName"></span></td>
+					<td id="g">그룹명</td>
+					<td id="g"><span id="inviteGroupName"></span></td>
 				</tr>
 				<tr>
-					<td>아이디</td>
-					<td><input id="inviteMember" type="text"/>    <input type="button" onclick="inviteMemberChk()" value="중복확인"/><span id="inviteMemberChkMsg"></span></td>
+					<td id="g">아이디</td>
+					<td><input id="inviteMember" type="text"/><input type="button" onclick="inviteMemberChk()" value="중복확인"/><span id="inviteMemberChkMsg"></span></td>
 				</tr>
 				<tr>
-					<td>초대 내용</td>
+					<td id="g">초대 내용</td>
 					<td>
 						<textarea id="inviteMsg" rows="5" cols="28" style="resize: none"></textarea>
 					</td>
 				</tr>
 			</table>
-			<input type="button" value="초대" onclick="groupInvite()">
+			<input id="inviteinput" type="button" value="초대" onclick="groupInvite()">
 			<div id="groupDel">그룹 삭제</div>
 		</div>
         
         <!-- 그룹원일 때 나오는 창 -->
         <div id="popupContenMember"><!-- 그룹장일 때 나오는 팝업 창 -->
 			<div class="headerPopupClose">X</div>
-			<h2>그룹 정보</h2>
+			<h2 id="g">그룹 정보</h2>
 			<table id="groupInfoInquiry">
 				<tr>
-					<td>그룹장 <span id="groupInfoInquiryMasterName"></span></td>
+					<td id="g">그룹장</td>
+					<td id="g"><span id="groupInfoInquiryMasterName"></span></td>
 				</tr>
 				<tr>
-					<td>그룹명</td>
-				</tr>
+					<td id="g">그룹명</td>
+					<td id="g"><input type='hidden' id="groupInfoIdx"><span id="groupInfoInquiryName"></span></td>
+				</tr>			
 				<tr>
-					<td><input type='hidden' id="groupInfoIdx"><span id="groupInfoInquiryName"></span></td>
-				</tr>
-				<tr>
-					<td>프로젝트 기간 - 시작</td>
-				</tr>	
-				<tr>
+					<td id="g">프로젝트 기간 - 시작</td>
 					<td><input id="groupInfoInquiryStartDate" type="date"/></td>
-				</tr>
-				<tr>
-					<td>프로젝트 기간 - 종료</td>
-				</tr>						
-				<tr>
-					<td><input id="groupInfoInquiryEndDate" type="date"/></td>
 				</tr>					
+				<tr>
+					<td id="g">프로젝트 기간 - 종료</td>
+					<td><input id="groupInfoInquiryEndDate" type="date"/></td>
+				</tr>									
 			</table>
 			<div id="groupmemberName">그룹원</div>
 			<table id="groupInquiryMemberList">
@@ -446,7 +548,7 @@
 					groupProgress=finishPlan/totalPlan*100;
 				}
 				console.log(groupProgress);
-				$("#groupProgress").html(groupProgress+" %  진행");
+				$("#groupProgress").html(Math.floor(groupProgress)+" %  진행");
 				
 				if(groupProgress == 100 && groupDday<=0){
 					$("#groupfinish").css("display","block");
@@ -610,6 +712,7 @@
 		if($("#popupContentMaster").css("display")!="none"){
 			$("#groupBg").css("display","none");
 			$("#popupContentMaster").css("display","none");
+			$("#popupContenMember").css("display","none");
 		}else{
 			$("#popupContentInvite").css("display","none");
 			$("#popupContentMaster").css("display","inline");
@@ -617,7 +720,8 @@
 		
 		if($("#popupContenMember").css("display")!="none"){
 			$("#groupBg").css("display","none");
-			$("#popupContentMember").css("display","none");
+			$("#popupContenMember").css("display","none");
+			$("#popupContentMaster").css("display","none");
 		}
 
 	})
@@ -706,19 +810,19 @@
 								location.href="memberInfoForm.jsp";
 								break;
 							case "notice":
-								location.href="/SemiProject_TeamP/adminList.jsp";
+								location.href="/SemiProject_TeamP/adminList";
 								break;
 							case "plan":
-								location.href="/plan.jsp";
+								location.href="/SemiProject_TeamP/plan.jsp";
 								break;
 							case "fileBbs":
-								location.href="/SemiProject_TeamP/fileList.jsp";
+								location.href="/SemiProject_TeamP/fileList";
 								break;
 							case "groupBbs":
-								location.href="/SemiProject_TeamP/groupBbs.jsp";
+								location.href="/SemiProject_TeamP/groupList";
 								break;	
 							case "comunityBbs":
-								location.href="/SemiProject_TeamP/comunityBbs.jsp";
+								location.href="/SemiProject_TeamP/comunityList?";
 								break;					
 							}
 						}
