@@ -19,6 +19,7 @@ public class AdminDAO {
 	Connection conn = null;
 	PreparedStatement ps = null;
 	ResultSet rs = null;
+	ResultSet rsT = null;
 	
 	public AdminDAO() {
 		try {
@@ -36,6 +37,9 @@ public class AdminDAO {
 			if(rs != null) {
 				rs.close();
 			}
+			if(rsT != null) {
+				rsT.close();
+			}
 			ps.close();
 			conn.close();
 		} catch (SQLException e) {
@@ -46,11 +50,9 @@ public class AdminDAO {
 
 	public ArrayList<AdminDTO> MemberList() {
 		ArrayList<AdminDTO>list = new ArrayList<>();
-		String sql = "SELECT * FROM member WHERE member_lv=? OR member_lv=?";
+		String sql = "SELECT * FROM member WHERE member_lv='member' OR member_lv='master'";
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, "member");
-			ps.setString(2, "master");
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				AdminDTO dto = new AdminDTO();
@@ -78,9 +80,9 @@ public class AdminDAO {
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, id);
-			rs=ps.executeQuery();
-			if(rs.next()) {
-				groupIdx = rs.getInt("group_idx");
+			rsT=ps.executeQuery();
+			if(rsT.next()) {
+				groupIdx = rsT.getInt("group_idx");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -94,9 +96,9 @@ public class AdminDAO {
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, groupIdx);
-			rs=ps.executeQuery();
-			if(rs.next()) {
-				groupName = rs.getString("group_name");
+			rsT=ps.executeQuery();
+			if(rsT.next()) {
+				groupName = rsT.getString("group_name");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
