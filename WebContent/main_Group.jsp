@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -265,6 +266,7 @@ obj.dataType="json";
 obj.error=function(e){console.log(e)};
 
 $(document).ready(function(){
+	var groupidx = '${sessionScope.groupNum}';
     $("#calender").fullCalendar({
           defaultDate : new Date()
         , lang : "ko"
@@ -360,7 +362,22 @@ $(document).on('click','.plandetail', function() {
 			$("#planEnd").val(data.plandetail.plan_endDay);
 			$("#select").val(data.plandetail.plan_state);	
 			$("#planState").val(data.plandetail.plan_state);
-			listPrint2(data.plandetail.plan_idx);			
+			listPrint2(data.plandetail.plan_idx);
+		}
+	});
+	ajaxCall(obj);
+	
+	$.ajax({
+		type : "post",
+		url : "./groupDetail",
+		data : {
+			groupIdx : groupidx,
+		},
+		dataType : "json",
+		success : function(data) {//인자 값은 서버에서 주는 메세지
+			if(planMember!='${sessionScope.loginId}'||planMember!=data.groupInfo.member_id){
+				$("#changeplan").css("display", "none");
+			}
 		}
 	});
 	ajaxCall(obj);
@@ -429,7 +446,6 @@ function ajaxCall(param){
 				</tr>
 
 			</table>
-			<div id="changeplan">일정 수정</div>
 			<div id="changesuc">수정 완료</div>
 			<div id="reply">
 				<div id="replybtn">
@@ -469,6 +485,10 @@ var groupidx = '${sessionScope.groupNum}';
 				alert(msg);
 		}
 	});
+	
+	
+
+	 
 	$("#changeplan").click(function(){
 		$("#planState").css("display", "none");
 		$("#select").css("display","inline");
