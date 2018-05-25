@@ -170,7 +170,6 @@
 	color: #004C63;
 	text-align: center;
 	line-height: 33px;
-	
 	border-radius: 8px;
 	display: block;
 }
@@ -184,7 +183,6 @@
 	color: #004C63;
 	text-align: center;
 	line-height: 33px;
-
 	border-radius: 8px;
 	display: block;
 	display: none;
@@ -216,7 +214,6 @@ table, td, th {
 	text-align: center;
 }
 
-
 /* 팝업배경 */
 #groupBg {
 	position: absolute;
@@ -228,7 +225,14 @@ table, td, th {
 	height: 100%;
 }
 
+.plan_title:hover {
+	background-color: yellow;
+	cursor: pointer;
+}
 
+#planinfo:hover {
+	background-color: gray;
+}
 </style>
 </head>
 <body>
@@ -244,7 +248,7 @@ table, td, th {
 		</div>
 	</c:if>
 
-<!--일정 정보(추가) 팝업  -->
+	<!--일정 정보(추가) 팝업  -->
 	<div id="popupContent">
 		<div class="mainPopupClose">X</div>
 		<form action="./planWrite" method="post">
@@ -366,8 +370,8 @@ table, td, th {
 	var date = [];
 	var day = [];
 	var content = "";
-		
-	/* 현재 날짜를 구함  */	
+
+	/* 현재 날짜를 구함  */
 	$(document).ready(
 			function() {
 
@@ -382,8 +386,6 @@ table, td, th {
 				planListCall();
 			});
 
-	
-	
 	/*일정페이지의 wbs의 일정 이름 부분 클릭시 일정 수정,삭제 팝업  */
 	$(document).on('click', '.plan_title', function() {
 		var tr = $(this);
@@ -393,6 +395,7 @@ table, td, th {
 
 		$("#groupBg").css("display", "inline");
 		$("#Infopopup").css("display", "inline");
+		$("#select").attr("disabled");
 	})
 	/*일정페이지의 wbs의 수행자부분 클릭시 일정 수정,삭제 팝업  */
 
@@ -416,8 +419,6 @@ table, td, th {
 		$("#Infopopup").css("display", "inline");
 	})
 
-
-	
 	//일정 삭제 버튼
 	$("#PlandelBnt").click(function() {
 		var detail = $("#planIdx").val();
@@ -441,16 +442,15 @@ table, td, th {
 		ajaxCall(obj);
 	})
 
-	
-	/* 일정 수정 버튼  */
-	$("#changeplan").click(function() {
+	/* 	$("#changeplan").click(function() {
 
-		$(".edit").css("border-width", "1px");
-		$(".edit").attr("readonly", false);
+	 $(".edit").css("border-width", "1px");
+	 $(".edit").attr("readonly", false);
 
-	});
-   /*  일정 수정 버튼 */
+	 }); */
+	/*  일정 수정 버튼 */
 	$("#changeplan").click(function() {
+		$("#select").removeAttr("disabled");
 		$("#planState").css("display", "none");
 		$("#select").css("display", "inline");
 		$("#PlaneditBnt").css("display", "inline");
@@ -461,14 +461,12 @@ table, td, th {
 
 	//일정 등록 버튼 클릭시 
 	$("#PlaneditBnt").click(function() {
-	
-
 
 		var startDay = $("#planStart").val();
 
 		var endDay = $("#planEnd").val();
 
-        /* 프로젝트의 시작 날짜와 종료 날짜 */
+		/* 프로젝트의 시작 날짜와 종료 날짜 */
 
 		console.log("시작 설정일" + startDay);
 		console.log("종료 설정일" + endDay);
@@ -609,54 +607,56 @@ table, td, th {
 			$("#1115").empty();
 			$("#1115").append(content);
 
-			data.planList.forEach(function(item,index){
-	               var today = new Date();
-	               var dd = today.getDate();
-	               var mm = today.getMonth()+1;
-	               var yyyy = today.getFullYear();
-	               if(dd<10) {
-	                   dd='0'+dd
-	               } 
-	               if(mm<10) {
-	                   mm='0'+mm
-	               } 
-	               today = yyyy+'-'+mm+'-'+dd;
-	               var betweenDateArr = betweenDate(item.plan_startDay, item.plan_endDay);
-	               var extendDateArr = betweenDate(item.plan_endDay, today);
-	               for(var j=0; j<betweenDateArr.length; j++){
-	                  for(var i=0; i<day.length; i++){
-	                     if($("td[class="+item.plan_idx+"]")[i].id==betweenDateArr[j]){
-	                        $("td[class="+item.plan_idx+"]")[i].style.backgroundColor = 'yellow';
-	                        
-	                     }
-	                     }
-	               }
-	               
-	               if(item.plan_state=='진행중'||item.plan_state=='준비중'){
-	            	   for(var j=1; j<extendDateArr.length; j++){
-	                       for(var i=0; i<day.length; i++){
-	                          	if($("td[class="+item.plan_idx+"]")[i].id==extendDateArr[j]){
-	                          		$("td[class="+item.plan_idx+"]")[i].style.backgroundColor = 'red';			        
-	                          	}
-	                        }
-	            	   }
-                     }else{
-	                     /*일정의 상태가 완료일떄*/
-	                     for(var j=1; j<extendDateArr.length; j++){
-	                          for(var i=0; i<day.length; i++){
-	                           	if($("td[class="+item.plan_idx+"]")[i].id==extendDateArr[j]){
-	                           		$("td[class="+item.plan_idx+"]")[i].style.backgroundColor = 'red';			
-	                           		if($("td[class="+item.plan_idx+"]")[i].id==item.plan_plan_finishDate){
-	                        	 	  $("td[class="+item.plan_idx+"]")[i].style.backgroundColor = 'green';
-	                           	 	}
-	                           	}
-	                         }
-	                      }
-	                     
-	                  }
-	                
-	   
-	             });  
+			data.planList
+					.forEach(function(item, index) {
+						var today = new Date();
+						var dd = today.getDate();
+						var mm = today.getMonth() + 1;
+						var yyyy = today.getFullYear();
+						if (dd < 10) {
+							dd = '0' + dd
+						}
+						if (mm < 10) {
+							mm = '0' + mm
+						}
+						today = yyyy + '-' + mm + '-' + dd;
+						var betweenDateArr = betweenDate(item.plan_startDay,
+								item.plan_endDay);
+						var extendDateArr = betweenDate(item.plan_endDay, today);
+						for (var j = 0; j < betweenDateArr.length; j++) {
+							for (var i = 0; i < day.length; i++) {
+								if ($("td[class=" + item.plan_idx + "]")[i].id == betweenDateArr[j]) {
+									$("td[class=" + item.plan_idx + "]")[i].style.backgroundColor = 'yellow';
+
+								}
+							}
+						}
+
+						if (item.plan_state == '진행중'
+								|| item.plan_state == '준비중') {
+							for (var j = 1; j < extendDateArr.length; j++) {
+								for (var i = 0; i < day.length; i++) {
+									if ($("td[class=" + item.plan_idx + "]")[i].id == extendDateArr[j]) {
+										$("td[class=" + item.plan_idx + "]")[i].style.backgroundColor = 'red';
+									}
+								}
+							}
+						} else {
+							/*일정의 상태가 완료일떄*/
+							for (var j = 1; j < extendDateArr.length; j++) {
+								for (var i = 0; i < day.length; i++) {
+									if ($("td[class=" + item.plan_idx + "]")[i].id == extendDateArr[j]) {
+										$("td[class=" + item.plan_idx + "]")[i].style.backgroundColor = 'red';
+										if ($("td[class=" + item.plan_idx + "]")[i].id == item.plan_plan_finishDate) {
+											$("td[class=" + item.plan_idx + "]")[i].style.backgroundColor = 'green';
+										}
+									}
+								}
+							}
+
+						}
+
+					});
 			/* 			$("td[class='9']").each(function(idx){
 							console.log($(this)[0].id)
 						});
@@ -667,19 +667,19 @@ table, td, th {
 		ajaxCall(obj);
 	}
 	//날짜비교함수
-    function compareDate(EndDay, today){
-       var result = "";
-       var EndDayArr = EndDay.split('-');
-       var todayArr = today.split('-');
-       
-       var EnddayDate = new Date(EndDayArr[0],EndDayArr[1],EndDayArr[2]);
-       var todayDate = new Date(todayArr[0],todayArr[1],todayArr[2]);
-       
-       if(EnddayDate<todayDate){
-          result = "over"
-       }
-       return result
-    }
+	function compareDate(EndDay, today) {
+		var result = "";
+		var EndDayArr = EndDay.split('-');
+		var todayArr = today.split('-');
+
+		var EnddayDate = new Date(EndDayArr[0], EndDayArr[1], EndDayArr[2]);
+		var todayDate = new Date(todayArr[0], todayArr[1], todayArr[2]);
+
+		if (EnddayDate < todayDate) {
+			result = "over"
+		}
+		return result
+	}
 	/* 중복값의 개수를 반환해주는 함수 */
 	function DuplicatesChk(arr) {
 		var results = {};
@@ -771,7 +771,7 @@ table, td, th {
 
 	})
 
-		//팝업창의 닫기 부분 클릭시 
+	//팝업창의 닫기 부분 클릭시 
 	$(".mainPopupClose").click(function() {
 		if ($("#popupContent").css("display") != "none") {
 			$("#groupBg").css("display", "none");
