@@ -118,10 +118,11 @@ public class GroupDAO {
 	
 	public ArrayList<GroupMemberDTO> groupMemberList(String memberId, int groupIdx) {
 		ArrayList<GroupMemberDTO> groupMemberList = new ArrayList<>();
-		String sql = "SELECT member_id FROM member_group WHERE group_idx=?";
+		String sql = "SELECT member_id FROM member_group WHERE group_idx=? AND member_id!=?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, groupIdx);
+			ps.setString(2, memberId);
 	
 			rs = ps.executeQuery();
 			
