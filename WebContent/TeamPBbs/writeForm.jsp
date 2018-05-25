@@ -6,7 +6,7 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Team P</title>
 <style>
 	/* 페이지 영역을 잡기 위한 css 설정입니다. */
     #page{

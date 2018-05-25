@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Team P ::공지사항</title>
 <style>
 	/* 페이지 영역을 잡기 위한 css 설정입니다. */
     #page{
@@ -102,7 +102,7 @@
 			<!-- 셋팅된 dto값을 테이블에 뿌려준다 -->
 			<c:forEach items="${list}" var="bbs">
 				<tr id="c">					
-					<td id="f" valign="top" align="left"><a id="d" href="detail?idx=${bbs.bbs_idx}&pageNo=${paging.pageNo}">${bbs.bbs_subject } (${bbs.reply_cnt})</a></td>
+					<td id="f" valign="top" align="left"><a id="d" href="detail?idx=${bbs.bbs_idx}&pageNo=${paging.pageNo}">${bbs.bbs_subject }</a></td>
 					<td id="f" valign="top">${bbs.member_id }</td>
 					<td id="f" valign="top">${bbs.bbs_date }</td>
 					<td id="f" valign="top">${bbs.bbs_bHit }</td>

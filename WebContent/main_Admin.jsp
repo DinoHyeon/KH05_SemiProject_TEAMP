@@ -5,7 +5,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <title>Insert title here</title>
+        <title>Team P ::관리자 페이지</title>
         <style>
             body{
                 background-color: #004C63;
