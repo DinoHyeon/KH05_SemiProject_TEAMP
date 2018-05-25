@@ -16,20 +16,20 @@
 	    height: 84.1%;
 		background-color: white;
    	}
-   	table{
+   	/* #tel{
 		border: 1px solid black;
 		border-collapse: collapse;
 		padding: 5px 10px;
 		width: 500px;
 		
-	}
-	th{
+	} */
+	#tel th{
 		border: 1px solid black;
 		border-collapse: collapse;
 		padding: 5px 10px;
 		width: 10%;
 	}
-	td{
+	#tel td{
 		border: 1px solid black;
 		border-collapse: collapse;
 		padding: 5px 10px;
@@ -43,7 +43,7 @@
 		width: 100%;
 		resize: none;
 	}
-	td{
+	#tel td{
 		text-align: center;
 	}
 	#sessionId{
@@ -60,7 +60,7 @@
    		height: 50%;
    	}
      	
-   	h2{
+   	#j{
    		margin-left: 600px;
    	}
 </style>
@@ -80,7 +80,7 @@
 	--> 
 	
     <div id="page">
-    <h2>글 쓰기</h2>
+    <h2 id="j">글 쓰기</h2>
     	<!-- 그룹번호 세션값이 groupNum (로그인시 디폴트값:0) 이 0 일때  == 그룹에 가입되어있지 않으면 -->
     	<c:if test="${groupNum == 0}">
     		<!-- /write 컨트롤러 에서 처리 -->

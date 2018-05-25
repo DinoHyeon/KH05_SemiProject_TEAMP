@@ -15,12 +15,23 @@
 	    height: 84.1%;
 		background-color: white;
    	}
-   		table,th,td{
+    /* #tel{
+		border: 1px solid black;
+		border-collapse: collapse;
+		padding: 5px 10px;
+	}  */
+     #tel th{
+		border: 1px solid black;
+		border-collapse: collapse;
+		padding: 5px 10px;
+	} 
+    
+     #tel td{
 		border: 1px solid black;
 		border-collapse: collapse;
 		padding: 5px 10px;
 	}
-	table{
+	#tel{
 		width: 500px;
 	}
 	input[type='text']{
@@ -30,7 +41,7 @@
 		width: 100%;
 		resize: none;
 	}
-	td{
+	#tel td{
 		text-align: center;
 	}
 	#sessionId{
@@ -48,7 +59,7 @@
    		height: 50%;
    	}
      	
-   	h2{
+   	#j{
    		margin-left: 600px;
    	}
    	
@@ -65,7 +76,7 @@
 	-->
 	
     <div id="page">
-    <h2>글쓰기</h2>
+    <h2 id="j">글쓰기</h2>
     	<!-- /groupWrite 컨트롤러에서 처리 -->
 		<form action="../groupWrite" method="get">
 		<!-- Bbs 테이블에 bbs_name 값을 groupBbs 로 추가  -->

@@ -38,7 +38,7 @@
    	}
    	
      	
-   	h2{
+   	#n{
    		margin-left: 50%;
    	}
    	
@@ -102,7 +102,7 @@
 <div id=page>
    
    <div id="list">
-    <h2>${info.bbs_subject }</h2>
+    <h2 id="n">${info.bbs_subject }</h2>
    <table id="tel">     
     <tr id="hidden" style="display:none;">
 			<th>게시글 번호</th>

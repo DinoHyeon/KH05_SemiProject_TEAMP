@@ -39,7 +39,7 @@
    		height: 50%;
    	}
      	
-   	h2{
+   	#n{
    		margin-left: 600px;
    	}
 	.edit {
@@ -103,7 +103,7 @@
 	<%@include file="../sideMenu.jsp"%>
     <div id="page">  
 			
-			<h2>${info.bbs_subject}</h2>
+			<h2 id="n">${info.bbs_subject}</h2>
 	
 		<table id="tel">
 		   <tr id="hidden" style="display:none;">

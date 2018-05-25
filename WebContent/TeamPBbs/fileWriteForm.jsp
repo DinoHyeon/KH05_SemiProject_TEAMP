@@ -16,12 +16,23 @@
 		background-color: white;
    	}
    	
-   	table,th,td{
+   	/* #tel{
+		border: 1px solid black;
+		border-collapse: collapse;
+		padding: 5px 10px;
+	} */
+	#tel th{
+		border: 1px solid black;
+		border-collapse: collapse;
+		padding: 5px 10px;
+	} 
+    
+     #tel td{
 		border: 1px solid black;
 		border-collapse: collapse;
 		padding: 5px 10px;
 	}
-	table{
+	#tel{
 		width: 500px;
 	}
 	input[type='text']{
@@ -31,7 +42,7 @@
 		width: 100%;
 		resize: none;
 	}
-	td{
+	#tel td{
 		text-align: center;
 	}
 	
@@ -49,7 +60,7 @@
    		height: 50%;
    	}
      	
-   	h2{
+   	#j{
    		margin-left: 600px;
    	}
 </style>
@@ -58,7 +69,7 @@
 	<%@include file="../headerMenu.jsp"%>
 	<%@include file="../sideMenu.jsp"%>
     <div id="page">
-    <h2>글쓰기</h2>
+    <h2 id="j">글쓰기</h2>
 		<form action="../fileWrite" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="bbs_name" value="fileBbs">
 		

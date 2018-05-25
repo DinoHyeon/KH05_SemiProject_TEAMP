@@ -497,7 +497,7 @@
 <script>
 	var path = window.location.pathname;
 	var loaction = "";
-	if(path.indexOf('WriteForm')>-1||path.indexOf('dateForm')>-1||path.indexOf('writeForm')>-1){
+	if(path.indexOf('WriteForm')>-1||path.indexOf('writeForm')>-1){
 		loaction= ".";
 	}
 	
