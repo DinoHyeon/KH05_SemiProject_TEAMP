@@ -115,7 +115,10 @@
 		    <jsp:param name="finalPageNo" value="${paging.finalPageNo}" />
 		</jsp:include>
 		
-		<button id="btn" onclick="location.href = 'TeamPBbs/fileWriteForm.jsp'">글쓰기</button>
+		
+		<c:if test="${sessionScope.groupNum != '0'}">
+			<button id="btn" onclick="location.href = 'TeamPBbs/fileWriteForm.jsp'">글쓰기</button>
+		</c:if>
       
       <form action="./fileList" method="get">
 			<table id="tab">
